@@ -2,6 +2,7 @@
 title: Ubuntu 14.04 Qt5.3.1 Fcitx 输入法支持中文
 date: 2018-07-22 20:57:47
 tags: [Qt,Linux]
+categories: 编程
 ---
 ## 安装fcitx for Qt5动态库
 

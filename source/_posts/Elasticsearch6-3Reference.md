@@ -2,6 +2,7 @@
 title: Elasticsearch 6.3 参考文档（1）
 date: 2018-07-24 21:12:28
 tags: [Elasticsearch,翻译]
+categories: 编程
 ---
 
 
@@ -18,4 +19,3 @@ tags: [Elasticsearch,翻译]
 - 假设你有数据分析或商业智能的需求，需要在大量数据的基础上（假设有百万条，甚至几十亿条数据）进行快速的调研，分析，可视化，定制化问卷。在这个例子里，你可以使用Elasticsearch存储数据，之后使用Kibana（Elasticsearch/Logstash/Kibana 的部分功能）来创建定制化的仪表盘，以实现重要数据的可视化。另外，基于这些数据，你可以使用Elasticsearch的聚合功能来执行复杂的商业信息查询工作。
 
 接下来的教程，将引导你安装运行Elasticsearch，了解其中的机理，执行索引，查找，修改数据等一些基础操作。在教程结束的时候，你应该对于Elasticsearch有了一定的了解，知道Elasticsearch 是什么，它是怎么工作的，希望你能够受到一些启发，利用它创建复杂的搜索应用程序，或者进行数据挖掘的工作。
-

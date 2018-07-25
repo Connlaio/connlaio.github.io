@@ -2,6 +2,7 @@
 title: SQL Programming （2）： Connection to Databases
 date: 2018-07-23 20:57:47
 tags: [Qt,SQL,翻译]
+categories: 编程
 ---
 
 使用 QSqlQuery 或者 QSqlQueryModel 可以访问数据库，创建并打开一个或多个数据库连接。数据库连接通常是使用连接名而不是数据库名来区分彼此。你可以针对一个数据库创建多个连接。 QSqlDatabase 类创建数据库连接时，如果没有指定连接名，那么就为默认连接。当调用 QSqlQuery 或者 QSqlQueryModel 的成员函数（有一个参数为数据库连接名）时，如果未传递数据库的连接名称， 那么默认的数据库连接就会被使用。当你的应用程序只需要一个数据库连接时，那么创建一个默认连接无疑是方便的。
