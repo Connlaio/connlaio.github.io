@@ -11,7 +11,7 @@ install:
   - npm install # 下载依赖
 
 script:
-  hexo g
+  hexo clean && hexo g
   # - hexo algolia # 我装了algolia的搜索工具。这一步正常可以是 hexo g
 
 
