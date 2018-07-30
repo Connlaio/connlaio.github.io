@@ -186,7 +186,8 @@ social_icons:
 since: 2018
 
 use_motion: true
-canvas_nest: true 
+# canvas_nest: true
+three_waves: true
 
 # archive page title
 archive:
