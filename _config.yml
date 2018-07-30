@@ -6,7 +6,7 @@
 title: Conner # your blog title name
 subtitle:
 author: Conner Xu # 作者
-language:
+language: zh-Hans
 timezone: Asia/Shanghai
 
 # custom Site settings
@@ -128,8 +128,8 @@ markdown:
     - markdown-it-emoji
 
 ## Themes: https://hexo.io/themes/
-theme: Anisina
-
+# theme: Anisina
+theme：next
 
 # img CDN path
 cdn-url:  # 你的CDN地址
