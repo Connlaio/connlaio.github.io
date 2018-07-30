@@ -50,7 +50,7 @@ anchorjs: false                        # if you want to customize anchor. check 
 
 # Use livere
 use_livere: true
-livere_uid: MTAyMC8zODQwNS8xNDkzMw==
+# livere_uid: MTAyMC8zODQwNS8xNDkzMw==
 
 # Analytics settings
 # Baidu Analytics
@@ -132,36 +132,28 @@ markdown:
 theme: next
 #scheme: Muse
 #scheme: Mist
-scheme: Pisces
+# scheme: Pisces
 
-menu:
-  home: /
-  archives: /archives
-  about: /about
-  categories: /categories
-  tags: /tags
-  commonweal: /404.html
-menu_icons:
-  enable: true
-  # Icon Mapping.
-  home: home
-  about: user
-  categories: th
-  tags: tags
-  archives: archive
-  commonweal: heartbeat
+# menu:
+#   home: /
+#   archives: /archives
+#   about: /about
+#   categories: /categories
+#   tags: /tags
+#   commonweal: /404.html
+
 #
-sidebar:
-  position: left
+# sidebar:
+#   position: left
 #   display: post
 
-avatar: /uploads/head.jpeg
-
-disqus:
-  enable: true
-  shortname: kang_xu
-  count: true
-jiathis: true
+# avatar: /uploads/head.jpeg
+#
+# disqus:
+#   enable: true
+#   shortname: kang_xu
+#   count: true
+# jiathis: true
 
 
 # Code Highlight theme
