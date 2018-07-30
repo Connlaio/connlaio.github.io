@@ -129,16 +129,10 @@ markdown:
 
 ## Themes: https://hexo.io/themes/
 # theme: Anisina
-theme：next
-
-# img CDN path
-cdn-url:  # 你的CDN地址
-
-# Qiniu imageView2 API
-# More info http://developer.qiniu.com/code/v6/api/kodo-api/image/imageview2.html
-clip-content: "?imageView2/1/w/1400/h/400/interlace/1/q/90"
-clip-avatar: "?imageView2/2/w/300/h/300/interlace/1/q/90"
-clip-home-post-bg: "?imageView2/1/w/800/h/300/interlace/1/q/70"
+theme: next
+#scheme: Muse
+#scheme: Mist
+scheme: Pisces
 
 # post default images
 post-default-img: #博文默认的图片
