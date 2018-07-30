@@ -56,21 +56,21 @@ livere_uid: MTAyMC8zODQwNS8xNDkzMw==
 # Baidu Analytics
 ba_track_id:
 # Google Analytics
-ga_track_id:             # Format: UA-xxxxxx-xx
-ga_domain:
+# ga_track_id:             # Format: UA-xxxxxx-xx
+# ga_domain:
 
 # Sidebar settings
-sidebar: true
-sidebar-about-description: # 个人描述
-sidebar-avatar:     # use absolute URL
+# sidebar: true
+# sidebar-about-description: # 个人描述
+# sidebar-avatar:     # use absolute URL
 
 
 # Featured Tags
-featured-tags: true                     # whether or not using Feature-Tags
-featured-condition-size: 1              # A tag will be featured if the size of it is more than this condition value
+# featured-tags: true                     # whether or not using Feature-Tags
+# featured-condition-size: 1              # A tag will be featured if the size of it is more than this condition value
 
 # friends
-friends:  # 友链
+# friends:  # 友链
 
 # Directory
 source_dir: source
@@ -150,14 +150,17 @@ menu_icons:
   tags: tags
   archives: archive
   commonweal: heartbeat
-
+#
 sidebar:
   position: left
-  display: post
+#   display: post
 
 avatar: /uploads/head.jpeg
 
-
+disqus:
+  enable: true
+  shortname: kang_xu
+  count: true
 
 # archive page title
 archive:
