@@ -134,12 +134,29 @@ theme: next
 #scheme: Mist
 scheme: Pisces
 
-# post default images
-post-default-img: #博文默认的图片
-post-default-img-mobile: #移动端显示的图片
+menu:
+  home: /
+  archives: /archives
+  about: /about
+  categories: /categories
+  tags: /tags
+  commonweal: /404.html
+menu_icons:
+  enable: true
+  # Icon Mapping.
+  home: home
+  about: user
+  categories: th
+  tags: tags
+  archives: archive
+  commonweal: heartbeat
 
-# search api , set your custom key
-swiftype_key:
+sidebar:
+  position: left
+  display: post
+
+avatar: /uploads/head.jpeg
+
 
 
 # archive page title
