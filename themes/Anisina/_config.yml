@@ -31,7 +31,7 @@ permalink_defaults:
 # RSS:
 weibo_username:
 zhihu_username:
-github_username:
+github_username: Connlaio
 twitter_username:
 facebook_username:
 linkedin_username:
@@ -41,15 +41,16 @@ anchorjs: false                        # if you want to customize anchor. check 
 
 
 # Disqus settings
-disqus_username:
+# disqus_username: kang_xu
 
 # Duoshuo settings
-duoshuo_username:  # 你的多说帐号
+#duoshuo_username:  # 你的多说帐号
 # Share component is depend on Comment so we can NOT use share only.
-duoshuo_share: true                     # set to false if you want to use Comment without Sharing
+#duoshuo_share: true                     # set to false if you want to use Comment without Sharing
 
 # Use livere
-use_livere:
+use_livere: true
+livere_uid: MTAyMC8zODQwNS8xNDkzMw==
 
 # Analytics settings
 # Baidu Analytics
@@ -59,6 +60,7 @@ ga_track_id:             # Format: UA-xxxxxx-xx
 ga_domain:
 
 # Sidebar settings
+sidebar: true
 sidebar-about-description: # 个人描述
 sidebar-avatar:     # use absolute URL
 
@@ -128,13 +130,6 @@ markdown:
 ## Themes: https://hexo.io/themes/
 theme: Anisina
 
-# Deployment
-## Docs: https://hexo.io/docs/deployment.html
-deploy:
-  type:
-  repo:
-  branch:
-
 
 # img CDN path
 cdn-url:  # 你的CDN地址
@@ -157,3 +152,10 @@ swiftype_key:
 archive:
     title: archives
     description: 可以根据归档日期检索所有文件
+
+# Deployment
+## Docs: https://hexo.io/docs/deployment.html
+deploy:
+  type: git
+  repo: git@github.com:Connlaio/connlaio.github.io.git
+  branch: master
