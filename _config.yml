@@ -95,7 +95,7 @@ future: true
 highlight:
   enable: true
   line_number: false
-  auto_detect: false
+  auto_detect: true
   tab_replace:
 
 # Category & Tag
@@ -159,7 +159,7 @@ theme: next
 # Code Highlight theme
 # Available value: normal | night | night eighties | night blue | night bright
 # https://github.com/chriskempson/tomorrow-theme
-highlight_theme: night eighties
+# highlight_theme: night eighties
 
 social:
   GitHub: https://github.com/Connlaio
