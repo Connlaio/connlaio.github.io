@@ -15,7 +15,10 @@ SEOTitle: Conner
 header-img:
 email: xukang-11@live.com
 description: "Conner 的私人记录"
-keyword: # seo key words
+keyword:
+  -Qt
+  -C++
+  -Elasticsearch
 
 favicon: # your favicon png
 # custom end
@@ -40,37 +43,6 @@ linkedin_username:
 anchorjs: false                        # if you want to customize anchor. check out line:181 of `post.html`
 
 
-# Disqus settings
-# disqus_username: kang_xu
-
-# Duoshuo settings
-#duoshuo_username:  # 你的多说帐号
-# Share component is depend on Comment so we can NOT use share only.
-#duoshuo_share: true                     # set to false if you want to use Comment without Sharing
-
-# Use livere
-use_livere: true
-# livere_uid: MTAyMC8zODQwNS8xNDkzMw==
-
-# Analytics settings
-# Baidu Analytics
-ba_track_id:
-# Google Analytics
-# ga_track_id:             # Format: UA-xxxxxx-xx
-# ga_domain:
-
-# Sidebar settings
-# sidebar: true
-# sidebar-about-description: # 个人描述
-# sidebar-avatar:     # use absolute URL
-
-
-# Featured Tags
-# featured-tags: true                     # whether or not using Feature-Tags
-# featured-condition-size: 1              # A tag will be featured if the size of it is more than this condition value
-
-# friends
-# friends:  # 友链
 
 # Directory
 source_dir: source
@@ -130,36 +102,6 @@ markdown:
 ## Themes: https://hexo.io/themes/
 # theme: Anisina
 theme: next
-#scheme: Muse
-#scheme: Mist
-# scheme: Pisces
-
-# menu:
-#   home: /
-#   archives: /archives
-#   about: /about
-#   categories: /categories
-#   tags: /tags
-#   commonweal: /404.html
-
-#
-# sidebar:
-#   position: left
-#   display: post
-
-# avatar: /uploads/head.jpeg
-#
-# disqus:
-#   enable: true
-#   shortname: kang_xu
-#   count: true
-# jiathis: true
-
-
-# Code Highlight theme
-# Available value: normal | night | night eighties | night blue | night bright
-# https://github.com/chriskempson/tomorrow-theme
-# highlight_theme: night eighties
 
 social:
   GitHub: https://github.com/Connlaio
@@ -177,9 +119,10 @@ social_icons:
 
 since: 2018
 
-use_motion: true
-# canvas_nest: true
-three_waves: true
+sitemap:
+    path: sitemap.xml
+baidusitemap:
+    path: baidusitemap.xml
 
 # archive page title
 archive:
