@@ -95,7 +95,7 @@ index_with_subtitle: false
 menu:
   home: / || home
   about: /about/ || user
-  tags: /Tags/ || tags
+  tags: /tags/ || tags
   categories: /categories/ || th
   archives: /archives/ || archive
   #schedule: /schedule/ || calendar
