@@ -4,7 +4,7 @@
 
 # Site
 title: Conner # your blog title name
-subtitle:
+subtitle: To be Stronger
 author: Conner Xu # 作者
 language: zh-Hans
 timezone: Asia/Shanghai
@@ -16,9 +16,6 @@ header-img:
 email: xukang-11@live.com
 description: "Conner 的私人记录"
 keyword:
-  - Qt
-  - C++
-  - Elasticsearch
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
