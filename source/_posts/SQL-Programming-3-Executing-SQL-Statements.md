@@ -1,15 +1,8 @@
 ---
 title: 'SQL Programming(3): Executing SQL Statements'
-comments: true
-toc: true
-categories:
-  - 编程
-  - Qt
+categories: [编程, Qt]
 date: 2018-08-01 13:02:48
-tags:
-  - Qt
-  - SQL
-  - 翻译
+tags: [Qt, SQL, 翻译]
 ---
 
   QSqlQuery 类为执行SQL语句和浏览查询结果上提供了交互接口。
