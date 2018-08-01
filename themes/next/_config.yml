@@ -28,7 +28,8 @@ override: true
 # Then need to rename & redefine they on any other names, otherwise icons from Next will rewrite your custom icons in Hexo.
 favicon:
   # small: /images/favicon-16x16-next.png
-  medium: /img/favicon-1.png
+  small: /img/favicon-16x16.ico
+  medium: /img/favicon-1.ico
   apple_touch_icon: /images/apple-touch-icon-next.png
   safari_pinned_tab: /images/logo.svg
   #android_manifest: /images/manifest.json
