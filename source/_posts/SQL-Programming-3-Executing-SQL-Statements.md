@@ -25,7 +25,7 @@ tags:
  query.exec("SELECT name, salary FROM employee WHERE salary > 50000");
 ```
 
-  QSqlQuery 的构造函数接受一个可选的QSqlDatabase对象作为参数，用来指定要使用的数据库。在上述例子中，QSqlQuery 对象在构造时没有传参来指定数据库，所以会使用默认的数据库连接。如果发生了错误，exec()函数会返回false。之后可以使用QSqlQuery:lastError()函数来查看错误。
+  QSqlQuery 的构造函数接受一个可选的QSqlDatabase对象作为参数，用来指定要使用的数据库。在上述例子中，QSqlQuery 对象在构造时没有传参来指定数据库，所以会使用默认的数据库连接。如果发生了错误，exec()函数会返回false。之后可以使用_QSqlQuery:lastError()_函数来查看错误。
 
 ## 浏览查询结果
 
