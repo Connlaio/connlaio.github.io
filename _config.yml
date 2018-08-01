@@ -20,9 +20,6 @@ keyword:
   - C++
   - Elasticsearch
 
-favicon: img/favicon-1.ico
-# custom end
-
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
 url: https://conner.work
@@ -37,6 +34,7 @@ anchorjs: false                        # if you want to customize anchor. check 
 
 
 # Directory
+#
 source_dir: source
 public_dir: public
 tag_dir: Tags
@@ -63,9 +61,10 @@ highlight:
   tab_replace:
 
 # Category & Tag
-default_category: uncategorized
-category_map:
-tag_map:
+#
+# default_category: uncategorized
+# category_map:
+# tag_map:
 
 # Date / Time format
 ## Hexo uses Moment.js to parse and display date
@@ -100,6 +99,12 @@ sitemap:
     path: sitemap.xml
 baidusitemap:
     path: baidusitemap.xml
+
+search:
+  path: search.xml
+  field: post
+  format: html
+  limit: 10000
 
 # archive page title
 archive:
