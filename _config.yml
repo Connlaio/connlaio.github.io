@@ -16,9 +16,9 @@ header-img:
 email: xukang-11@live.com
 description: "Conner 的私人记录"
 keyword:
-  -Qt
-  -C++
-  -Elasticsearch
+  - Qt
+  - C++
+  - Elasticsearch
 
 favicon: img/favicon-1.ico
 # custom end
@@ -30,14 +30,6 @@ root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
 
-# SNS settings
-# RSS:
-weibo_username:
-zhihu_username:
-github_username: Connlaio
-twitter_username:
-facebook_username:
-linkedin_username:
 
 # Build settings
 anchorjs: false                        # if you want to customize anchor. check out line:181 of `post.html`
@@ -47,7 +39,7 @@ anchorjs: false                        # if you want to customize anchor. check 
 # Directory
 source_dir: source
 public_dir: public
-tag_dir: tags
+tag_dir: Tags
 archive_dir: archives
 category_dir: categories
 code_dir: downloads/code
@@ -62,7 +54,7 @@ external_link: true # Open external links in new tab
 filename_case: 0
 render_drafts: false
 post_asset_folder: true
-relative_link: false
+relative_link: true
 future: true
 highlight:
   enable: true
@@ -102,21 +94,6 @@ markdown:
 ## Themes: https://hexo.io/themes/
 # theme: Anisina
 theme: next
-
-social:
-  GitHub: https://github.com/Connlaio
-  # Twitter: https://twitter.com/your-user-name
-  # 微博: http://weibo.com/your-user-name
-  # 豆瓣: http://douban.com/people/your-user-name
-  # 知乎: http://www.zhihu.com/people/your-user-name
-  #
-social_icons:
-  enable: true
-  # Icon Mappings
-  GitHub: github
-  Twitter: twitter
-  微博: weibo
-
 since: 2018
 
 sitemap:
