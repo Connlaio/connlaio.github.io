@@ -1,5 +1,5 @@
 ---
-title: SQL Programming (2)：Connection to Databases
+title: 'SQL Programming (2): Connection to Databases'
 date: 2018-07-23 20:57:47
 tags: [Qt, SQL, 翻译]
 categories: 
@@ -46,7 +46,7 @@ Qt SQL Programming  系列翻译
 
 - {% post_link "SQL-Programming-1-Overview" "SQL Programming (1): Overview" %}
 - {% post_link "SQL-Programming-3-Executing-SQL-Statements" "SQL Programming (3): Executing SQL Statements" %}
-- {% post_link "SQL Programming-4-Using-the-SQL-Model-Classes" "SQL Programming (4)：Using the SQL Model Classes" %}
+- {% post_link "SQL Programming-4-Using-the-SQL-Model-Classes" "SQL Programming (4): Using the SQL Model Classes" %}
 - {% post_link "SQL Programming-5-Presenting-Data-in-a-Table-View" "SQL Programming (5): Presenting Data in a Table View" %}
 - {% post_link "SQL Programming-6-Creating-Data-Aware-Forms" "SQL Programming (6): Creating Data Aware Forms" %}
 

@@ -130,9 +130,9 @@ bool EditableSqlModel::setFirstName(int personId, const QString &firstName)
 Qt SQL Programming  系列翻译
 
 - {% post_link "SQL-Programming-1-Overview" "SQL Programming (1): Overview" %}
-- {% post_link "SQL Programming-2-Connection-to-Databases" "SQL Programming (2)：Connection to Databases" %}
+- {% post_link "SQL Programming-2-Connection-to-Databases" "SQL Programming (2): Connection to Databases" %}
 - {% post_link "SQL-Programming-3-Executing-SQL-Statements" "SQL Programming (3): Executing SQL Statements" %}
-- {% post_link "SQL Programming-4-Using-the-SQL-Model-Classes" "SQL Programming (4)：Using the SQL Model Classes" %}
+- {% post_link "SQL Programming-4-Using-the-SQL-Model-Classes" "SQL Programming (4): Using the SQL Model Classes" %}
 - {% post_link "SQL Programming-6-Creating-Data-Aware-Forms" "SQL Programming (6): Creating Data Aware Forms" %}
 
 ***
