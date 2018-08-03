@@ -143,7 +143,7 @@ model.submitAll();
 1. 没有任何缓存，意味着性能会显著下降；
 2. 当你试图增加一个主键时，你来不及对它填充数据。
 
-# The SQL Relational Table Model
+## The SQL Relational Table Model
 
 ​    QSqlRelationalTableModel 是对QSqlTableModel类的扩展，它提供了对外键的支持。一个外键是指一个表中的字段和另外一个表的主键存在一对一的映射关系。举个例子，如果book表中有一个名为authorid的字段指的是author表中的id字段（id字段是主键），那么authorid就是一个外键。
 
