@@ -63,7 +63,8 @@ QSqlQueryModel, QSqlTableModel, 和QSqlRelationalTableModel类将数据库中的
 
 ***
 Qt SQL Programming  系列翻译
--  [SQL Programming （2）： Connection to Databases](https://conner.work/2018/07/23/SQL%20Programming%20%EF%BC%882%EF%BC%89%EF%BC%9A%20Connectiong%20to%20Databases/)
-- [SQL Programming (3) : Executing SQL Statements](https://conner.work/2018/08/01/SQL-Programming-3-Executing-SQL-Statements/)
+
+- {% post_link "SQL Programming （2）：Connection to Databases" %}
+- {% post_link "SQL-Programming-3-Executing-SQL-Statements" SQL Programming (3): Executing SQL Statements %}
 - {% post_link "SQL Programming （4）：Using the SQL Model Classes" %}
 ***

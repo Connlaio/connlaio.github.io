@@ -1,5 +1,5 @@
 ---
-title: 'SQL Programming(3): Executing SQL Statements'
+title: 'SQL Programming (3): Executing SQL Statements'
 date: 2018-08-01 13:02:48
 tags: [Qt, SQL, 翻译]
 categories: 
@@ -9,7 +9,8 @@ categories:
 
   QSqlQuery 类为执行SQL语句和浏览查询结果上提供了交互接口。
 
-  QSqlQueryModel类和QSqlTableModel在访问数据库上提供了更高水平的接口，这两个类将在下一部分进行说明。如果你不熟悉SQL，那么你可以直接查看下一部分[Using the SQL Model Class]()。
+  QSqlQueryModel类和QSqlTableModel在访问数据库上提供了更高水平的接口，这两个类将在下一部分进行说明。如果你不熟悉SQL，那么你可以直接查看下一部分
+  {% post_link "SQL Programming （4）：Using the SQL Model Classes" "Using the SQL Model Class"%} 。
 
 ##  执行一条语句
 
@@ -124,10 +125,9 @@ QSqlDatabase::database().commit();
   事务机制的使用是用来保证一个复杂操作的原子性（举个例子，查询一个外键和增加一条记录），或是提供一种消除中间复杂性变化的手段。
 
 ***
-
 Qt SQL Programming  系列翻译
 
--  [SQL Programming(1): Overview](https://conner.work/2015/02/11/SQL-Programming-1-Overview/#more)
--  [SQL Programming (2): Connection to Databases](https://conner.work/2018/07/23/SQL%20Programming%20%EF%BC%882%EF%BC%89%EF%BC%9A%20Connectiong%20to%20Databases/)
-
+- {% post_link "SQL-Programming-1-Overview" "SQL Programming (1): Overview"%}
+- {% post_link "SQL Programming （2）：Connection to Databases" %}
+- {% post_link "SQL Programming （4）：Using the SQL Model Classes" %}
 ***

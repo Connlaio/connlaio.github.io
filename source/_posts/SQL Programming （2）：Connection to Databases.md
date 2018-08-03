@@ -42,10 +42,9 @@ QSqlDatabase secondDB = QSqlDatabase::addDatabase("QMYSQL", "second");
 
 
 ***
-
 Qt SQL Programming  系列翻译
 
--  [SQL Programming(1): Overview](https://conner.work/2015/02/11/SQL-Programming-1-Overview/#more)
--  [SQL Programming(3): Executing SQL Statements](https://conner.work/2018/08/01/SQL-Programming-3-Executing-SQL-Statements/)
-
+- {% post_link "SQL-Programming-1-Overview" "SQL Programming (1): Overview"%}
+- {% post_link "SQL-Programming-3-Executing-SQL-Statements" SQL Programming (3): Executing SQL Statements %}
+- {% post_link "SQL Programming （4）：Using the SQL Model Classes" %}
 ***
