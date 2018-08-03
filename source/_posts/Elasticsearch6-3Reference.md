@@ -2,7 +2,9 @@
 title: Elasticsearch 6.3 参考文档（1）
 date: 2018-07-24 21:12:28
 tags: [Elasticsearch,翻译]
-categories: 编程
+categories: 
+- [编程]
+- [Elasticsearch 6.3 系列翻译]
 ---
 
 

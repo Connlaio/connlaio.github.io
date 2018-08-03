@@ -1,10 +1,12 @@
 ---
-title: 'SQL Programming(1): Overview'
+title: 'SQL Programming (1): Overview'
 # comments: true
 # toc: true
 date: 2015-02-11 22:46:14
 tags: [Qt, SQL, 翻译]
-categories: [编程, Qt]
+categories: 
+- [编程, Qt]
+- [Qt SQL Programming  系列翻译]
 ---
 
 阅读本文，建议有一定基础的SQL知识，能够理解简单的SELECT, INSERT, UPDATE, 和DELETE语句。即便使用QSqlTableModel类不需要SQL知识便能够完成数据库的浏览和编辑功能，但是，还是强烈建议读者对SQL有一定的基础知识。[ Introduction to Database Systems (7th Ed.)](https://book.douban.com/subject/1768231/) 书中，涵盖了对SQL数据操作的标准语句。
@@ -62,6 +64,6 @@ QSqlQueryModel, QSqlTableModel, 和QSqlRelationalTableModel类将数据库中的
 ***
 Qt SQL Programming  系列翻译
 -  [SQL Programming （2）： Connection to Databases](https://conner.work/2018/07/23/SQL%20Programming%20%EF%BC%882%EF%BC%89%EF%BC%9A%20Connectiong%20to%20Databases/)
-- [SQL Programming(3): Executing SQL Statements](https://conner.work/2018/08/01/SQL-Programming-3-Executing-SQL-Statements/)
+- [SQL Programming (3) : Executing SQL Statements](https://conner.work/2018/08/01/SQL-Programming-3-Executing-SQL-Statements/)
 - {% post_link "SQL Programming （4）：Using the SQL Model Classes" %}
 ***

@@ -6,8 +6,9 @@ date: 2018-08-03 08:54:47
 
 tags: [Qt, SQL, 翻译]
 
-categories: [编程, Qt] 
-
+categories: 
+- [编程, Qt]
+- [Qt SQL Programming  系列翻译]
 ---
 
   
