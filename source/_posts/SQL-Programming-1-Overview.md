@@ -9,7 +9,7 @@ categories:
 - [Qt SQL Programming  系列翻译]
 ---
 
-阅读本文，建议有一定基础的SQL知识，能够理解简单的SELECT, INSERT, UPDATE, 和DELETE语句。即便使用QSqlTableModel类不需要SQL知识便能够完成数据库的浏览和编辑功能，但是，还是强烈建议读者对SQL有一定的基础知识。[ Introduction to Database Systems (7th Ed.)](https://book.douban.com/subject/1768231/) 书中，涵盖了对SQL数据操作的标准语句。
+阅读本文，建议有一定基础的SQL知识，能够理解简单的SELECT, INSERT, UPDATE, 和DELETE语句。即便使用QSqlTableModel 类不需要SQL知识便能够完成数据库的浏览和编辑功能，但是，还是强烈建议读者对SQL有一定的基础知识。[ Introduction to Database Systems (7th Ed.)](https://book.douban.com/subject/1768231/) 书中，涵盖了对SQL数据操作的标准语句。
 
 ## 主题：
 
@@ -45,7 +45,7 @@ SQL类分为3层：
 
 ### 驱动层：
 
-包含 _QSqlDriver_ , _QSqlDriverCreator_ , _QSqlDriverCreatorBase_ , _QSqlDriverPlugin_ , 和 _QSqlResult_ 类。
+包含 QSqlDriver , QSqlDriverCreator , QSqlDriverCreatorBase , QSqlDriverPlugin , 和 QSqlResult 类。
 
 这一层提供了具体的数据库和 SQL API层之间的底层桥梁。更多信息请参见SQL数据库驱动。
 
@@ -64,7 +64,7 @@ QSqlQueryModel, QSqlTableModel, 和QSqlRelationalTableModel类将数据库中的
 ***
 Qt SQL Programming  系列翻译
 
-- {% post_link "SQL Programming （2）：Connection to Databases" %}
+- {% post_link "SQL Programming （2）：Connection to Databases" "SQL Programming (2)：Connection to Databases"%}
 - {% post_link "SQL-Programming-3-Executing-SQL-Statements" SQL Programming (3): Executing SQL Statements %}
-- {% post_link "SQL Programming （4）：Using the SQL Model Classes" %}
+- {% post_link "SQL Programming （4）：Using the SQL Model Classes" "SQL Programming (4)：Using the SQL Model Classes"%}
 ***

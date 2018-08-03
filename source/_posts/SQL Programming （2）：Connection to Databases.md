@@ -1,5 +1,5 @@
 ---
-title: SQL Programming （2）： Connection to Databases
+title: SQL Programming (2)：Connection to Databases
 date: 2018-07-23 20:57:47
 tags: [Qt, SQL, 翻译]
 categories: 
@@ -20,7 +20,7 @@ categories:
  bool ok = db.open();
 ```
 
-​	  第一行，创建一个数据库连接对象，最后一行是打开数据库连接，之后使用。在此期间，我们初始化了一些连接信息，包括数据库名，主机名，用户名和密码。上述例子中，我们连接了一个bigblue主机上的名为flightdb的MySQL数据库。函数 _addDatabase()_ 的参数 "QMYSQL"指定了连接使用的数据库驱动类型。Qt所包含的数据库驱动集都列于支持的数据库驱动表中。 在上述代码段中，由于我们没有给 _addDatabase()_ 函数的第二个参数连接名传递参数，所以，上述的连接会成为默认连接。举个例子，接下来我们创建了两个MySQL数据的连接，并分别命名为"first" 和"second"：
+​	  第一行，创建一个数据库连接对象，最后一行是打开数据库连接，之后使用。在此期间，我们初始化了一些连接信息，包括数据库名，主机名，用户名和密码。上述例子中，我们连接了一个 bigblue 主机上的名为 flightdb 的MySQL数据库。函数 _addDatabase()_ 的参数 "QMYSQL"指定了连接使用的数据库驱动类型。Qt所包含的数据库驱动集都列于支持的数据库驱动表中。 在上述代码段中，由于我们没有给 _addDatabase()_ 函数的第二个参数连接名传递参数，所以，上述的连接会成为默认连接。举个例子，接下来我们创建了两个MySQL数据的连接，并分别命名为"first" 和"second"：
 
 ```c++
 QSqlDatabase firstDB = QSqlDatabase::addDatabase("QMYSQL", "first");
@@ -46,5 +46,5 @@ Qt SQL Programming  系列翻译
 
 - {% post_link "SQL-Programming-1-Overview" "SQL Programming (1): Overview"%}
 - {% post_link "SQL-Programming-3-Executing-SQL-Statements" SQL Programming (3): Executing SQL Statements %}
-- {% post_link "SQL Programming （4）：Using the SQL Model Classes" %}
+- {% post_link "SQL Programming （4）：Using the SQL Model Classes" "SQL Programming (4)：Using the SQL Model Classes"%}
 ***
