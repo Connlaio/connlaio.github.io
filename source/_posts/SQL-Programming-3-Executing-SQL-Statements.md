@@ -10,7 +10,7 @@ categories:
   QSqlQuery 类为执行SQL语句和浏览查询结果上提供了交互接口。
 
   QSqlQueryModel 和QSqlTableModel在访问数据库上提供了更抽象的接口，这两个类将在下一部分进行说明。如果你不熟悉SQL，那么你可以直接查看下一部分
-  {% post_link "SQL Programming （4）：Using the SQL Model Classes" "Using the SQL Model Class"%} 。
+  {% post_link "SQL Programming-4-Using-the-SQL-Model-Classes" "Using the SQL Model Class"%} 。
 
 ##  执行一条语句
 
