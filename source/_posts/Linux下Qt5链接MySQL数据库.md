@@ -13,11 +13,9 @@ Qt 访问 MySql 需要 2 个库文件，一个是 Qt 自己的 MySql 驱动插�
 
 背景介绍：
 
-    系统环境：Ubuntu 14.04
-
-    Qt版本： Qt 5.3.1 (GCC 4.6.1, 32 bit)
-
-    MySQL版本：5.6
+> 系统环境：Ubuntu 14.04   
+> Qt版本： Qt 5.3.1 (GCC 4.6.1, 32 bit)  
+> MySQL版本：5.6
 
 首先我通过官网下载了Qt的安装包，安装了Qt，安装目录为 _~/Qt5.3.1_，之后通过apt-get安装了MySql。然后使用了一个简单的程序进行MySql的链接测试，发现报错，错误为
 ```shell
@@ -25,7 +23,7 @@ QSqlDatabase: QMYSQL driver not loaded
 QSqlDatabase: available drivers: QSQLITE QMYSQL QMYSQL3 QPSQL QPSQL7  false  
 ```
 
-因为之前在Windows上也遇到了类似的报错，只要找到MySql的安装路径，将libmysql.dll动态库添加到Qt安装目录下的bin目录即可，在Windows上我的Qt的安装目录为 _C:\Qt\Qt5.3.1\5.3\mingw482_32\bin_ 。Linux下又该如何解决呢？
+因为之前在Windows上也遇到了类似的报错，只要找到MySql的安装路径，将libmysql.dll动态库添加到Qt安装目录下的bin目录即可， Linux下又该如何解决呢？
 
   是否是Linux下MySql库的问题，还是Qt当中MySQL驱动插件的问题？
 通过命令行进入Qt的安装目录，
