@@ -23,11 +23,10 @@ QSqlDatabase: QMYSQL driver not loaded
 QSqlDatabase: available drivers: QSQLITE QMYSQL QMYSQL3 QPSQL QPSQL7  false  
 ```
 
-因为之前在Windows上也遇到了类似的报错，只要找到MySql的安装路径，将libmysql.dll动态库添加到Qt安装目录下的bin目录即可， Linux下又该如何解决呢？
+因为之前在Windows上也遇到了类似的报错，只要找到MySql的安装路径，将libmysql.dll动态库添加到Qt安装目录下的bin目录即可。Linux下又该如何解决呢？
 
-  是否是Linux下MySql库的问题，还是Qt当中MySQL驱动插件的问题？
-通过命令行进入Qt的安装目录，
-_connlaio@ubuntu:~/Qt5.3.1/5.3/gcc/plugins/sqldrivers$_  命令
+  是Linux下MySql库的问题，还是Qt当中MySQL驱动插件的问题？通过命令行进入Qt的安装目录，
+_connlaio@ubuntu:~/Qt5.3.1/5.3/gcc/plugins/sqldrivers$_  ，在终端中键入
 
 ```shell
 ldd libqsqlmysql.so
@@ -40,10 +39,4 @@ libmysqlclient_r.so.16 => not found ----
 ./i386-linux-gnu/libmysqlclient_r.so.18
 ```
 
-看来，我们需要重新编译Qt的MySQL驱动插件。找到Qt源码，进入 _qtbase/src/sql/_ 目录，最简单的方法是将目录下的sql工程添加到Qt中，构建MySQL驱动。
-
-```shell
-sudo apt-get install libmysqlclient-dev
-```
-
-然后到 _/qtbase/plugins/sqldriver_ 目录下就能看到生成的动态库。然后将新的MySQL驱动插件拷贝到对应的 _gcc/plugins/sqldrivers_ 目录下即可。
+看来，我们需要重新编译Qt的MySQL驱动插件。找到Qt源码，进入 _qtbase/src/sql/_ 目录，最简单的方法是将目录下的sql工程添加到Qt中，构建MySQL驱动。 编译完成后到 _/qtbase/plugins/sqldriver_ 目录下就能看到生成的动态库。将新的MySQL驱动插件拷贝到对应的 _gcc/plugins/sqldrivers_ 目录下即可。
