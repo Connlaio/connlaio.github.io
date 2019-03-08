@@ -26,12 +26,20 @@ tags: Linux
 GRUB_CMDLINE_LINUX_DEFAULT=”quiet splash”
 ```
 
-将值修改为 __no splash__ .
+**删除值**。
 
 **关键** : 执行命令。
 
 ``` shell
-update grub
+update-grub
 ```
 
 重启。
+
+[参见官方说明](https://help.ubuntu.com/community/Grub2/Setup)
+
+
+>GRUB_CMDLINE_LINUX_DEFAULT="quiet splash"
+>
+>This line imports any entries to the end of the 'linux' line (GRUB >legacy's "kernel" line). The entries are appended to the end of the >normal mode only.
+>To view a black screen with boot processes displayed in text, remove >"quiet splash". To see the grub splash image plus a condensed text >output, use "splash".
