@@ -1,5 +1,5 @@
 ---
-title: 修改IiTunes备份路径
+title: 修改iTunes备份路径
 comments: true
 toc: true
 categories:
