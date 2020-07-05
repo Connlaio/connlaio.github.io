@@ -10,10 +10,11 @@ tags: 日常软件
 
   一直用的是Windows PC，奈何手里有个iPhone，有时候想备份了，备份到电脑吧，iTunes 无脑存C盘，
 
-  真是让人很无语。搞了个外置硬盘来存备份，网上搜罗了下设置方法，终于找到了。那就是软链接。
+  真是让人很无语。搞了个外置硬盘来存备份，网上搜罗了下设置方法，终于找到了，那就是软链接。
 参见[如何在Windows或Linux创建链接](https://www.howtogeek.com/howto/16226/complete-guide-to-symbolic-links-symlinks-on-windows-or-linux/)
 
-我要备份的路径为H盘。
+简述下步骤：
+备份的目标路径为H盘。
 
 1. 在目标磁盘分区下面创建一个名为“Backup”的文件夹。
 2. 将 iTunes 默认备份路径（C:\Users\自己的电脑名\AppData\Roaming\Apple Computer\MobileSync\Backup）下的所有子文件夹（每个子文件夹代表着一个设备的备份目录）复制到刚才建立的 __"H:\Backup"__ 文件夹下面。
