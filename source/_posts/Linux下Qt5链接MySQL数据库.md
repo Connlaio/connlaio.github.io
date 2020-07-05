@@ -34,6 +34,7 @@ libmysqlclient_r.so.16 => not found ----
 ```
 
 说明 MySQL的动态链接库无法找到，但是，在进入 _/usr/lib/_ 目录下通过find命令发现，MySQL的动态链接库是存在的，不过，名字不同。
+
 ```shell
  find -name "libmysql*" -print
 ./i386-linux-gnu/libmysqlclient_r.so.18
