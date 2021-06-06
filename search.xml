@@ -1,0 +1,438 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>Elasticsearch 6.3 参考文档（1）</title>
+    <url>/2018/07/24/Elasticsearch6-3Reference/</url>
+    <content><![CDATA[<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><p>  Elasticsearch 是一个开源的，高度可扩展性的全文检索和分析引擎。它允许你在近乎实时下存储，搜索，分析大量数据。它通常用作底层引擎（技术），为具有复杂搜索功能和要求的应用程序提供支持。</p>
+<p>以下是Elasticsearch的一些简单用例：</p>
+<ul>
+<li>你运行了一个允许用户检索所售商品的在线商店。在这个例子中，你可以使用Elasticsearch保存你的所有商品库存和目录，在用户搜索的时候提供建议。</li>
+<li>你想要收集日志和交易数据，通过分析和挖掘这些数据来查看交易趋势，统计信息，总结和异常情况。在这个例子中，你可以使用 Logstash（Elasticsearch，Logstash，Kibana Stack的一部分功能）来收集，整合，分析这些数据，然后使用Logstash将结果反馈给Elasticsearch。一旦Elasticsearch获取了这些数据，你就可以通过查找，聚合来挖掘你所感兴趣的任何信息。</li>
+<li>你运行了一个价格预警平台，它允许精打细算的客户制定一些规则。例如，我想买一个电子产品，在未来一个月内，如果有供应商的价格低于 xxx 的时候，我能够接到通知。在这个例子中，需要收集所有供应商的定价信息，然后推送到Elasticsearch中，通过Elasticsearch的反查找（过滤器）功能，将商品价格的变动和客户的需求进行匹配，一旦条件满足，则向客户发出通知。</li>
+<li>假设你有数据分析或商业智能的需求，需要在大量数据的基础上（假设有百万条，甚至几十亿条数据）进行快速的调研，分析，可视化，定制化问卷。在这个例子里，你可以使用Elasticsearch存储数据，之后使用Kibana（Elasticsearch/Logstash/Kibana 的部分功能）来创建定制化的仪表盘，以实现重要数据的可视化。另外，基于这些数据，你可以使用Elasticsearch的聚合功能来执行复杂的商业信息查询工作。</li>
+</ul>
+<p>接下来的教程，将引导你安装运行Elasticsearch，了解其中的机理，执行索引，查找，修改数据等一些基础操作。在教程结束的时候，你应该对于Elasticsearch有了一定的了解，知道Elasticsearch 是什么，它是怎么工作的，希望你能够受到一些启发，利用它创建复杂的搜索应用程序，或者进行数据挖掘的工作。</p>
+]]></content>
+      <categories>
+        <category>编程</category>
+        <category>Elasticsearch 6.3 系列翻译</category>
+      </categories>
+      <tags>
+        <tag>Elasticsearch</tag>
+        <tag>翻译</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux 禁止开机动画(Plymouth)</title>
+    <url>/2018/08/31/Linux-disable-the-Splash-on-start/</url>
+    <content><![CDATA[<p>先介绍下背景。客户使用的公司产品是Debian系统的，老版本的软件中，使用了带有公司logo的开机动画，客户想要去掉。</p>
+<p>因为这些软件和系统的配置都不是我经手的，恰恰接到了这个任务，只好Google+Baidu了。开机动画是Plymouth 定制的主题。先按照这个方向去查找。<br>无果。好吧，意外找到了一个帖子，同样的需求，好消息是，题主解决了问题。</p>
+<p>大概思路是修改grub的启动配置。</p>
+<p>上解决方法。</p>
+<p> <strong>Note</strong> : 以下操作，均使用的是 root 权限，或者 使用 sudo。</p>
+<p>进入 <strong>/etc/default/grub</strong> 目录</p>
+<p>修改内容<br><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">GRUB_CMDLINE_LINUX_DEFAULT=”quiet splash”</span><br></pre></td></tr></table></figure></p>
+<p><strong>删除值</strong>。</p>
+<p><strong>关键</strong> : 执行命令。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">update-grub</span><br></pre></td></tr></table></figure>
+<p>重启。</p>
+<p><a href="https://help.ubuntu.com/community/Grub2/Setup" target="_blank" rel="noopener">参见官方说明</a></p>
+<blockquote>
+<p>GRUB_CMDLINE_LINUX_DEFAULT=”quiet splash”</p>
+<p>This line imports any entries to the end of the ‘linux’ line (GRUB legacy’s “kernel” line). The entries are appended to the end of the normal mode only.<br>To view a black screen with boot processes displayed in text, remove “quiet splash”. To see the grub splash image plus a condensed text output, use “splash”.</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>编程</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux下Qt5链接MySQL数据库</title>
+    <url>/2018/08/31/Linux%E4%B8%8BQt5%E9%93%BE%E6%8E%A5MySQL%E6%95%B0%E6%8D%AE%E5%BA%93/</url>
+    <content><![CDATA[<p>Qt 访问 MySql 需要 2 个库文件，一个是 Qt 自己的 MySql 驱动插件，另一个是 MySql 的动态链接库，缺一不可。在 Qt 程序里加载 MySql 驱动插件，其依赖于MySql 的动态链接库。</p>
+<p>在Windows下，使用Qt5链接MySql应该是一件比较简单的事，但是，Linux下却不见得如此。</p>
+<p>背景介绍：</p>
+<blockquote>
+<p>系统环境：Ubuntu 14.04<br>Qt版本： Qt 5.3.1 (GCC 4.6.1, 32 bit)<br>MySQL版本：5.6</p>
+</blockquote>
+<p>首先我通过官网下载了Qt的安装包，安装了Qt，安装目录为 <em>~/Qt5.3.1</em>，之后通过apt-get安装了MySql。然后使用了一个简单的程序进行MySql的链接测试，发现报错，错误为<br><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">QSqlDatabase: QMYSQL driver not loaded</span><br><span class="line">QSqlDatabase: available drivers: QSQLITE QMYSQL QMYSQL3 QPSQL QPSQL7  false</span><br></pre></td></tr></table></figure></p>
+<p>因为之前在Windows上也遇到了类似的报错，只要找到MySql的安装路径，将libmysql.dll动态库添加到Qt安装目录下的bin目录即可。Linux下又该如何解决呢？</p>
+<p>  是Linux下MySql库的问题，还是Qt当中MySQL驱动插件的问题？通过命令行进入Qt的安装目录，<br><em>connlaio@ubuntu:~/Qt5.3.1/5.3/gcc/plugins/sqldrivers$</em>  ，在终端中键入</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ldd libqsqlmysql.so</span><br><span class="line">libmysqlclient_r.so.16 =&gt; not found ----</span><br></pre></td></tr></table></figure>
+<p>说明 MySQL的动态链接库无法找到，但是，在进入 <em>/usr/lib/</em> 目录下通过find命令发现，MySQL的动态链接库是存在的，不过，名字不同。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"> find -name "libmysql*" -print</span><br><span class="line">./i386-linux-gnu/libmysqlclient_r.so.18</span><br></pre></td></tr></table></figure>
+<p>看来，我们需要重新编译Qt的MySQL驱动插件。找到Qt源码，进入 <em>qtbase/src/sql/</em> 目录，最简单的方法是将目录下的sql工程添加到Qt中，构建MySQL驱动。 编译完成后到 <em>/qtbase/plugins/sqldriver</em> 目录下就能看到生成的动态库。将新的MySQL驱动插件拷贝到对应的 <em>gcc/plugins/sqldrivers</em> 目录下即可。</p>
+]]></content>
+      <categories>
+        <category>编程</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>SQL Programming (2): Connection to Databases</title>
+    <url>/2018/07/23/SQL%20Programming-2-Connection-to-Databases/</url>
+    <content><![CDATA[<p>使用 QSqlQuery 或者 QSqlQueryModel 可以访问数据库，创建并打开一个或多个数据库连接。数据库连接通常是使用连接名而不是数据库名来区分彼此。你可以针对一个数据库创建多个连接。 QSqlDatabase 类创建数据库连接时，如果没有指定连接名，那么就为默认连接。当调用 QSqlQuery 或者 QSqlQueryModel 的成员函数（有一个参数为数据库连接名）时，如果未传递数据库的连接名称， 那么默认的数据库连接就会被使用。当你的应用程序只需要一个数据库连接时，那么创建一个默认连接无疑是方便的。</p>
+<p>​     <strong>注意</strong>：创建一个数据库连接和打开是不同的。创建一个连接涉及到实例化 QSqlDatabase 类，当打开它时，连接才会启用。下面的代码片段演示了如何创建一个默认的数据库连接，然后打开它：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">QSqlDatabase db = QSqlDatabase::addDatabase(<span class="string">"QMYSQL"</span>);</span><br><span class="line">db.setHostName(<span class="string">"bigblue"</span>);</span><br><span class="line">db.setDatabaseName(<span class="string">"flightdb"</span>);</span><br><span class="line">db.setUserName(<span class="string">"acarlson"</span>);</span><br><span class="line">db.setPassword(<span class="string">"1uTbSbAs"</span>);</span><br><span class="line"><span class="keyword">bool</span> ok = db.open();</span><br></pre></td></tr></table></figure>
+<p>​      第一行，创建一个数据库连接对象，最后一行是打开数据库连接，之后使用。在此期间，我们初始化了一些连接信息，包括数据库名，主机名，用户名和密码。上述例子中，我们连接了一个 bigblue 主机上的名为 flightdb 的MySQL数据库。函数 <em>addDatabase()</em> 的参数 “QMYSQL”指定了连接使用的数据库驱动类型。Qt所包含的数据库驱动集都列于支持的数据库驱动表中。 在上述代码段中，由于我们没有给 <em>addDatabase()</em> 函数的第二个参数连接名传递参数，所以，上述的连接会成为默认连接。举个例子，接下来我们创建了两个MySQL数据的连接，并分别命名为”first” 和”second”：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">QSqlDatabase firstDB = QSqlDatabase::addDatabase(<span class="string">"QMYSQL"</span>, <span class="string">"first"</span>);</span><br><span class="line">QSqlDatabase secondDB = QSqlDatabase::addDatabase(<span class="string">"QMYSQL"</span>, <span class="string">"second"</span>);</span><br></pre></td></tr></table></figure>
+<p>​     在上述两个连接的信息初始化之后，针对每个连接调用open函数来建立真正的连接。如果调用open函数失败，那么返回值为false。这样的话，我们可以调用 <em>QSqlDatabase::lastError()</em> 函数来获取错误信息。一旦一个连接建立之后，我们就可以在任何地方调用 <em>QSqlDatabase::database()</em> 静态函数来获取这个数据库连接的指针。如果我们没有指定连接名，那么我们将会得到默认连接的指针。</p>
+<p>​    举个例子：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">QSqlDatabase defaultDB = QSqlDatabase::database();</span><br><span class="line">QSqlDatabase firstDB = QSqlDatabase::database(<span class="string">"first"</span>);</span><br><span class="line">QSqlDatabase secondDB = QSqlDatabase::database(<span class="string">"second"</span>);</span><br></pre></td></tr></table></figure>
+<p>​    如果要移除一个数据库连接，首先调用 <em>QSqlDatabase::close()</em> 来关闭数据库，之后使用静态函数 <em>QSqlDatabase::removeDatabase()</em> 来移除。</p>
+<hr>
+<p>Qt SQL Programming  系列翻译</p>
+<ul>
+<li><a href="/2015/02/11/SQL-Programming-1-Overview/" title="SQL Programming (1): Overview">SQL Programming (1): Overview</a></li>
+<li><a href="/2018/08/01/SQL-Programming-3-Executing-SQL-Statements/" title="SQL Programming (3): Executing SQL Statements">SQL Programming (3): Executing SQL Statements</a></li>
+<li><a href="/2018/08/03/SQL Programming-4-Using-the-SQL-Model-Classes/" title="SQL Programming (4): Using the SQL Model Classes">SQL Programming (4): Using the SQL Model Classes</a></li>
+<li><a href="/2018/08/03/SQL Programming-5-Presenting-Data-in-a-Table-View/" title="SQL Programming (5): Presenting Data in a Table View">SQL Programming (5): Presenting Data in a Table View</a></li>
+<li><a href="/2018/08/03/SQL Programming-6-Creating-Data-Aware-Forms/" title="SQL Programming (6): Creating Data Aware Forms">SQL Programming (6): Creating Data Aware Forms</a>
+</li>
+</ul>
+<hr>
+]]></content>
+      <categories>
+        <category>编程</category>
+        <category>Qt</category>
+        <category>Qt SQL Programming  系列翻译</category>
+      </categories>
+      <tags>
+        <tag>翻译</tag>
+        <tag>Qt</tag>
+        <tag>SQL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>SQL Programming (4): Using the SQL Model Classes</title>
+    <url>/2018/08/03/SQL%20Programming-4-Using-the-SQL-Model-Classes/</url>
+    <content><![CDATA[<p>除了QSqlQuery类以外，Qt还提供了三个更复杂的访问数据库的类，QSqlQueryModel ,QSqlTableModel, QSqlRelationalTableModel.</p>
+<ul>
+<li><p>QSqlQueryModel : 一个基于任意SQL语句的只读模型</p>
+</li>
+<li><p>QSqlTableModel：一个针对单表的可读写模型</p>
+</li>
+<li><p>QSqlRelationalTableModel： 一个支持外键的QSQLTableModel的子类</p>
+<p>以上的三个类都源于QAbstractTableModel类（这个类继承自QAbstractItemModel），通过和一个Item View类结合（比如QListView、QTableView），使得从一个数据库中呈现数据的更加的简单。在Presenting Data in a Table View 章节，这一过程将会被详细的解释。</p>
+<p>使用这些类也能够让你的代码更加方便的更改为其他的数据源。举个例子，如果你开始使用的是QSqlTableModel类，之后觉得使用XML文档来替代之前使用的数据库来存储数据，那么这本质上只是一个数据模型替换为另一个的问题。</p>
+</li>
+</ul>
+<h2 id="The-SQL-Query-Model"><a href="#The-SQL-Query-Model" class="headerlink" title="The SQL Query Model"></a>The SQL Query Model</h2><p>  QSqlQueryModel 提供了基于一条SQL语句的只读模型。</p>
+<p>  例子：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">QSqlQueryModel model; </span><br><span class="line"></span><br><span class="line">model.setQuery(<span class="string">"SELECT * FROM employee"</span>); </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; model.rowCount(); ++i) &#123; </span><br><span class="line"></span><br><span class="line"> <span class="keyword">int</span> id = model.record(i).value(<span class="string">"id"</span>).toInt(); </span><br><span class="line"></span><br><span class="line"> QString name = model.record(i).value(<span class="string">"name"</span>).toString(); </span><br><span class="line"></span><br><span class="line"> qDebug() &lt;&lt; id &lt;&lt; name; </span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>  在调用了 <em>QSqlQueryModel::setQuery()</em> 函数设置了查询语句后，你可以使用 <em>QSqlQueryModel::record(int)</em> 来获取指定的查询记录。当然，你也可以使用   <em>QSqlQueryModel::data()</em> 或者其他的继承自QAbstractItemModel的函数。</p>
+<p>​    例外，<em>setQuery()</em> 的一个重载函数支持两个参数，一个是一个QSqlQuery的对象，另外一个是要操作的结果集，也就是数据库。这可以让你更好的使用QSqlQuery的一些特性（比如，prepared queries）。</p>
+<h2 id="The-SQL-Table-Model"><a href="#The-SQL-Table-Model" class="headerlink" title="The SQL Table Model"></a>The SQL Table Model</h2><p>​    QSqlTableModel提供了一个一次可以操作单个SQL表的可读写模型。</p>
+<p>例子：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"> QSqlTableModel model;</span><br><span class="line"></span><br><span class="line"> model.setTable(<span class="string">"employee"</span>);</span><br><span class="line"></span><br><span class="line"> model.setFilter(<span class="string">"salary &gt; 50000"</span>);</span><br><span class="line"></span><br><span class="line"> model.setSort(<span class="number">2</span>, Qt::DescendingOrder);</span><br><span class="line"></span><br><span class="line"> model.select();</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; model.rowCount(); ++i) &#123;</span><br><span class="line"></span><br><span class="line"> QString name = model.record(i).value(<span class="string">"name"</span>).toString();</span><br><span class="line"></span><br><span class="line"> <span class="keyword">int</span> salary = model.record(i).value(<span class="string">"salary"</span>).toInt();</span><br><span class="line"></span><br><span class="line"> qDebug() &lt;&lt; name &lt;&lt; salary;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>   QSqlTableModel 针对 QSqlQuery，在单表的操作修改上提供了更好的交互方式。这样就使得开发者只需要很少的代码同时摆脱了SQL语法的束缚就能够完成数据操作。</p>
+<p>​   使用 <em>QSqlTableModel:record()</em> 函数可以获得表中的指定行，使用 <em>QSqlTableModel:setRecord()</em> 来修改数据。举个例子，下面的代码会将每个员工的工资提高10%：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; model.rowCount(); ++i) &#123;</span><br><span class="line"></span><br><span class="line"> QSqlRecord record = model.record(i);</span><br><span class="line"></span><br><span class="line"> <span class="keyword">double</span> salary = record.value(<span class="string">"salary"</span>).toInt();</span><br><span class="line"></span><br><span class="line"> salary *= <span class="number">1.1</span>;</span><br><span class="line"></span><br><span class="line"> record.setValue(<span class="string">"salary"</span>, salary);</span><br><span class="line"></span><br><span class="line"> model.setRecord(i, record);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"> model.submitAll();</span><br></pre></td></tr></table></figure>
+<p>​    你也可以使用 <em>QSqlTableModel:data()</em> 和 <em>QSqlTableModel:setData()</em>（继承自QAbstractItemModel）来获取数据。例如，下面是如何使用 <em>setData()</em> 函数来更新一条记录：    </p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">model.setData(model.index(row, column), <span class="number">75000</span>);</span><br><span class="line"></span><br><span class="line">model.submitAll();</span><br></pre></td></tr></table></figure>
+<p>​    以下是如何插入并填充一行数据：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">model.insertRows(row, <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">model.setData(model.index(row, <span class="number">0</span>), <span class="number">1013</span>);</span><br><span class="line"></span><br><span class="line">model.setData(model.index(row, <span class="number">1</span>), <span class="string">"Peter Gordon"</span>);</span><br><span class="line"></span><br><span class="line">model.setData(model.index(row, <span class="number">2</span>), <span class="number">68500</span>);</span><br><span class="line"></span><br><span class="line">model.submitAll();</span><br></pre></td></tr></table></figure>
+<p>​    以下是如何删除五个连续的行数据：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">model.removeRows(row, <span class="number">5</span>);</span><br><span class="line"></span><br><span class="line">model.submitAll();</span><br></pre></td></tr></table></figure>
+<p>​    函数 <em>QSqlTableModel:removeRows()</em> 的第一个参数是第一个要被删除行的索引。    </p>
+<p>​    当你修改完成一行记录后，应该调用 <em>QSqlTableModel::submitAll()</em> 函数来保证所有的数据改变都被写入数据库。</p>
+<p>​    至于在什么时候应该调用 <em>submitAll()</em> 函数取决于表的编辑策略（edit strategy）。默认的编辑策略是 <em>QSqlTableModel::OnRowChange</em>，即在用户选取不同的行后，向数据库提交更改。其他的策略还有 <em>QSqlTableModel::OnManualSubmin()</em>（即缓存所有数据改变，直到调用 <em>submitAll()</em> 函数），<em>QSqlTableModel::OnFieldChange()</em>（不缓存更改）。当 QSqlTableModel 和 View 类一起使用时，这些策略是非常有帮助的。</p>
+<p>​    <em>QSqlTableModel::OnFieldChange()</em> 意味着你永远不会显示的调用 <em>submitAll()</em> 函数。尽管如此，这里面也存在这两个误区：</p>
+<ol>
+<li>没有任何缓存，意味着性能会显著下降；</li>
+<li>当你试图增加一个主键时，你来不及对它填充数据。</li>
+</ol>
+<h2 id="The-SQL-Relational-Table-Model"><a href="#The-SQL-Relational-Table-Model" class="headerlink" title="The SQL Relational Table Model"></a>The SQL Relational Table Model</h2><p>​    QSqlRelationalTableModel 是对QSqlTableModel类的扩展，它提供了对外键的支持。一个外键是指一个表中的字段和另外一个表的主键存在一对一的映射关系。举个例子，如果book表中有一个名为 authorid 的字段指的是 author 表中的id字段（id字段是主键），那么 authorid 就是一个外键。</p>
+<p>​        <img src="http://doc.qt.io/qt-5/images/noforeignkeys.png" alt="img"></p>
+<p>​        <img src="http://doc.qt.io/qt-5/images/foreignkeys.png" alt="img"></p>
+<p>​        第一副截图是在 QTableView 里使用了一个简单的QSqlTableModel。外键（city和Country）并没有被转化为可读值。第二幅截图使用的是QSqlRelationalTableModel，外键值被解析为可读的文本字符。</p>
+<p>​    下面的代码片段演示了如何创建一个QSqlRelationalTableModel：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">model-&gt;setTable(<span class="string">"employee"</span>);</span><br><span class="line"></span><br><span class="line">model-&gt;setRelation(<span class="number">2</span>, QSqlRelation(<span class="string">"city"</span>, <span class="string">"id"</span>, <span class="string">"name"</span>));</span><br><span class="line"></span><br><span class="line">model-&gt;setRelation(<span class="number">3</span>, QSqlRelation(<span class="string">"country"</span>, <span class="string">"id"</span>, <span class="string">"name"</span>));</span><br></pre></td></tr></table></figure>
+<p>​    详细用法，请查看QSqlRelationalTableModel的文档。</p>
+<hr>
+<p>Qt SQL Programming  系列翻译</p>
+<ul>
+<li><a href="/2015/02/11/SQL-Programming-1-Overview/" title="SQL Programming (1): Overview">SQL Programming (1): Overview</a></li>
+<li><a href="/2018/07/23/SQL Programming-2-Connection-to-Databases/" title="SQL Programming (2): Connection to Databases">SQL Programming (2): Connection to Databases</a></li>
+<li><a href="/2018/08/01/SQL-Programming-3-Executing-SQL-Statements/" title="SQL Programming (3): Executing SQL Statements">SQL Programming (3): Executing SQL Statements</a></li>
+<li><a href="/2018/08/03/SQL Programming-5-Presenting-Data-in-a-Table-View/" title="SQL Programming (5): Presenting Data in a Table View">SQL Programming (5): Presenting Data in a Table View</a></li>
+<li><a href="/2018/08/03/SQL Programming-6-Creating-Data-Aware-Forms/" title="SQL Programming (6): Creating Data Aware Forms">SQL Programming (6): Creating Data Aware Forms</a>
+</li>
+</ul>
+<hr>
+]]></content>
+      <categories>
+        <category>编程</category>
+        <category>Qt</category>
+        <category>Qt SQL Programming  系列翻译</category>
+      </categories>
+      <tags>
+        <tag>翻译</tag>
+        <tag>Qt</tag>
+        <tag>SQL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>SQL Programming (5): Presenting Data in a Table View</title>
+    <url>/2018/08/03/SQL%20Programming-5-Presenting-Data-in-a-Table-View/</url>
+    <content><![CDATA[<p>​    QSqlQueryModel，QSqlTableModel， 和QSqlRelationalTableMode 类可以作为 Qt 视图类（例如QListView，QTableView 和QTreeView）的数据源。实践中，QTableView类是迄今为止最常见的选择，因为SQL结果集基本上是一个二维的数据结构。</p>
+<p><img src="http://doc.qt.io/qt-5/images/relationaltable.png" alt="img"></p>
+<p>​    下面的例子创建了一个基于SQL数据模型的视图：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">QTableView *view = <span class="keyword">new</span> QTableView;</span><br><span class="line"></span><br><span class="line">view-&gt;setModel(model);</span><br><span class="line"></span><br><span class="line">view-&gt;show();</span><br></pre></td></tr></table></figure>
+<p>​    如果模型是可读写的（例如，QSqlTableModel），那么视图是允许用户修改字段的。你可以通过调用下面的代码来禁止掉用户修改</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">view-&gt;setEditTriggers(QAbstractItemView::NoEditTriggers);</span><br></pre></td></tr></table></figure>
+<p>​    同一个数据模型可以作为多个视图的数据源。如果用户在其中一个视图中修改了数据模型，那么其他的视图会立刻做出相应的改变。The Table Model 例子说明了它是如何工作的。视图类显示了页眉顶部的标签栏。可以通过调用model中的setHeaderData()函数来修改标题文本。标题的标签文本默认为数据表的字段名。例如：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">model-&gt;setHeaderData(<span class="number">0</span>, Qt::Horizontal, QObject::tr(<span class="string">"ID"</span>));</span><br><span class="line"></span><br><span class="line">model-&gt;setHeaderData(<span class="number">1</span>, Qt::Horizontal, QObject::tr(<span class="string">"Name"</span>));</span><br><span class="line"></span><br><span class="line">model-&gt;setHeaderData(<span class="number">2</span>, Qt::Horizontal, QObject::tr(<span class="string">"City"</span>));</span><br><span class="line"></span><br><span class="line">model-&gt;setHeaderData(<span class="number">3</span>, Qt::Horizontal, QObject::tr(<span class="string">"Country"</span>));</span><br></pre></td></tr></table></figure>
+<p>​    QTableView 在表的左侧有一个用数字标识行号的垂直表头。如果通过调用 <em>QSqlTableModel::insertRows()</em> 函数来插入一行，那么新的一行将会标有 <em> 号，直到调用函数 <em>submitAll()</em> ，或者用户移动到其他数据行时被自动提交（假设编辑策略为 QSqlTableModel::OnRowChange），</em>号才会消失。</p>
+<p><img src="http://doc.qt.io/qt-5/images/insertrowinmodelview.png" alt="img"></p>
+<p>​    同样的，如果使用函数 <em>removeRows()</em> 来移除行，被移除的行会被一个感叹号(!)标记直到更改被提交。视图中的项通过委托（delegate）实现。默认的委托类QItemDelegate可以处理最常见的数据类型（例如int，QString，QImage等）。当用户开始编辑视图中的项时，委托还负责提供编辑工具（例如，组合框）。你也可以通过子类化QAbstractItemDelegate 或者 QItemDelegate 类来实现你自己的委托类。更多的信息，可以查看<a href="qthelp://org.qt-project.qtwidgets.531/qtwidgets/model-view-programming.html" target="_blank" rel="noopener">模型视图编程</a>。</p>
+<p>​    QSqlTableModel类针对单表操作进行了优化。如果需要一个可以操作任意结果集的可读写模型，你可以子类化QSqlTableModel，重新实现 <em>flags()</em> 、<em>setData()</em> 函数使其能够读写。下面的两个函数可以使一个查询模型的字段1、2可编辑：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function">Qt::ItemFlags <span class="title">EditableSqlModel::flags</span><span class="params">(<span class="keyword">const</span> QModelIndex &amp;index)</span> <span class="keyword">const</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"></span><br><span class="line"> Qt::ItemFlags flags = QSqlQueryModel::flags(index);</span><br><span class="line"></span><br><span class="line"> <span class="keyword">if</span> (index.column() == <span class="number">1</span> || index.column() == <span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">    flags |= Qt::ItemIsEditable;</span><br><span class="line"></span><br><span class="line"> <span class="keyword">return</span> flags;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">EditableSqlModel::setData</span><span class="params">(<span class="keyword">const</span> QModelIndex &amp;index, <span class="keyword">const</span> QVariant &amp;value, <span class="keyword">int</span> <span class="comment">/* role */</span>)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"></span><br><span class="line"> <span class="keyword">if</span> (index.column() &lt; <span class="number">1</span> || index.column() &gt; <span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line"> QModelIndex primaryKeyIndex = QSqlQueryModel::index(index.row(), <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"> <span class="keyword">int</span> id = data(primaryKeyIndex).toInt();</span><br><span class="line"></span><br><span class="line"> clear();</span><br><span class="line"></span><br><span class="line"> <span class="keyword">bool</span> ok;</span><br><span class="line"></span><br><span class="line"> <span class="keyword">if</span> (index.column() == <span class="number">1</span>) &#123;</span><br><span class="line"></span><br><span class="line">    ok = setFirstName(id, value.toString());</span><br><span class="line"></span><br><span class="line"> &#125; <span class="keyword">else</span> &#123;</span><br><span class="line"></span><br><span class="line">    ok = setLastName(id, value.toString());</span><br><span class="line"></span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> refresh();</span><br><span class="line"></span><br><span class="line"> <span class="keyword">return</span> ok;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>​       函数 <em>setFirstName()</em> 的定义如下：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">EditableSqlModel::setFirstName</span><span class="params">(<span class="keyword">int</span> personId, <span class="keyword">const</span> QString &amp;firstName)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"></span><br><span class="line"> QSqlQuery query;</span><br><span class="line"></span><br><span class="line"> query.prepare(<span class="string">"update person set firstname = ? where id = ?"</span>);</span><br><span class="line"></span><br><span class="line"> query.addBindValue(firstName);</span><br><span class="line"></span><br><span class="line"> query.addBindValue(personId);</span><br><span class="line"></span><br><span class="line"> <span class="keyword">return</span> query.exec();</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>​    函数 <em>setLastName()</em> 类似。完整源代码可以查看 例子<a href="qthelp://org.qt-project.qtsql.531/qtsql/qtsql-querymodel-example.html" target="_blank" rel="noopener">Query Model</a> 。</p>
+<p>​    子类化一个模型类可以在很多方面进行定义：可以为项提供提示字符，改变背景色，提供计算后的值，为查看和编辑提供不同的值，处理空值等等。更多细节可以查看 <a href="qthelp://org.qt-project.qtwidgets.531/qtwidgets/model-view-programming.html" target="_blank" rel="noopener">Model/View Programming</a>以及<a href="qthelp://org.qt-project.qtwidgets.531/qtwidgets/qabstractitemview.html" target="_blank" rel="noopener">QAbstractItemView</a>参考文档。</p>
+<p>​    如果你仅仅想要将外键转化为更友好的字符串，你可以使用QSqlRelationalTableModel类。你最好也使用 QSqlRelationalDelegate 类，它提供了组合框控件来更方便的边间外键。</p>
+<p><img src="http://doc.qt.io/qt-5/images/relationaltable.png" alt="img"></p>
+<p>​    <a href="qthelp://org.qt-project.qtsql.531/qtsql/qtsql-relationaltablemodel-example.html" target="_blank" rel="noopener">Relational Table Model</a>例子说明了如何使用 QSqlRelationalTableModel 和 QSqlRelationalDelegate类为表提供外键支持。</p>
+<hr>
+<p>Qt SQL Programming  系列翻译</p>
+<ul>
+<li><a href="/2015/02/11/SQL-Programming-1-Overview/" title="SQL Programming (1): Overview">SQL Programming (1): Overview</a></li>
+<li><a href="/2018/07/23/SQL Programming-2-Connection-to-Databases/" title="SQL Programming (2): Connection to Databases">SQL Programming (2): Connection to Databases</a></li>
+<li><a href="/2018/08/01/SQL-Programming-3-Executing-SQL-Statements/" title="SQL Programming (3): Executing SQL Statements">SQL Programming (3): Executing SQL Statements</a></li>
+<li><a href="/2018/08/03/SQL Programming-4-Using-the-SQL-Model-Classes/" title="SQL Programming (4): Using the SQL Model Classes">SQL Programming (4): Using the SQL Model Classes</a></li>
+<li><a href="/2018/08/03/SQL Programming-6-Creating-Data-Aware-Forms/" title="SQL Programming (6): Creating Data Aware Forms">SQL Programming (6): Creating Data Aware Forms</a>
+</li>
+</ul>
+<hr>
+]]></content>
+      <categories>
+        <category>编程</category>
+        <category>Qt</category>
+        <category>Qt SQL Programming  系列翻译</category>
+      </categories>
+      <tags>
+        <tag>翻译</tag>
+        <tag>Qt</tag>
+        <tag>SQL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>SQL Programming (6): Creating Data Aware Forms</title>
+    <url>/2018/08/03/SQL%20Programming-6-Creating-Data-Aware-Forms/</url>
+    <content><![CDATA[<p>​    使用上述SQL模块，一个数据库的内容可以使用其他的模型/视图模块来表示。对于一些应用程序来说，使用标准的item view 来显示信息已经足够了。然而，在基于用户数据的应用程序往往需要一个基于表格的用户交互界面，并且将数据库中指定行列的数据被填充到窗体的可编辑控件中去。我们可以使用QDataWidgetMapper类来创建上述的数据感知窗体，这个通用的模型/视图组件可以将一个模型中的数据和用户界面的指定控件相互映射。QDataWidgetMapper 类针对指定的数据库表，将表中的项按照行或者列进行数据映射。因此，将QDataWidgetMapper 类与一个SQL模型搭配使用 和将其与其他table模型搭配使用一样简单。</p>
+<p><img src="http://doc.qt.io/qt-5/images/qdatawidgetmapper-simple.png" alt="img"></p>
+<p>​    上述 例子很好的说明了使用QDataWidgetMapper类和一些简单的输入控件来访问信息。</p>
+<hr>
+<p>Qt SQL Programming  系列翻译</p>
+<ul>
+<li><a href="/2015/02/11/SQL-Programming-1-Overview/" title="SQL Programming (1): Overview">SQL Programming (1): Overview</a></li>
+<li><a href="/2018/07/23/SQL Programming-2-Connection-to-Databases/" title="SQL Programming (2): Connection to Databases">SQL Programming (2): Connection to Databases</a></li>
+<li><a href="/2018/08/01/SQL-Programming-3-Executing-SQL-Statements/" title="SQL Programming (3): Executing SQL Statements">SQL Programming (3): Executing SQL Statements</a></li>
+<li><a href="/2018/08/03/SQL Programming-4-Using-the-SQL-Model-Classes/" title="SQL Programming (4): Using the SQL Model Classes">SQL Programming (4): Using the SQL Model Classes</a></li>
+<li><a href="/2018/08/03/SQL Programming-5-Presenting-Data-in-a-Table-View/" title="SQL Programming (5): Presenting Data in a Table View">SQL Programming (5): Presenting Data in a Table View</a>
+</li>
+</ul>
+<hr>
+]]></content>
+      <categories>
+        <category>编程</category>
+        <category>Qt</category>
+        <category>Qt SQL Programming  系列翻译</category>
+      </categories>
+      <tags>
+        <tag>翻译</tag>
+        <tag>Qt</tag>
+        <tag>SQL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>SQL Programming (1): Overview</title>
+    <url>/2015/02/11/SQL-Programming-1-Overview/</url>
+    <content><![CDATA[<p>阅读本文，建议有一定基础的SQL知识，能够理解简单的SELECT, INSERT, UPDATE, 和DELETE语句。即便使用QSqlTableModel 类不需要SQL知识便能够完成数据库的浏览和编辑功能，但是，还是强烈建议读者对SQL有一定的基础知识。<a href="https://book.douban.com/subject/1768231/" target="_blank" rel="noopener"> Introduction to Database Systems (7th Ed.)</a> 书中，涵盖了对SQL数据操作的标准语句。</p>
+<h2 id="主题："><a href="#主题：" class="headerlink" title="主题："></a>主题：</h2><ul>
+<li>数据库类（Database Classes）</li>
+<li>链接数据库（connecting to Database）<ul>
+<li>数据库驱动（SQL Database Drivers）</li>
+</ul>
+</li>
+<li>执行SQL语句（Executing SQL Statements）<ul>
+<li>Qt支持的数据库系统的数据类型（Data Types for Qt-supported Database Systems）</li>
+</ul>
+</li>
+<li>使用SQL模型类（using the SQL Model Classes）</li>
+<li>在Table View中显示数据（Presenting Data in a Table View）</li>
+<li>创建数据识别窗体（Creating Data-Aware Forms）</li>
+</ul>
+<h2 id="数据库类（Database-Classes）"><a href="#数据库类（Database-Classes）" class="headerlink" title="数据库类（Database Classes）"></a>数据库类（Database Classes）</h2><p>以下类提供对SQL数据库的访问。</p>
+<ul>
+<li>QSql                                       包含Qt SQL模块中所使用到的标示符（Enum，Flags）   </li>
+<li>QSqlDriverCreatorBase       SQL驱动工厂基类</li>
+<li>QSqlDriverCreator               模板类，提供了一种特定驱动类型的SQL驱动工厂</li>
+<li>QSqlDatabase                      代表一个到数据库的链接</li>
+<li>QSqlDriver                           访问特定SQL数据库的抽象基类</li>
+<li>QSqlError                            SQL数据库的错误信息</li>
+<li>QSqlField                            操作SQL数据库表和视图中的字段</li>
+<li>QSqlIndex                          描述和控制数据库索引的函数集</li>
+<li>QSqlQuery                          操作执行SQL语句的方法</li>
+<li>QSqlRecord                        封装了数据库的记录</li>
+<li>QSqlResult                          访问具体SQL数据库数据的抽象接口</li>
+<li>QSqlQueryModel                SQL结果集的只读数据模型</li>
+<li>QSqlRelationalTableModel   一个数据库表的可编辑数据模型，提供外键支持</li>
+<li>QSqlTableModel                一个数据库表的可编辑数据模型</li>
+</ul>
+<p>SQL类分为3层：</p>
+<h3 id="驱动层："><a href="#驱动层：" class="headerlink" title="驱动层："></a>驱动层：</h3><p>包含 QSqlDriver , QSqlDriverCreator , QSqlDriverCreatorBase , QSqlDriverPlugin , 和 QSqlResult 类。</p>
+<p>这一层提供了具体的数据库和 SQL API层之间的底层桥梁。更多信息请参见SQL数据库驱动。</p>
+<h3 id="SQL-API层："><a href="#SQL-API层：" class="headerlink" title="SQL API层："></a>SQL API层：</h3><p>本层的类提供了对数据库的访问接口。通过使用QSqlDatabase类创建链接。QSqlQuery类实现数据库交互。 除了 QSqlDatabase 和 QSqlQuery类之外,本层还提供了 QSqlError, QSqlField, QSqlIndex, 和 QSqlRecord类。</p>
+<h3 id="用户界面层："><a href="#用户界面层：" class="headerlink" title="用户界面层："></a>用户界面层：</h3><p>QSqlQueryModel, QSqlTableModel, 和QSqlRelationalTableModel类将数据库中的数据与数据呈现控件相连接。这些类设计成和Qt的模型/视图框架协同工作。</p>
+<p><strong>注意</strong> ：QCoreApplication 对象必须在使用这些类之前被实例化。</p>
+<hr>
+<p>Qt SQL Programming  系列翻译</p>
+<ul>
+<li><a href="/2018/07/23/SQL Programming-2-Connection-to-Databases/" title="SQL Programming (2): Connection to Databases">SQL Programming (2): Connection to Databases</a></li>
+<li><a href="/2018/08/01/SQL-Programming-3-Executing-SQL-Statements/" title="SQL Programming (3): Executing SQL Statements">SQL Programming (3): Executing SQL Statements</a></li>
+<li><a href="/2018/08/03/SQL Programming-4-Using-the-SQL-Model-Classes/" title="SQL Programming (4): Using the SQL Model Classes">SQL Programming (4): Using the SQL Model Classes</a></li>
+<li><a href="/2018/08/03/SQL Programming-5-Presenting-Data-in-a-Table-View/" title="SQL Programming (5): Presenting Data in a Table View">SQL Programming (5): Presenting Data in a Table View</a></li>
+<li><a href="/2018/08/03/SQL Programming-6-Creating-Data-Aware-Forms/" title="SQL Programming (6): Creating Data Aware Forms">SQL Programming (6): Creating Data Aware Forms</a>
+</li>
+</ul>
+<hr>
+]]></content>
+      <categories>
+        <category>编程</category>
+        <category>Qt</category>
+        <category>Qt SQL Programming  系列翻译</category>
+      </categories>
+      <tags>
+        <tag>翻译</tag>
+        <tag>Qt</tag>
+        <tag>SQL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>SQL Programming (3): Executing SQL Statements</title>
+    <url>/2018/08/01/SQL-Programming-3-Executing-SQL-Statements/</url>
+    <content><![CDATA[<p>  QSqlQuery 类为执行SQL语句和浏览查询结果上提供了交互接口。</p>
+<p>  QSqlQueryModel 和QSqlTableModel在访问数据库上提供了更抽象的接口，这两个类将在下一部分进行说明。如果你不熟悉SQL，那么你可以直接查看下一部分<br>  <a href="/2018/08/03/SQL Programming-4-Using-the-SQL-Model-Classes/" title="Using the SQL Model Class">Using the SQL Model Class</a> 。</p>
+<h2 id="执行一条语句"><a href="#执行一条语句" class="headerlink" title="执行一条语句"></a>执行一条语句</h2><p>  要执行一条SQL语句，你可以创建一个QSqlQuery 对象，然后调用 <em>QSqlQuery:exec()</em> 函数，如下：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">QSqlQuery query;</span><br><span class="line">query.exec(<span class="string">"SELECT name, salary FROM employee WHERE salary &gt; 50000"</span>);</span><br></pre></td></tr></table></figure>
+<p>  QSqlQuery 的构造函数接受一个可选的QSqlDatabase对象作为参数，用来指定要使用的数据库。在上述例子中，QSqlQuery 对象在构造时没有传参来指定数据库，所以会使用默认的数据库连接。如果发生了错误，<em>exec()</em> 函数会返回false。之后可以使用 <em>QSqlQuery:lastError()</em> 函数来查看错误。</p>
+<h2 id="浏览查询结果"><a href="#浏览查询结果" class="headerlink" title="浏览查询结果"></a>浏览查询结果</h2><p>  QSqlQuery 类可以逐一访问结果集的每一条记录。在调用 <em>exec()</em> 函数后，QSqlQuery 的内部指针会指向第一条记录之前的位置。我们必须调用 <em>QSqlQuery:next()</em> 函数将指针指向第一条记录，之后通过反复调用 <em>next()</em> 函数来获取其他记录，直到 <em>next()</em> 函数返回false。以下是一个典型的循环来遍历所有记录:</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">while</span> (query.next()) &#123;</span><br><span class="line">    QString name = query.value(<span class="number">0</span>).toString();</span><br><span class="line">    <span class="keyword">int</span> salary = query.value(<span class="number">1</span>).toInt();</span><br><span class="line">    qDebug() &lt;&lt; name &lt;&lt; salary;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> <em>QSqlQuery:value()</em> 函数返回当前记录的指定字段的值。字段从0开始进行索引。 <em>QSqlQuery::value()</em> 函数返回一个QVariant类对象，它支持各种C++和Qt的核心数据类型，例如int，QString，QByteArray。数据库中不同的类型会自动映射到Qt中最接近等效的类型。在代码中，通过调用 <em>QVariant:toString()</em> 和 <em>QVariant:toInt()</em> 函数将变体类型分别转换为QString类型和int类型。对Qt所支持的数据库类型的推荐概述，请参见此表。你可以使用 <em>QSqlQuery::next()</em> , <em>QSqlQuery::previous()</em>, <em>QSqlQuery::first()</em>, <em>QSqlQuery::last()</em>, 和 <em>QSqlQuery::seek()</em> 函数对结果集进行反复查询。可以使用 <em>QSqlQuery:at()</em> 函数来获取当前行的索引，在数据库支持的情况下，可以使用 <em>QSqlQuery:size()</em> 函数来获取结果集的总行数。使用 <em>QSQLDriver:hasFeature()</em> 函数可以确定一个数据库是否支持给定的特性。在下面的例子中，如果数据库支持size特性，通过调用 <em>QSqlQuery:size()</em> 函数来获取结果集的记录数，不然，通过访问最后一条记录，利用记录的位置来总的记录数。</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">QSqlQuery query;</span><br><span class="line"><span class="keyword">int</span> numRows;</span><br><span class="line">query.exec(<span class="string">"SELECT name, salary FROM employee WHERE salary &gt; 50000"</span>);</span><br><span class="line">QSqlDatabase defaultDB = QSqlDatabase::database();</span><br><span class="line"><span class="keyword">if</span> (defaultDB.driver()-&gt;hasFeature(QSqlDriver::QuerySize)) &#123;</span><br><span class="line">	numRows = query.size();</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line"> <span class="comment">// this can be very slow</span></span><br><span class="line"> query.last();</span><br><span class="line"> numRows = query.at() + <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>  如果你在遍历结果时只通过传递正整数值来调用函数 <em>next()</em>, <em>seek()</em>，那么，你可以在调用 <em>exec()</em> 函数前，调用 <em>QSqlQuery::setForwardOnly(true)</em>。在针对大数据结果集进行操作时，这个简单的做法会显著的加快查询的速度。</p>
+<h2 id="插入，更新，删除记录"><a href="#插入，更新，删除记录" class="headerlink" title="插入，更新，删除记录"></a>插入，更新，删除记录</h2><p>  QSqlQuery 类可以执行任意的SQL语句，不单单是select。下面的例子说明了如何使用insert 将一条记录插入数据表中：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">QSqlQuery query;</span><br><span class="line">query.exec(<span class="string">"INSERT INTO employee (id, name, salary) "</span></span><br><span class="line"> <span class="string">"VALUES (1001, 'Thad Beaumont', 65000)"</span>);</span><br></pre></td></tr></table></figure>
+<p>  如果你想要同时插入多条记录，那么将真实的数据和SQL语句分开是一种比较有效的做法。这就要用到占位符。Qt支持两种占位符语法：命名绑定和位置绑定。下面是命名绑定的例子：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">QSqlQuery query;</span><br><span class="line">query.prepare(<span class="string">"INSERT INTO employee (id, name, salary) "</span></span><br><span class="line"><span class="string">"VALUES (:id, :name, :salary)"</span>);</span><br><span class="line">query.bindValue(<span class="string">":id"</span>, <span class="number">1001</span>);</span><br><span class="line">query.bindValue(<span class="string">":name"</span>, <span class="string">"Thad Beaumont"</span>);</span><br><span class="line">query.bindValue(<span class="string">":salary"</span>, <span class="number">65000</span>);</span><br><span class="line">query.exec();</span><br></pre></td></tr></table></figure>
+<p>位置绑定示例：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">QSqlQuery query;</span><br><span class="line">query.prepare(<span class="string">"INSERT INTO employee (id, name, salary) "</span></span><br><span class="line"><span class="string">"VALUES (?, ?, ?)"</span>);</span><br><span class="line">query.addBindValue(<span class="number">1001</span>);</span><br><span class="line">query.addBindValue(<span class="string">"Thad Beaumont"</span>);</span><br><span class="line">query.addBindValue(<span class="number">65000</span>);</span><br><span class="line">query.exec();</span><br></pre></td></tr></table></figure>
+<p>  以上两种语法在Qt支持的数据库中都是有效的。如果数据库本就支持上述语法，那么Qt就会简单的将语句转发给数据库系统进行执行；否则，Qt会通过预处理查询来模拟占位符语法。最后，数据库执行的真正语句可以通过 <em>QSqlQuery:executedQuery()</em> 函数获得。需要插入多条记录时，只需要提前调用一次 <em>QSqlQuery:prepare()</em> 函数。之后你可以在调用 <em>exec()</em> 函数之前，根据需要调用 <em>bindValue()</em> 或者 <em>addBindValue()</em> 函数。除了性能，使用占位符的另外一个优点在于，你可以指定任意值而不用担心转义字符的问题。</p>
+<p>  更新一条记录和插入记录类似：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">QSqlQuery query;</span><br><span class="line">query.exec(<span class="string">"UPDATE employee SET salary = 70000 WHERE id = 1003"</span>);</span><br></pre></td></tr></table></figure>
+<p>  你同样可以使用命名绑定或者位置绑定将参数值和真值关联起来。</p>
+<p>  最后，这是删除语句的例子：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">QSqlQuery query;</span><br><span class="line">query.exec(<span class="string">"DELETE FROM employee WHERE id = 1007"</span>);</span><br></pre></td></tr></table></figure>
+<h2 id="事务处理"><a href="#事务处理" class="headerlink" title="事务处理"></a>事务处理</h2><p>  如果基础数据库引擎支持事务处理，那么 <em>QSqlDriver::hasFeature(QSqlDriver::Transactions)</em> 函数的返回值为true。首先使用 <em>QSqlDatabase::transaction()</em> 来启动事务，其次为要执行的SQL命令，最后调用 <em>QSqlDatabase::commit()</em> 或者 <em>QSqlDatabase::rollback()</em> 函数。当使用事务创建查询之前，首先要启动事务。</p>
+<p>例子：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">QSqlDatabase::database().transaction();</span><br><span class="line">QSqlQuery query;</span><br><span class="line">query.exec(<span class="string">"SELECT id FROM employee WHERE name = 'Torild Halvorsen'"</span>);</span><br><span class="line"><span class="keyword">if</span> (query.next()) &#123;</span><br><span class="line"> <span class="keyword">int</span> employeeId = query.value(<span class="number">0</span>).toInt();</span><br><span class="line"> query.exec(<span class="string">"INSERT INTO project (id, name, ownerid) "</span></span><br><span class="line"> <span class="string">"VALUES (201, 'Manhattan Project', "</span></span><br><span class="line"> + QString::number(employeeId) + <span class="string">')'</span>);</span><br><span class="line">&#125;</span><br><span class="line">QSqlDatabase::database().commit();</span><br></pre></td></tr></table></figure>
+<p>  事务机制的使用是用来保证一个复杂操作的原子性（举个例子，查询一个外键和增加一条记录），或是提供一种消除中间复杂性变化的手段。</p>
+<hr>
+<p>Qt SQL Programming  系列翻译</p>
+<ul>
+<li><a href="/2015/02/11/SQL-Programming-1-Overview/" title="SQL Programming (1): Overview">SQL Programming (1): Overview</a></li>
+<li><a href="/2018/07/23/SQL Programming-2-Connection-to-Databases/" title="SQL Programming (2): Connection to Databases">SQL Programming (2): Connection to Databases</a></li>
+<li><a href="/2018/08/03/SQL Programming-4-Using-the-SQL-Model-Classes/" title="SQL Programming (4): Using the SQL Model Classes">SQL Programming (4): Using the SQL Model Classes</a></li>
+<li><a href="/2018/08/03/SQL Programming-5-Presenting-Data-in-a-Table-View/" title="SQL Programming (5): Presenting Data in a Table View">SQL Programming (5): Presenting Data in a Table View</a></li>
+<li><a href="/2018/08/03/SQL Programming-6-Creating-Data-Aware-Forms/" title="SQL Programming (6): Creating Data Aware Forms">SQL Programming (6): Creating Data Aware Forms</a>
+</li>
+</ul>
+<hr>
+]]></content>
+      <categories>
+        <category>编程</category>
+        <category>Qt</category>
+        <category>Qt SQL Programming  系列翻译</category>
+      </categories>
+      <tags>
+        <tag>翻译</tag>
+        <tag>Qt</tag>
+        <tag>SQL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Thinkpad e480 ubuntu 18.04 wifi adapter not found</title>
+    <url>/2018/09/28/Thinkpad-e480-ubuntu-18-04-wifi-adapter-not-found/</url>
+    <content><![CDATA[<p>  公司新配的E480 原装了win10，奈何有时候还要用Linux，系统内存只有8G，开虚拟机有些吃紧，索性直接装 双系统吧。</p>
+<p>安装过程暂且不表，但是，装完后发现，18.04 下竟然没有 WiFi和蓝牙。Google一番，<br>发现了解决方案。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo apt update</span><br><span class="line">sudo apt install build-essential git dkms</span><br><span class="line">git clone https://github.com/tomaspinho/rtl8821ce.git</span><br><span class="line">cd rtl8821ce</span><br><span class="line">sudo ./dkms-install.sh</span><br></pre></td></tr></table></figure>
+<p>最后键入<br><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo modprobe 8821ce</span><br></pre></td></tr></table></figure></p>
+<p>问题恰恰出在了这儿。之前所有的步骤都ok，或者通过<br><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">make</span><br><span class="line">sudo make install</span><br></pre></td></tr></table></figure></p>
+<p>的方式，都能够顺利生成 <strong>8821ce.ko</strong> 文件。但是，加载就是失败。报错为 <em>key is not available</em> ， 大意如此。之后只能又遍寻方法，最后通过 关闭 BIOS 中的 Security Boost，重启之后，终获成功。</p>
+<p><strong>Note</strong> ： 安装时，一定要将 BIOS 中的 Security Boost 选项 设置为 关闭（disable）。</p>
+]]></content>
+      <categories>
+        <category>编程</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+        <tag>Qt</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Ubuntu 14.04 Qt5.3.1 Fcitx 输入法支持中文</title>
+    <url>/2018/07/22/Ubuntu14%E4%B8%8BQt5-3-1%E5%AE%89%E8%A3%85%E4%B8%AD%E6%96%87%E8%BE%93%E5%85%A5%E6%B3%95%E6%94%AF%E6%8C%81/</url>
+    <content><![CDATA[<h2 id="安装fcitx-for-Qt5动态库"><a href="#安装fcitx-for-Qt5动态库" class="headerlink" title="安装fcitx for Qt5动态库"></a>安装fcitx for Qt5动态库</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo apt-get install fcitx-libs-qt5</span><br></pre></td></tr></table></figure>
+<p><strong>注</strong>：这一个命令执行完毕后，系统中已经具备基于Qt5的程序的汉字录入环境支持。存在一个奇怪现象是，Qt5所带的Qt Creator依然无法切换输入法，而且刚刚编译的程序，也无法录入汉字，但卸载掉Qt5开发环境后，刚刚编译的程序居然可以切换输入法，录入汉字了。这个现象说明，卸载Qt5开发环境后，同样的程序，使用系统提供的依赖库环境，录入汉字问题消失。问题出在Qt5开发环境缺少fcix for Qt5动态库上面。</p>
+<h2 id="向Qt5开发环境安装fcitx-for-Qt5支持"><a href="#向Qt5开发环境安装fcitx-for-Qt5支持" class="headerlink" title="向Qt5开发环境安装fcitx for Qt5支持"></a>向Qt5开发环境安装fcitx for Qt5支持</h2><p>进入 <em>/Qt5.3.1/Tools/QtCreator/bin/plugins/platforminputcontexts</em> 目录发现</p>
+<p>官网提供的安装包仅仅有 <em>libibusplatforminputcontextplugin.so</em>，对ibus输入法的支持</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cd ~/Qt5.3.1/Tools/QtCreator/bin/plugins/platforminputcontexts</span><br><span class="line">cp /usr/lib/x86_64-linux-gnu/qt5/plugins/platforminputcontexts/libfcitxplatforminputcontextplugin.so .</span><br><span class="line"></span><br><span class="line">chmod +x  libfcitxplatforminputcontextplugin.so</span><br></pre></td></tr></table></figure>
+<p>上面解决了Qt5 Creator汉字输入问题，新编译的程序运行库环境目录是_~/Qt5.3.1/5.3/gcc_64/plugins/platforminputcontexts$_</p>
+<p>依然执行如下命令</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cd ~/Qt5.3.1/5.3/gcc_64/plugins/platforminputcontexts$</span><br><span class="line"></span><br><span class="line">cp /usr/lib/x86_64-linux-gnu/qt5/plugins/platforminputcontexts/libfcitxplatforminputcontextplugin.so .</span><br><span class="line"></span><br><span class="line">chmod +x  libfcitxplatforminputcontextplugin.so</span><br></pre></td></tr></table></figure>
+<p>同时需要在终端中对配置文件进行修改，使用命令 —<em>gedit ~/.profile</em> 打开配置文件，在文档末尾添加</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">export GTK_IM_MODULE=fcitx</span><br><span class="line"></span><br><span class="line">export QT_IM_MODULE=fcitx</span><br><span class="line"></span><br><span class="line">export XMODIFIERS=@im=fcitx</span><br></pre></td></tr></table></figure>
+<p>之后进行保存，重启fcitx，重启系统。</p>
+<p><strong>Note</strong>:Qt 中默认的快捷键与输入法的激活快捷键是有冲突的，需要进行设定。</p>
+]]></content>
+      <categories>
+        <category>编程</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+        <tag>Qt</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>修改iTunes备份路径</title>
+    <url>/2018/09/17/%E4%BF%AE%E6%94%B9IiTunes%E5%A4%87%E4%BB%BD%E8%B7%AF%E5%BE%84/</url>
+    <content><![CDATA[<p>  一直用的是Windows PC，奈何手里有个iPhone，有时候想备份了，备份到电脑吧，iTunes 无脑存C盘，</p>
+<p>  真是让人很无语。搞了个外置硬盘来存备份，网上搜罗了下设置方法，终于找到了，那就是软链接。<br>参见<a href="https://www.howtogeek.com/howto/16226/complete-guide-to-symbolic-links-symlinks-on-windows-or-linux/" target="_blank" rel="noopener">如何在Windows或Linux创建链接</a></p>
+<p>简述下步骤：<br>备份的目标路径为H盘。</p>
+<ol>
+<li>在目标磁盘分区下面创建一个名为“Backup”的文件夹。</li>
+<li>将 iTunes 默认备份路径（C:\Users\自己的电脑名\AppData\Roaming\Apple Computer\MobileSync\Backup）下的所有子文件夹（每个子文件夹代表着一个设备的备份目录）复制到刚才建立的 <strong>“H:\Backup”</strong> 文件夹下面。</li>
+<li>删除原始的 C 盘路径下 Backup 文件夹及其下面的所有子文件夹。</li>
+<li>找到 <strong>C:\Windows\System32\cmd.exe</strong>，选择“以管理员身份运行”，打开命令提示符程序，并输入下面字符串命令并按回车执行：<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">　　mklink /D "C:\Users\自己电脑名\AppData\Roaming\Apple Computer\MobileSync\Backup" "H:\Backup"</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>　　上述命令执行完之后，会自动在 MobileSync 文件夹下建立一个名为 Backup 的镜像文件夹，即 H 盘下的 Backup 文件夹已经映射到原先默认备份路径了。</p>
+<p>　　大功告成。</p>
+<p><strong>注</strong> 文中的方法参考了<a href="https://bbs.feng.com/mobile-news-read-0-684174.html" target="_blank" rel="noopener">威锋论坛中的帖子</a>。</p>
+]]></content>
+      <categories>
+        <category>杂项</category>
+      </categories>
+      <tags>
+        <tag>日常软件</tag>
+      </tags>
+  </entry>
+</search>
