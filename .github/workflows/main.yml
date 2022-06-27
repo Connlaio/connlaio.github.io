@@ -8,7 +8,7 @@ on:
   push:
     branches: [ "hexo" ]
   pull_request:
-    branches: [ "hexo" ]
+    branches: [ "master" ]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -25,7 +25,7 @@ jobs:
       - name: Checkout source
         uses: actions/checkout@v2
         with:
-            ref: main
+            ref: hexo
 
       - name: Setup Node.js
         uses: actions/setup-node@v2
