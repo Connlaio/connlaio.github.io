@@ -112,5 +112,5 @@ archive:
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repo: git@github.com:Connlaio/connlaio.github.io.git
+  repo: https://github.com/Connlaio/connlaio.github.io
   branch: master
