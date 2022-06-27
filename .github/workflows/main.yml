@@ -36,7 +36,7 @@ jobs:
       - name: Setup Hexo
         env: 
                 # HEXO_DEPLOY_PRI_XIAOXIN_WINDOW 这个就是配置hexo仓库secrets的name，一定要对应上
-                ACTION_DEPLOY_KEY: ${{ secrets.Hexo_Key }}
+                ACTION_DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
         run: |
                     mkdir -p ~/.ssh/
                     echo "$ACTION_DEPLOY_KEY"> ~/.ssh/id_rsa
