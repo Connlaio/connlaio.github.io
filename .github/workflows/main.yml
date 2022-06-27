@@ -60,6 +60,7 @@ jobs:
           echo "$DEPLOY_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan github.com >> ~/.ssh/known_hosts
+          cat   ~/.ssh/id_rsa
       - name: Prepare hexo and npm env
         run: |
           npm install -g hexo-cli
