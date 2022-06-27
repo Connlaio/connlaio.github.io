@@ -59,7 +59,5 @@ jobs:
           ssh-keyscan github.com >> ~/.ssh/known_hosts
       - name: Deploy
         run: |
-            hexo cl
-            hexo g
-            hexo d
+          npx hexo clean && npx hexo generate && gulp && npx hexo deploy
 
