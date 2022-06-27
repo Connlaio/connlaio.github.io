@@ -36,7 +36,7 @@ jobs:
       - name: Setup Hexo
         env: 
                 # HEXO_DEPLOY_PRI_XIAOXIN_WINDOW 这个就是配置hexo仓库secrets的name，一定要对应上
-               DEPLOY_KEY : ${{ secrets.DEPLOY_KEY}}
+               deploy_key : ${{ secrets.DEPLOY_KEY}}
         run: |
                     mkdir -p ~/.ssh/
                     echo "$ACTION_DEPLOY_KEY"> ~/.ssh/id_rsa
@@ -49,7 +49,7 @@ jobs:
                     npm install
       - name: Deploy
         run: |
-            hexo clean
+            hexo cl
             hexo g
             hexo d
 
