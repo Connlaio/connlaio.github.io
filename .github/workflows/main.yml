@@ -64,6 +64,10 @@ jobs:
         run: |
           npm install -g hexo-cli
           npm install
+      - name: Prepare git env
+        run: |
+          git config --global user.email xukang-11@live.com
+          git config --global user.name connerxu
       - name: Deploy
 #         run: |
 #           npx hexo clean && npx hexo generate && gulp && npx hexo deploy
