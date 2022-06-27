@@ -32,9 +32,9 @@ jobs:
 
 
          # Cache node modules to accelerate
-      - name: Get yarn cache directory path
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
+#       - name: Get yarn cache directory path
+#         id: yarn-cache-dir-path
+#         run: echo "::set-output name=dir::$(yarn cache dir)"
 
 #       - name: Use yarn cache
 #         uses: actions/cache@v2
@@ -45,9 +45,12 @@ jobs:
 #           restore-keys: |
 #             ${{ runner.os }}-yarn-
 
-      - name: Install dependencies
-        run: yarn install --prefer-offline --frozen-lockfile
+#       - name: Install dependencies
+#         run: yarn install --prefer-offline --frozen-lockfile
 
+
+#   env:
+#     SSH_DEPLOY_KEY: ${{ secrets.MY_BLOG_DEPLOY_KEY }}
       - name: Set up environment
         env:
           DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
@@ -57,7 +60,15 @@ jobs:
           echo "$DEPLOY_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan github.com >> ~/.ssh/known_hosts
-      - name: Deploy
+      - name: Prepare hexo and npm env
         run: |
-          npx hexo clean && npx hexo generate && gulp && npx hexo deploy
+          npm install -g hexo-cli
+          npm install
+      - name: Deploy
+#         run: |
+#           npx hexo clean && npx hexo generate && gulp && npx hexo deploy
+        run: | 
+          hexo cl
+          hexo g
+          hexo d
 
