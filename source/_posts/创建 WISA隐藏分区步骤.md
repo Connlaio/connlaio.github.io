@@ -1,4 +1,14 @@
-# 创建 WISA隐藏分区步骤
+---
+title: 创建 WISA隐藏分区步骤
+comments: true
+toc: true
+categories:
+  - 杂项
+date: 2022-6-27 14:59:00
+tags: 日常软件
+---
+
+ 
 
 1.  使用管理员权限打开命令行终端
 2. 输入`diskpart` 指令，进入diskpart管理部分；

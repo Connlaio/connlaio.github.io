@@ -1,4 +1,12 @@
-# Beyond compare 4 This license key has been revoked 解决办法
+---
+title: Beyond compare 4 This license key has been revoked 解决办法
+comments: true
+toc: true
+categories:
+  - 杂项
+date: 2022-6-27 14:59:00
+tags: 日常软件
+---
 
 ## Linux
 
