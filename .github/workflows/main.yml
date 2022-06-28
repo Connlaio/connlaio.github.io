@@ -53,11 +53,11 @@ jobs:
 #     SSH_DEPLOY_KEY: ${{ secrets.MY_BLOG_DEPLOY_KEY }}
       - name: Set up environment
         env:
-          DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         run: |
           sudo timedatectl set-timezone "Asia/Shanghai"
           mkdir -p ~/.ssh
-          echo "$DEPLOY_KEY" | tr -d '\r' > ~/.ssh/id_rsa
+          echo "$SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H 'github.com' >> ~/.ssh/known_hosts
         
