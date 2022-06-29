@@ -107,9 +107,4 @@ The same instructions can also be used for an offline installation of the `wineh
 
 
 
-参考链接：
-
-[WineHQ]: https://wiki.winehq.org/Ubuntu
-
-
-
+参考链接：[WineHQ](http:///wiki.winehq.org/Ubuntu)
