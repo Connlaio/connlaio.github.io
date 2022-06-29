@@ -1,4 +1,12 @@
-#  Ubuntu 18.04 安装 WineHQ版本
+---
+title: Ubuntu 18.04 安装 WineHQ版本
+comments: true
+toc: true
+categories:
+  - 杂项
+date: 2022-6-29 10:09:00
+tags: 日常软件
+---
 
 ## 准备工作
 

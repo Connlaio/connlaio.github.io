@@ -1,4 +1,12 @@
-﻿﻿# Ubuntu 18.04 安装 RealVNC Server 指南
+﻿﻿---
+title: Ubuntu 18.04 安装 RealVNC Server 指南
+comments: true
+toc: true
+categories:
+  - 杂项
+date: 2022-6-29 10:09:00
+tags: 日常软件
+---
 
 1. 打开 RealVNC的网址（https://www.realvnc.com/en/connect/download/vnc/）
 

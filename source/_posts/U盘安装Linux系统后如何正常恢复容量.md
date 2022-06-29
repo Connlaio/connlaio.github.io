@@ -1,4 +1,13 @@
-# U盘安装Linux系统后如何正常恢复容量
+---
+title: U盘安装Linux系统后如何正常恢复容量
+comments: true
+toc: true
+categories:
+  - 杂项
+date: 2022-6-29 10:09:00
+tags: 日常软件
+---
+
 
 ## 使用Windows 系统
 
