@@ -1,0 +1,1457 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+  <meta name="baidu-site-verification" content="rGDFURJ4xG" />
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-1.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="翻译,Qt,SQL," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Conner" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="除了QSqlQuery类以外，Qt还提供了三个更复杂的访问数据库的类，QSqlQueryModel ,QSqlTableModel, QSqlRelationalTableModel.  QSqlQueryModel : 一个基于任意SQL语句的只读模型  QSqlTableModel：一个针对单表的可读写模型  QSqlRelationalTableModel： 一个支持外键的QSQLTable">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SQL Programming (4): Using the SQL Model Classes">
+<meta property="og:url" content="https://conner.work/2018/08/03/SQL%20Programming-4-Using-the-SQL-Model-Classes/index.html">
+<meta property="og:site_name" content="Conner">
+<meta property="og:description" content="除了QSqlQuery类以外，Qt还提供了三个更复杂的访问数据库的类，QSqlQueryModel ,QSqlTableModel, QSqlRelationalTableModel.  QSqlQueryModel : 一个基于任意SQL语句的只读模型  QSqlTableModel：一个针对单表的可读写模型  QSqlRelationalTableModel： 一个支持外键的QSQLTable">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://doc.qt.io/qt-5/images/noforeignkeys.png">
+<meta property="og:image" content="http://doc.qt.io/qt-5/images/foreignkeys.png">
+<meta property="article:published_time" content="2018-08-03T00:54:47.000Z">
+<meta property="article:modified_time" content="2022-07-19T01:51:41.451Z">
+<meta property="article:author" content="Conner Xu">
+<meta property="article:tag" content="翻译">
+<meta property="article:tag" content="Qt">
+<meta property="article:tag" content="SQL">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://doc.qt.io/qt-5/images/noforeignkeys.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":true,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://conner.work/2018/08/03/SQL Programming-4-Using-the-SQL-Model-Classes/"/>
+
+
+
+
+
+  <title>SQL Programming (4): Using the SQL Model Classes | Conner</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-123160438-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Conner</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">To be Stronger</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-404"></i> <br />
+            
+            Commonweal 404
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="Searching..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://conner.work/2018/08/03/SQL%20Programming-4-Using-the-SQL-Model-Classes/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/head.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Conner">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">SQL Programming (4): Using the SQL Model Classes</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-03T08:54:47+08:00">
+                2018-08-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BC%96%E7%A8%8B/" itemprop="url" rel="index">
+                    <span itemprop="name">编程</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BC%96%E7%A8%8B/Qt/" itemprop="url" rel="index">
+                    <span itemprop="name">Qt</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Qt-SQL-Programming-%E7%B3%BB%E5%88%97%E7%BF%BB%E8%AF%91/" itemprop="url" rel="index">
+                    <span itemprop="name">Qt SQL Programming  系列翻译</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/08/03/SQL%20Programming-4-Using-the-SQL-Model-Classes/" class="leancloud_visitors" data-flag-title="SQL Programming (4): Using the SQL Model Classes">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article&#58;</span>
+                
+                <span title="Words count in article">
+                  1.3k 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time &asymp;</span>
+                
+                <span title="Reading time">
+                  5 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>除了QSqlQuery类以外，Qt还提供了三个更复杂的访问数据库的类，QSqlQueryModel ,QSqlTableModel, QSqlRelationalTableModel.</p>
+<ul>
+<li><p>QSqlQueryModel : 一个基于任意SQL语句的只读模型</p>
+</li>
+<li><p>QSqlTableModel：一个针对单表的可读写模型</p>
+</li>
+<li><p>QSqlRelationalTableModel： 一个支持外键的QSQLTableModel的子类</p>
+<p>以上的三个类都源于QAbstractTableModel类（这个类继承自QAbstractItemModel），通过和一个Item View类结合（比如QListView、QTableView），使得从一个数据库中呈现数据的更加的简单。在Presenting Data in a Table View 章节，这一过程将会被详细的解释。</p>
+<p>使用这些类也能够让你的代码更加方便的更改为其他的数据源。举个例子，如果你开始使用的是QSqlTableModel类，之后觉得使用XML文档来替代之前使用的数据库来存储数据，那么这本质上只是一个数据模型替换为另一个的问题。</p>
+</li>
+</ul>
+<h2 id="The-SQL-Query-Model"><a href="#The-SQL-Query-Model" class="headerlink" title="The SQL Query Model"></a>The SQL Query Model</h2><p>  QSqlQueryModel 提供了基于一条SQL语句的只读模型。</p>
+<p>  例子：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">QSqlQueryModel model; </span><br><span class="line"></span><br><span class="line">model.<span class="built_in">setQuery</span>(<span class="string">&quot;SELECT * FROM employee&quot;</span>); </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; model.<span class="built_in">rowCount</span>(); ++i) &#123; </span><br><span class="line"></span><br><span class="line"> <span class="type">int</span> id = model.<span class="built_in">record</span>(i).<span class="built_in">value</span>(<span class="string">&quot;id&quot;</span>).<span class="built_in">toInt</span>(); </span><br><span class="line"></span><br><span class="line"> QString name = model.<span class="built_in">record</span>(i).<span class="built_in">value</span>(<span class="string">&quot;name&quot;</span>).<span class="built_in">toString</span>(); </span><br><span class="line"></span><br><span class="line"> <span class="built_in">qDebug</span>() &lt;&lt; id &lt;&lt; name; </span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>  在调用了 <em>QSqlQueryModel::setQuery()</em> 函数设置了查询语句后，你可以使用 <em>QSqlQueryModel::record(int)</em> 来获取指定的查询记录。当然，你也可以使用   <em>QSqlQueryModel::data()</em> 或者其他的继承自QAbstractItemModel的函数。</p>
+<p>​    例外，<em>setQuery()</em> 的一个重载函数支持两个参数，一个是一个QSqlQuery的对象，另外一个是要操作的结果集，也就是数据库。这可以让你更好的使用QSqlQuery的一些特性（比如，prepared queries）。</p>
+<h2 id="The-SQL-Table-Model"><a href="#The-SQL-Table-Model" class="headerlink" title="The SQL Table Model"></a>The SQL Table Model</h2><p>​    QSqlTableModel提供了一个一次可以操作单个SQL表的可读写模型。</p>
+<p>例子：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"> QSqlTableModel model;</span><br><span class="line"></span><br><span class="line"> model.<span class="built_in">setTable</span>(<span class="string">&quot;employee&quot;</span>);</span><br><span class="line"></span><br><span class="line"> model.<span class="built_in">setFilter</span>(<span class="string">&quot;salary &gt; 50000&quot;</span>);</span><br><span class="line"></span><br><span class="line"> model.<span class="built_in">setSort</span>(<span class="number">2</span>, Qt::DescendingOrder);</span><br><span class="line"></span><br><span class="line"> model.<span class="built_in">select</span>();</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; model.<span class="built_in">rowCount</span>(); ++i) &#123;</span><br><span class="line"></span><br><span class="line"> QString name = model.<span class="built_in">record</span>(i).<span class="built_in">value</span>(<span class="string">&quot;name&quot;</span>).<span class="built_in">toString</span>();</span><br><span class="line"></span><br><span class="line"> <span class="type">int</span> salary = model.<span class="built_in">record</span>(i).<span class="built_in">value</span>(<span class="string">&quot;salary&quot;</span>).<span class="built_in">toInt</span>();</span><br><span class="line"></span><br><span class="line"> <span class="built_in">qDebug</span>() &lt;&lt; name &lt;&lt; salary;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>   QSqlTableModel 针对 QSqlQuery，在单表的操作修改上提供了更好的交互方式。这样就使得开发者只需要很少的代码同时摆脱了SQL语法的束缚就能够完成数据操作。</p>
+<p>​   使用 <em>QSqlTableModel:record()</em> 函数可以获得表中的指定行，使用 <em>QSqlTableModel:setRecord()</em> 来修改数据。举个例子，下面的代码会将每个员工的工资提高10%：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; model.<span class="built_in">rowCount</span>(); ++i) &#123;</span><br><span class="line"></span><br><span class="line"> QSqlRecord record = model.<span class="built_in">record</span>(i);</span><br><span class="line"></span><br><span class="line"> <span class="type">double</span> salary = record.<span class="built_in">value</span>(<span class="string">&quot;salary&quot;</span>).<span class="built_in">toInt</span>();</span><br><span class="line"></span><br><span class="line"> salary *= <span class="number">1.1</span>;</span><br><span class="line"></span><br><span class="line"> record.<span class="built_in">setValue</span>(<span class="string">&quot;salary&quot;</span>, salary);</span><br><span class="line"></span><br><span class="line"> model.<span class="built_in">setRecord</span>(i, record);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"> model.<span class="built_in">submitAll</span>();</span><br></pre></td></tr></table></figure>
+
+<p>​    你也可以使用 <em>QSqlTableModel:data()</em> 和 _QSqlTableModel:setData()_（继承自QAbstractItemModel）来获取数据。例如，下面是如何使用 <em>setData()</em> 函数来更新一条记录：    </p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">model.<span class="built_in">setData</span>(model.<span class="built_in">index</span>(row, column), <span class="number">75000</span>);</span><br><span class="line"></span><br><span class="line">model.<span class="built_in">submitAll</span>();</span><br></pre></td></tr></table></figure>
+
+<p>​    以下是如何插入并填充一行数据：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">model.<span class="built_in">insertRows</span>(row, <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">model.<span class="built_in">setData</span>(model.<span class="built_in">index</span>(row, <span class="number">0</span>), <span class="number">1013</span>);</span><br><span class="line"></span><br><span class="line">model.<span class="built_in">setData</span>(model.<span class="built_in">index</span>(row, <span class="number">1</span>), <span class="string">&quot;Peter Gordon&quot;</span>);</span><br><span class="line"></span><br><span class="line">model.<span class="built_in">setData</span>(model.<span class="built_in">index</span>(row, <span class="number">2</span>), <span class="number">68500</span>);</span><br><span class="line"></span><br><span class="line">model.<span class="built_in">submitAll</span>();</span><br></pre></td></tr></table></figure>
+
+<p>​    以下是如何删除五个连续的行数据：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">model.<span class="built_in">removeRows</span>(row, <span class="number">5</span>);</span><br><span class="line"></span><br><span class="line">model.<span class="built_in">submitAll</span>();</span><br></pre></td></tr></table></figure>
+
+<p>​    函数 <em>QSqlTableModel:removeRows()</em> 的第一个参数是第一个要被删除行的索引。    </p>
+<p>​    当你修改完成一行记录后，应该调用 <em>QSqlTableModel::submitAll()</em> 函数来保证所有的数据改变都被写入数据库。</p>
+<p>​    至于在什么时候应该调用 <em>submitAll()</em> 函数取决于表的编辑策略（edit strategy）。默认的编辑策略是 _QSqlTableModel::OnRowChange_，即在用户选取不同的行后，向数据库提交更改。其他的策略还有 _QSqlTableModel::OnManualSubmin()_（即缓存所有数据改变，直到调用 <em>submitAll()</em> 函数），_QSqlTableModel::OnFieldChange()_（不缓存更改）。当 QSqlTableModel 和 View 类一起使用时，这些策略是非常有帮助的。</p>
+<p>​    <em>QSqlTableModel::OnFieldChange()</em> 意味着你永远不会显示的调用 <em>submitAll()</em> 函数。尽管如此，这里面也存在这两个误区：</p>
+<ol>
+<li>没有任何缓存，意味着性能会显著下降；</li>
+<li>当你试图增加一个主键时，你来不及对它填充数据。</li>
+</ol>
+<h2 id="The-SQL-Relational-Table-Model"><a href="#The-SQL-Relational-Table-Model" class="headerlink" title="The SQL Relational Table Model"></a>The SQL Relational Table Model</h2><p>​    QSqlRelationalTableModel 是对QSqlTableModel类的扩展，它提供了对外键的支持。一个外键是指一个表中的字段和另外一个表的主键存在一对一的映射关系。举个例子，如果book表中有一个名为 authorid 的字段指的是 author 表中的id字段（id字段是主键），那么 authorid 就是一个外键。</p>
+<p>​        <img src="http://doc.qt.io/qt-5/images/noforeignkeys.png" alt="img"></p>
+<p>​        <img src="http://doc.qt.io/qt-5/images/foreignkeys.png" alt="img"></p>
+<p>​        第一副截图是在 QTableView 里使用了一个简单的QSqlTableModel。外键（city和Country）并没有被转化为可读值。第二幅截图使用的是QSqlRelationalTableModel，外键值被解析为可读的文本字符。</p>
+<p>​    下面的代码片段演示了如何创建一个QSqlRelationalTableModel：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">model-&gt;<span class="built_in">setTable</span>(<span class="string">&quot;employee&quot;</span>);</span><br><span class="line"></span><br><span class="line">model-&gt;<span class="built_in">setRelation</span>(<span class="number">2</span>, <span class="built_in">QSqlRelation</span>(<span class="string">&quot;city&quot;</span>, <span class="string">&quot;id&quot;</span>, <span class="string">&quot;name&quot;</span>));</span><br><span class="line"></span><br><span class="line">model-&gt;<span class="built_in">setRelation</span>(<span class="number">3</span>, <span class="built_in">QSqlRelation</span>(<span class="string">&quot;country&quot;</span>, <span class="string">&quot;id&quot;</span>, <span class="string">&quot;name&quot;</span>));</span><br></pre></td></tr></table></figure>
+
+<p>​    详细用法，请查看QSqlRelationalTableModel的文档。</p>
+<hr>
+<p>Qt SQL Programming  系列翻译</p>
+<ul>
+<li><a href="/2015/02/11/SQL-Programming-1-Overview/" title="SQL Programming (1): Overview">SQL Programming (1): Overview</a></li>
+<li><a href="/2018/07/23/SQL%20Programming-2-Connection-to-Databases/" title="SQL Programming (2): Connection to Databases">SQL Programming (2): Connection to Databases</a></li>
+<li><a href="/2018/08/01/SQL-Programming-3-Executing-SQL-Statements/" title="SQL Programming (3): Executing SQL Statements">SQL Programming (3): Executing SQL Statements</a></li>
+<li><a href="/2018/08/03/SQL%20Programming-5-Presenting-Data-in-a-Table-View/" title="SQL Programming (5): Presenting Data in a Table View">SQL Programming (5): Presenting Data in a Table View</a></li>
+<li><a href="/2018/08/03/SQL%20Programming-6-Creating-Data-Aware-Forms/" title="SQL Programming (6): Creating Data Aware Forms">SQL Programming (6): Creating Data Aware Forms</a></li>
+</ul>
+<hr>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:</strong>
+    Conner Xu
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link:</strong>
+    <a href="https://conner.work/2018/08/03/SQL%20Programming-4-Using-the-SQL-Model-Classes/" title="SQL Programming (4): Using the SQL Model Classes">https://conner.work/2018/08/03/SQL%20Programming-4-Using-the-SQL-Model-Classes/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice: </strong>
+    All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> unless stating additionally.
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E7%BF%BB%E8%AF%91/" rel="tag"># 翻译</a>
+          
+            <a href="/tags/Qt/" rel="tag"># Qt</a>
+          
+            <a href="/tags/SQL/" rel="tag"># SQL</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/01/SQL-Programming-3-Executing-SQL-Statements/" rel="next" title="SQL Programming (3): Executing SQL Statements">
+                <i class="fa fa-chevron-left"></i> SQL Programming (3): Executing SQL Statements
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/08/03/SQL%20Programming-5-Presenting-Data-in-a-Table-View/" rel="prev" title="SQL Programming (5): Presenting Data in a Table View">
+                SQL Programming (5): Presenting Data in a Table View <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zODQwNS8xNDkzMw=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/uploads/head.jpeg"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%20%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a rel="external nofollow" href="https://github.com/Connlaio" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-globe"></i></a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a rel="external nofollow" href="mailto:conlaio0213@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i></a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#The-SQL-Query-Model"><span class="nav-number">1.</span> <span class="nav-text">The SQL Query Model</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#The-SQL-Table-Model"><span class="nav-number">2.</span> <span class="nav-text">The SQL Table Model</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#The-SQL-Relational-Table-Model"><span class="nav-number">3.</span> <span class="nav-text">The SQL Relational Table Model</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Conner Xu</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">9.5k</span>
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a rel="external nofollow" class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a rel="external nofollow" class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a></div>
+
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    bp.src = '//push.zhanzhang.baidu.com/push.js';
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('-1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("uUMcdEGNnvijYNiBYG1jILQW-gzGzoHsz", "kkrdLSWfnYgcnAGnA3LtyyC1");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

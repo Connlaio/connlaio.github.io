@@ -1,0 +1,577 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Conner</title>
+  <icon>https://www.gravatar.com/avatar/506d22b25b59ff6838000b743a037ca1</icon>
+  <subtitle>To be Stronger</subtitle>
+  <link href="https://conner.work/atom.xml" rel="self"/>
+  
+  <link href="https://conner.work/"/>
+  <updated>2022-07-19T01:51:41.451Z</updated>
+  <id>https://conner.work/</id>
+  
+  <author>
+    <name>Conner Xu</name>
+    <email>xukang-11@live.com</email>
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Ubuntu svn开机启动脚本</title>
+    <link href="https://conner.work/2022/07/19/Ubuntu-SVN-Startup/"/>
+    <id>https://conner.work/2022/07/19/Ubuntu-SVN-Startup/</id>
+    <published>2022-07-19T01:41:14.000Z</published>
+    <updated>2022-07-19T01:51:41.451Z</updated>
+    
+    <content type="html"><![CDATA[<p>最近配置了一台svn服务器，参考了网上很多开机启动的配置，发现都没有生效。直到测试了其中一个脚本。内容如下：</p><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/sh</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment">## BEGIN INIT INFO</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Provides:          start-svn.sh</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Required-Start:</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Required-Stop:</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Default-Start:     2 3 4 5</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Default-Stop:</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Short-Description: start svn service</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment">## END INIT INFO</span></span></span><br><span class="line"></span><br><span class="line">svnserve -d -r /home/xxx/localsvn</span><br></pre></td></tr></table></figure><p>关键的部分是，注释说明部分，<strong>一定</strong> 要加上，不然，没有效果。</p><p>将这个脚本命名为 <strong>start-svn.sh</strong> （或者其他你喜欢的名字）， 添加好可执行权限 （ <strong>chmod +x start-svn.sh</strong> ），然后复制到 <strong>&#x2F;etc&#x2F;init.d&#x2F;</strong> 目录下。</p><p>之后在终端键入指令</p><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo update-rc.d start-svn.sh defaults 100</span><br></pre></td></tr></table></figure><p>之后重启。</p><p>检查svn 是否能够开机自启动</p><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ps -aux | grep svn</span><br></pre></td></tr></table></figure><p>如果没有，那么执行 <strong>runlevel</strong> ，查看当前启动level, 会打印一个数字, 把这个数字加到脚本 start-svn.sh 的 Default-Start 后面, 然后再执行一遍试试。</p><p>参考链接:<a href="https://icode.best/i/59118544595426">ubuntu安装SVN并设置开机启动-爱代码爱编程</a></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;最近配置了一台svn服务器，参考了网上很多开机启动的配置，发现都没有生效。直到测试了其中一个脚本。内容如下：&lt;/p&gt;
+&lt;figure class=&quot;highlight shell&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;</summary>
+      
+    
+    
+    
+    <category term="Linux" scheme="https://conner.work/categories/Linux/"/>
+    
+    <category term="Shell" scheme="https://conner.work/categories/Linux/Shell/"/>
+    
+    
+    <category term="Linux" scheme="https://conner.work/tags/Linux/"/>
+    
+    <category term="Ubuntu" scheme="https://conner.work/tags/Ubuntu/"/>
+    
+    <category term="Shell" scheme="https://conner.work/tags/Shell/"/>
+    
+    <category term="subversion" scheme="https://conner.work/tags/subversion/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>RealVNC Server Ubuntu 18.04 无显示器连接</title>
+    <link href="https://conner.work/2022/07/06/%20RealVNC%20Server%20Ubuntu%2018.04%20%E6%97%A0%E6%98%BE%E7%A4%BA%E5%99%A8%E8%BF%9E%E6%8E%A5/"/>
+    <id>https://conner.work/2022/07/06/%20RealVNC%20Server%20Ubuntu%2018.04%20%E6%97%A0%E6%98%BE%E7%A4%BA%E5%99%A8%E8%BF%9E%E6%8E%A5/</id>
+    <published>2022-07-06T03:55:15.000Z</published>
+    <updated>2022-07-19T01:51:41.451Z</updated>
+    
+    <content type="html"><![CDATA[<p>  安装xserver-xorg-video-dummy，做一个虚拟的显示器。</p><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo apt install xserver-xorg-video-dummy</span><br></pre></td></tr></table></figure><p>  修改配置文件。</p><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cd /usr/share/X11/xorg.conf.d</span><br><span class="line">sudo vim xorg.conf</span><br></pre></td></tr></table></figure><p>配置文件内容如下：</p><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">Section &quot;Device&quot;</span><br><span class="line">    Identifier &quot;DummyDevice&quot;</span><br><span class="line">    Driver &quot;dummy&quot;</span><br><span class="line">    VideoRam 256000</span><br><span class="line">EndSection</span><br><span class="line"> </span><br><span class="line">Section &quot;Screen&quot;</span><br><span class="line">    Identifier &quot;DummyScreen&quot;</span><br><span class="line">    Device &quot;DummyDevice&quot;</span><br><span class="line">    Monitor &quot;DummyMonitor&quot;</span><br><span class="line">    DefaultDepth 24</span><br><span class="line">    SubSection &quot;Display&quot;</span><br><span class="line">        Depth 24</span><br><span class="line">        Modes &quot;1920x1080_60.0&quot;</span><br><span class="line">    EndSubSection</span><br><span class="line">EndSection</span><br><span class="line"> </span><br><span class="line">Section &quot;Monitor&quot;</span><br><span class="line">    Identifier &quot;DummyMonitor&quot;</span><br><span class="line">    HorizSync 30-70</span><br><span class="line">    VertRefresh 50-75</span><br><span class="line">    ModeLine &quot;1920x1080&quot; 148.50 1920 2448 2492 2640 1080 1084 1089 1125 +Hsync +Vsync</span><br><span class="line">EndSection</span><br></pre></td></tr></table></figure><p>重启即可。</p><p><strong>Warning</strong>  </p><p>经测试发现，在 18.04 上，如果使用此方式进行链接，会导致无法打开系统设置，或者点击系统设置后，</p><p>退出当前用户（杀死所有进程），并显示登录界面。无法判断是否为个例。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;  安装xserver-xorg-video-dummy，做一个虚拟的显示器。&lt;/p&gt;
+&lt;figure class=&quot;highlight shell&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;sudo apt </summary>
+      
+    
+    
+    
+    <category term="杂项" scheme="https://conner.work/categories/%E6%9D%82%E9%A1%B9/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Ubuntu 解决耳机驱动异常</title>
+    <link href="https://conner.work/2022/06/29/Ubuntu%20%20%E8%A7%A3%E5%86%B3%E8%80%B3%E6%9C%BA%E9%A9%B1%E5%8A%A8%E5%BC%82%E5%B8%B8/"/>
+    <id>https://conner.work/2022/06/29/Ubuntu%20%20%E8%A7%A3%E5%86%B3%E8%80%B3%E6%9C%BA%E9%A9%B1%E5%8A%A8%E5%BC%82%E5%B8%B8/</id>
+    <published>2022-06-29T02:09:00.000Z</published>
+    <updated>2022-07-19T01:51:41.451Z</updated>
+    
+    <content type="html"><![CDATA[<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">echo &quot;options snd_hda_intel probe_mask=1&quot; | sudo tee /etc/modprobe.d/tensorbook.conf</span><br><span class="line"></span><br><span class="line">sudo update-initramfs -u -k all</span><br><span class="line"></span><br></pre></td></tr></table></figure><p>重新启动即可。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;figure class=&quot;highlight shell&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;echo &amp;quot;options snd_hda_intel probe_mask=1&amp;quot; | su</summary>
+      
+    
+    
+    
+    <category term="杂项" scheme="https://conner.work/categories/%E6%9D%82%E9%A1%B9/"/>
+    
+    
+    <category term="日常软件" scheme="https://conner.work/tags/%E6%97%A5%E5%B8%B8%E8%BD%AF%E4%BB%B6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Ubuntu 18.04 安装 RealVNC Server 指南</title>
+    <link href="https://conner.work/2022/06/29/Ubuntu18.04%E5%AE%89%E8%A3%85VNCServer/"/>
+    <id>https://conner.work/2022/06/29/Ubuntu18.04%E5%AE%89%E8%A3%85VNCServer/</id>
+    <published>2022-06-29T02:09:00.000Z</published>
+    <updated>2022-07-19T01:51:41.455Z</updated>
+    
+    <content type="html"><![CDATA[<ol><li><p>打开 RealVNC的网址（<a href="https://www.realvnc.com/en/connect/download/vnc/%EF%BC%89">https://www.realvnc.com/en/connect/download/vnc/）</a></p></li><li><p>选择对应的版本，Linux DEB x64，点击下载；</p></li><li><p>下载完成后，双击安装包，进行安装；此步骤中，会要求输入电脑当前登录账户的密码；</p></li><li><p>安装完成后，在应用程序中搜索 VNC Server 并打开；</p></li><li><p>点击界面中的右上角菜单按钮，选中Licensing项，选择Register offline选项，输入 激活码（H322B-2B225-XR3S9-BGVXZ-9674A），激活即可。</p></li><li><p>成功后，VNCServer的状态栏图标将会显示正常，没有x 红色部分。</p></li></ol>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;打开 RealVNC的网址（&lt;a href=&quot;https://www.realvnc.com/en/connect/download/vnc/%EF%BC%89&quot;&gt;https://www.realvnc.com/en/connect/download/vn</summary>
+      
+    
+    
+    
+    <category term="杂项" scheme="https://conner.work/categories/%E6%9D%82%E9%A1%B9/"/>
+    
+    
+    <category term="日常软件" scheme="https://conner.work/tags/%E6%97%A5%E5%B8%B8%E8%BD%AF%E4%BB%B6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>U盘安装Linux系统后如何正常恢复容量</title>
+    <link href="https://conner.work/2022/06/29/U%E7%9B%98%E5%AE%89%E8%A3%85Linux%E7%B3%BB%E7%BB%9F%E5%90%8E%E5%A6%82%E4%BD%95%E6%AD%A3%E5%B8%B8%E6%81%A2%E5%A4%8D%E5%AE%B9%E9%87%8F/"/>
+    <id>https://conner.work/2022/06/29/U%E7%9B%98%E5%AE%89%E8%A3%85Linux%E7%B3%BB%E7%BB%9F%E5%90%8E%E5%A6%82%E4%BD%95%E6%AD%A3%E5%B8%B8%E6%81%A2%E5%A4%8D%E5%AE%B9%E9%87%8F/</id>
+    <published>2022-06-29T02:09:00.000Z</published>
+    <updated>2022-07-19T01:51:41.455Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="使用Windows-系统"><a href="#使用Windows-系统" class="headerlink" title="使用Windows 系统"></a>使用Windows 系统</h2><ol><li>使用cmd</li><li>键入 diskpart</li><li>list disk  And select the U disk (etc: select disk 1 )</li><li>clean</li><li>create partition primary</li><li>format fs fat32(比较耗时)</li></ol>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;使用Windows-系统&quot;&gt;&lt;a href=&quot;#使用Windows-系统&quot; class=&quot;headerlink&quot; title=&quot;使用Windows 系统&quot;&gt;&lt;/a&gt;使用Windows 系统&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;使用cmd&lt;/li&gt;
+&lt;li&gt;键入 diskpa</summary>
+      
+    
+    
+    
+    <category term="杂项" scheme="https://conner.work/categories/%E6%9D%82%E9%A1%B9/"/>
+    
+    
+    <category term="日常软件" scheme="https://conner.work/tags/%E6%97%A5%E5%B8%B8%E8%BD%AF%E4%BB%B6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Ubuntu 18.04 安装 WineHQ版本</title>
+    <link href="https://conner.work/2022/06/29/WineHQ_18.04_install/"/>
+    <id>https://conner.work/2022/06/29/WineHQ_18.04_install/</id>
+    <published>2022-06-29T02:09:00.000Z</published>
+    <updated>2022-07-19T01:51:41.455Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><ol><li><p>安装 libfaudio0 库</p><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cd ~/Desktop</span><br><span class="line">wget https://download.opensuse.org/repositories/Emulators:/Wine:/Debian/xUbuntu_18.04/amd64/libfaudio0_19.07-0~bionic_amd64.deb</span><br><span class="line">wget https://download.opensuse.org/repositories/Emulators:/Wine:/Debian/xUbuntu_18.04/i386/libfaudio0_19.07-0~bionic_i386.deb</span><br><span class="line">sudo dpkg -i libfaudio0_19.07-0~bionic_amd64.deb libfaudio0_19.07-0~bionic_i386.deb</span><br><span class="line">sudo apt --fix-broken install</span><br></pre></td></tr></table></figure></li></ol><h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="如果是-64位系统，需要使能32位架构"><a href="#如果是-64位系统，需要使能32位架构" class="headerlink" title="如果是 64位系统，需要使能32位架构"></a>如果是 64位系统，需要使能32位架构</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo dpkg --add-architecture i386 </span><br></pre></td></tr></table></figure><h3 id="添加key"><a href="#添加key" class="headerlink" title="添加key"></a>添加key</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">wget -nc https://dl.winehq.org/wine-builds/winehq.key</span><br><span class="line">sudo apt-key add winehq.key</span><br></pre></td></tr></table></figure><h3 id="添加对应的软件源"><a href="#添加对应的软件源" class="headerlink" title="添加对应的软件源"></a>添加对应的软件源</h3><table><thead><tr><th>For this version:</th><th>Use this command:</th></tr></thead><tbody><tr><td>Ubuntu 21.10</td><td>sudo add-apt-repository ‘deb <a href="https://dl.winehq.org/wine-builds/ubuntu/">https://dl.winehq.org/wine-builds/ubuntu/</a> impish main’</td></tr><tr><td>Ubuntu 21.04</td><td>sudo add-apt-repository ‘deb <a href="https://dl.winehq.org/wine-builds/ubuntu/">https://dl.winehq.org/wine-builds/ubuntu/</a> hirsute main’</td></tr><tr><td>Ubuntu 20.10</td><td>sudo add-apt-repository ‘deb <a href="https://dl.winehq.org/wine-builds/ubuntu/">https://dl.winehq.org/wine-builds/ubuntu/</a> groovy main’</td></tr><tr><td>Ubuntu 20.04  &#x2F; Linux Mint 20.x</td><td>sudo add-apt-repository ‘deb <a href="https://dl.winehq.org/wine-builds/ubuntu/">https://dl.winehq.org/wine-builds/ubuntu/</a> focal main’</td></tr><tr><td>Ubuntu 18.04  &#x2F;  Linux Mint 19.x</td><td>sudo add-apt-repository ‘deb <a href="https://dl.winehq.org/wine-builds/ubuntu/">https://dl.winehq.org/wine-builds/ubuntu/</a> bionic main’</td></tr></tbody></table><h3 id="更新"><a href="#更新" class="headerlink" title="更新"></a>更新</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo apt update</span><br></pre></td></tr></table></figure><h3 id="安装需要的版本"><a href="#安装需要的版本" class="headerlink" title="安装需要的版本"></a>安装需要的版本</h3><table><thead><tr><th>Stable branch</th><th><code>sudo apt install --install-recommends winehq-stable </code></th></tr></thead><tbody><tr><td>Development branch</td><td><code>sudo apt install --install-recommends winehq-devel </code></td></tr><tr><td>Staging branch</td><td><code>sudo apt install --install-recommends winehq-staging</code></td></tr></tbody></table><h3 id="If-you-have-previously-used-the-distro-packages-you-will-notice-some-differences-in-the-WineHQ-ones"><a href="#If-you-have-previously-used-the-distro-packages-you-will-notice-some-differences-in-the-WineHQ-ones" class="headerlink" title="If you have previously used the distro packages, you will notice some differences in the WineHQ ones:"></a>If you have previously used the distro packages, you will notice some differences in the WineHQ ones:</h3><ul><li><p>Files are installed to &#x2F;opt&#x2F;wine-devel, opt&#x2F;wine-stable, or &#x2F;opt&#x2F;wine-staging (depending on which version you installed).</p></li><li><p>Menu items are not created for Wine’s builtin programs (winecfg, etc.), and if you are upgrading from a distro package that had added them, they will be removed. You can recreate them yourself using your menu editor.</p></li><li><p>Binfmt_misc registration is not added. Consult your distro’s documentation for <a href="http://manpages.ubuntu.com/manpages/jaunty/man8/update-binfmts.8.html">update-binfmts</a> if you wish to do this manually.</p></li><li><p>WineHQ does not at present package wine-gecko or wine-mono. When creating a new wine prefix, you will be asked if you want to download those components. For best compatibility, it is recommended to click Yes here. If the download doesn’t work for you, please follow the instructions on the <a href="http://wiki.winehq.org/Gecko">Gecko</a> and <a href="http://wiki.winehq.org/Mono">Mono</a> wiki pages to install them manually.</p></li><li><p>Beginning with Wine 5.7, the WineHQ Ubuntu packages have an optional debconf setting to enable CAP_NET_RAW to allow applications that need to send and receive raw IP packets to do so. This is disabled by default because it carries a potential security risk, and the vast majority of applications do not need that capability. Users of applications that do need it can enable CAP_NET_RAW after installing Wine by running</p><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">dpkg-reconfigure wine-&lt;branch&gt;-amd64 wine-&lt;branch&gt; wine-&lt;branch&gt;-i386</span><br></pre></td></tr></table></figure></li></ul><h2 id="无网络安装"><a href="#无网络安装" class="headerlink" title="无网络安装"></a>无网络安装</h2><p>  To install Wine on an Ubuntu machine without internet access, you must have access to a second Ubuntu machine (or VM) with an internet connection to download the Wine .deb package and its dependencies.</p><p>On the machine with internet, add the WineHQ repository and run apt update as described above.</p><p>Next, cache just the packages necessary for installing wine, without extracting them:</p><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo apt-get clean</span><br><span class="line">sudo apt-get --download-only install winehq-devel</span><br><span class="line">sudo apt-get --download-only dist-upgrade</span><br></pre></td></tr></table></figure><p>Copy all of the .deb files in &#x2F;var&#x2F;cache&#x2F;apt&#x2F;archives to a USB stick:</p><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cp -R /var/cache/apt/archives/ /media/usb-drive/deb-pkgs/</span><br></pre></td></tr></table></figure><p>Finally, on the machine without internet, install all of the packages from the flash drive:</p><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cd /media/usb-drive/deb-pkgs</span><br><span class="line">sudo dpkg -i *.deb</span><br></pre></td></tr></table></figure><p>The same instructions can also be used for an offline installation of the <code>winehq-staging</code> packages.</p><p>参考链接：<a href="http://wiki.winehq.org/Ubuntu">WineHQ</a></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;准备工作&quot;&gt;&lt;a href=&quot;#准备工作&quot; class=&quot;headerlink&quot; title=&quot;准备工作&quot;&gt;&lt;/a&gt;准备工作&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;安装 libfaudio0 库&lt;/p&gt;
+&lt;figure class=&quot;highlight shell&quot;&gt;&lt;</summary>
+      
+    
+    
+    
+    <category term="杂项" scheme="https://conner.work/categories/%E6%9D%82%E9%A1%B9/"/>
+    
+    
+    <category term="日常软件" scheme="https://conner.work/tags/%E6%97%A5%E5%B8%B8%E8%BD%AF%E4%BB%B6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Beyond compare 4 This license key has been revoked 解决办法</title>
+    <link href="https://conner.work/2022/06/27/BeyondCompare%204%20This%20license%20key%20has%20been%20revoked%20%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/"/>
+    <id>https://conner.work/2022/06/27/BeyondCompare%204%20This%20license%20key%20has%20been%20revoked%20%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</id>
+    <published>2022-06-27T06:59:00.000Z</published>
+    <updated>2022-07-19T01:51:41.451Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h2><ol><li><p>删除配置文件</p><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">rm -rf  ~/.config/bcompare</span><br></pre></td></tr></table></figure></li><li><p>重新破解</p><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cd /usr/lib/beyondcompare/</span><br><span class="line">sudo sed -i &quot;s/keexjEP3t4Mue23hrnuPtY4TdcsqNiJL-5174TsUdLmJSIXKfG2NGPwBL6vnRPddT7tH29qpkneX63DO9ECSPE9rzY1zhThHERg8lHM9IBFT+rVuiY823aQJuqzxCKIE1bcDqM4wgW01FH6oCBP1G4ub01xmb4BGSUG6ZrjxWHJyNLyIlGvOhoY2HAYzEtzYGwxFZn2JZ66o4RONkXjX0DF9EzsdUef3UAS+JQ+fCYReLawdjEe6tXCv88GKaaPKWxCeaUL9PejICQgRQOLGOZtZQkLgAelrOtehxz5ANOOqCaJgy2mJLQVLM5SJ9Dli909c5ybvEhVmIC0dc9dWH+/N9KmiLVlKMU7RJqnE+WXEEPI1SgglmfmLc1yVH7dqBb9ehOoKG9UE+HAE1YvH1XX2XVGeEqYUY-Tsk7YBTz0WpSpoYyPgx6Iki5KLtQ5G-aKP9eysnkuOAkrvHU8bLbGtZteGwJarev03PhfCioJL4OSqsmQGEvDbHFEbNl1qJtdwEriR+VNZts9vNNLk7UGfeNwIiqpxjk4Mn09nmSd8FhM4ifvcaIbNCRoMPGl6KU12iseSe+w+1kFsLhX+OhQM8WXcWV10cGqBzQE9OqOLUcg9n0krrR3KrohstS9smTwEx9olyLYppvC0p5i7dAx2deWvM1ZxKNs0BvcXGukR+/g&quot; BCompare</span><br></pre></td></tr></table></figure></li><li><p>重新打开软件，输入激活码</p><figure class="highlight brainfuck"><table><tr><td class="code"><pre><span class="line"><span class="literal">---</span> <span class="comment">BEGIN LICENSE KEY</span> <span class="literal">---</span></span><br><span class="line"><span class="comment">GXN1eh9FbDiX1ACdd7XKMV7hL7x0ClBJLUJ</span><span class="literal">-</span><span class="comment">zFfKofjaj2yxE53xauIfkqZ8FoLpcZ0Ux6McTyNmODDSvSIHLYhg1QkTxjCeSCk6ARz0ABJcnUmd3dZYJNWFyJun14rmGByRnVPL49QH</span><span class="literal">+</span><span class="comment">Rs0kjRGKCB</span><span class="literal">-</span><span class="comment">cb8IT4Gf0Ue9WMQ1A6t31MO9jmjoYUeoUmbeAQSofvuK8GN1rLRv7WXfUJ0uyvYlGLqzq1ZoJAJDyo0Kdr4ThF</span><span class="literal">-</span><span class="comment">IXcv2cxVyWVW1SaMq8GFosDEGThnY7C</span><span class="literal">-</span><span class="comment">SgNXW30jqAOgiRjKKRX9RuNeDMFqgP2cuf0NMvyMrMScnM1ZyiAaJJtzbxqN5hZOMClUTE</span><span class="literal">+++</span></span><br><span class="line"><span class="literal">---</span> <span class="comment">END LICENSE KEY</span> <span class="literal">-----</span></span><br></pre></td></tr></table></figure></li></ol>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;Linux&quot;&gt;&lt;a href=&quot;#Linux&quot; class=&quot;headerlink&quot; title=&quot;Linux&quot;&gt;&lt;/a&gt;Linux&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;删除配置文件&lt;/p&gt;
+&lt;figure class=&quot;highlight shell&quot;&gt;&lt;table</summary>
+      
+    
+    
+    
+    <category term="杂项" scheme="https://conner.work/categories/%E6%9D%82%E9%A1%B9/"/>
+    
+    
+    <category term="日常软件" scheme="https://conner.work/tags/%E6%97%A5%E5%B8%B8%E8%BD%AF%E4%BB%B6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>创建 WISA隐藏分区步骤</title>
+    <link href="https://conner.work/2022/06/27/%E5%88%9B%E5%BB%BA%20WISA%E9%9A%90%E8%97%8F%E5%88%86%E5%8C%BA%E6%AD%A5%E9%AA%A4/"/>
+    <id>https://conner.work/2022/06/27/%E5%88%9B%E5%BB%BA%20WISA%E9%9A%90%E8%97%8F%E5%88%86%E5%8C%BA%E6%AD%A5%E9%AA%A4/</id>
+    <published>2022-06-27T06:59:00.000Z</published>
+    <updated>2022-07-19T01:51:41.455Z</updated>
+    
+    <content type="html"><![CDATA[<ol><li>使用管理员权限打开命令行终端</li><li>输入<code>diskpart</code> 指令，进入diskpart管理部分；</li><li>输入<code>list disk</code> ；</li><li>选中要目标分区 <code>select  disk 1</code></li><li>输入 <code>rescan</code></li><li>输入 <code>list partition</code>，显示所有的分区；</li><li>选中目标分区 ，<code>select partition 1</code>(假设目标分区的序号为1)；</li><li>输入 <code>set id = 12</code>，此时，即可隐藏分区；</li><li>如果需要取消隐藏，在上一步时，输入  <code>set id = 7</code>，即可。</li></ol>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;ol&gt;
+&lt;li&gt;使用管理员权限打开命令行终端&lt;/li&gt;
+&lt;li&gt;输入&lt;code&gt;diskpart&lt;/code&gt; 指令，进入diskpart管理部分；&lt;/li&gt;
+&lt;li&gt;输入&lt;code&gt;list disk&lt;/code&gt; ；&lt;/li&gt;
+&lt;li&gt;选中要目标分区 &lt;code&gt;selec</summary>
+      
+    
+    
+    
+    <category term="杂项" scheme="https://conner.work/categories/%E6%9D%82%E9%A1%B9/"/>
+    
+    
+    <category term="日常软件" scheme="https://conner.work/tags/%E6%97%A5%E5%B8%B8%E8%BD%AF%E4%BB%B6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Ubuntu下配置Samba实现文件夹共享</title>
+    <link href="https://conner.work/2021/12/27/Ubuntu%E4%B8%8B%E9%85%8D%E7%BD%AESamba%E5%AE%9E%E7%8E%B0%E6%96%87%E4%BB%B6%E5%A4%B9%E5%85%B1%E4%BA%AB/"/>
+    <id>https://conner.work/2021/12/27/Ubuntu%E4%B8%8B%E9%85%8D%E7%BD%AESamba%E5%AE%9E%E7%8E%B0%E6%96%87%E4%BB%B6%E5%A4%B9%E5%85%B1%E4%BA%AB/</id>
+    <published>2021-12-27T07:26:52.000Z</published>
+    <updated>2022-07-19T01:51:41.455Z</updated>
+    
+    <content type="html"><![CDATA[<p><strong>转载文章，<a href="https://www.cnblogs.com/adong7639/p/7832046.html">原链接</a></strong></p><h2 id="Samba安装"><a href="#Samba安装" class="headerlink" title="Samba安装"></a>Samba安装</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo apt-get install samba</span><br><span class="line"> sudo apt-get install cifs-utils</span><br></pre></td></tr></table></figure><h2 id="创建共享目录"><a href="#创建共享目录" class="headerlink" title="创建共享目录"></a>创建共享目录</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mkdir /home/linux/share</span><br><span class="line">sudo chmod 777 /home/linux/share</span><br></pre></td></tr></table></figure><h2 id="创建配置文件"><a href="#创建配置文件" class="headerlink" title="创建配置文件"></a>创建配置文件</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">  #</span><span class="language-bash">save the previous config file.</span></span><br><span class="line">  sudo cp /etc/samba/smb.conf /etc/samba/smb.conf.bak</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">change the config</span></span><br><span class="line">    sudo vim /etc/samba/smb.conf</span><br><span class="line"></span><br></pre></td></tr></table></figure><pre><code> 配置分两种模式</code></pre><h3 id="Share模式"><a href="#Share模式" class="headerlink" title="Share模式"></a>Share模式</h3><p>**所有的用户都可以直接访问不需要用户名和密码，无需samba用户就可以访问服务器 **</p><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[Global]</span><br><span class="line">security = share </span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">在smb.conf最后添加</span></span><br><span class="line"></span><br><span class="line">[share]</span><br><span class="line">      path = /home/linux/share</span><br><span class="line">      available = yes</span><br><span class="line">      browseable = yes</span><br><span class="line">      public = yes</span><br><span class="line">      writable = yes</span><br></pre></td></tr></table></figure><h3 id="User模式"><a href="#User模式" class="headerlink" title="User模式"></a>User模式</h3><p><strong>user级别的samba则需以samba用户和密码才能访问</strong></p><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[Global]</span><br><span class="line">security = user</span><br><span class="line">[share]</span><br><span class="line">      path = /home/linux/share</span><br><span class="line">      available = yes</span><br><span class="line">      browseable = yes</span><br><span class="line">      public = no</span><br><span class="line">      writable = yes</span><br></pre></td></tr></table></figure><h2 id="创建Samba账户"><a href="#创建Samba账户" class="headerlink" title="创建Samba账户"></a>创建Samba账户</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo touch /etc/samba/smbpasswd</span><br><span class="line"> sudo smbpasswd -a linux</span><br></pre></td></tr></table></figure><h2 id="重启Samba服务"><a href="#重启Samba服务" class="headerlink" title="重启Samba服务"></a>重启Samba服务</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo /etc/init.d/smbd restart</span><br></pre></td></tr></table></figure><h2 id="创建盘符"><a href="#创建盘符" class="headerlink" title="创建盘符"></a>创建盘符</h2><h2 id="附件问题"><a href="#附件问题" class="headerlink" title="附件问题"></a>附件问题</h2><p><strong>使用 samba 以读写方式共享的文件夹，为什么从其他计算机访问时所创建的文件属于 nobody &#x2F; nogroup？如何更改默认属主和组？</strong></p><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo vim /etc/samba/smb.conf</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">修改配置文件如下:</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">在 [global] 放入以下内容</span></span><br><span class="line">force user = 帐号</span><br><span class="line">force group = 群组</span><br><span class="line">create mask = 0664</span><br><span class="line">directory mask = 0775</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">存档，重启smbd</span></span><br><span class="line">sudo service smbd restart</span><br><span class="line"></span><br></pre></td></tr></table></figure><h2 id="部分相关指令"><a href="#部分相关指令" class="headerlink" title="部分相关指令"></a>部分相关指令</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"> #</span><span class="language-bash">查看用户</span></span><br><span class="line">sudo pdbedit -L</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">修改密码</span></span><br><span class="line">sudo smbpasswd user</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">删除用户</span></span><br><span class="line">sudo smbpasswd -x user</span><br></pre></td></tr></table></figure>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;&lt;strong&gt;转载文章，&lt;a href=&quot;https://www.cnblogs.com/adong7639/p/7832046.html&quot;&gt;原链接&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;h2 id=&quot;Samba安装&quot;&gt;&lt;a href=&quot;#Samba安装&quot; class=&quot;h</summary>
+      
+    
+    
+    
+    <category term="Linux" scheme="https://conner.work/categories/Linux/"/>
+    
+    <category term="运维" scheme="https://conner.work/categories/Linux/%E8%BF%90%E7%BB%B4/"/>
+    
+    
+    <category term="日常软件" scheme="https://conner.work/tags/%E6%97%A5%E5%B8%B8%E8%BD%AF%E4%BB%B6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Thinkpad e480 ubuntu 18.04 wifi adapter not found</title>
+    <link href="https://conner.work/2018/09/28/Thinkpad-e480-ubuntu-18-04-wifi-adapter-not-found/"/>
+    <id>https://conner.work/2018/09/28/Thinkpad-e480-ubuntu-18-04-wifi-adapter-not-found/</id>
+    <published>2018-09-28T04:19:48.000Z</published>
+    <updated>2022-07-19T01:51:41.451Z</updated>
+    
+    <content type="html"><![CDATA[<p>  公司新配的E480 原装了win10，奈何有时候还要用Linux，系统内存只有8G，开虚拟机有些吃紧，索性直接装 双系统吧。</p><p>安装过程暂且不表，但是，装完后发现，18.04 下竟然没有 WiFi和蓝牙。Google一番，<br>发现了解决方案。</p><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo apt update</span><br><span class="line">sudo apt install build-essential git dkms</span><br><span class="line">git clone https://github.com/tomaspinho/rtl8821ce.git</span><br><span class="line">cd rtl8821ce</span><br><span class="line">sudo ./dkms-install.sh</span><br></pre></td></tr></table></figure><p>最后键入</p><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo modprobe 8821ce</span><br></pre></td></tr></table></figure><p>问题恰恰出在了这儿。之前所有的步骤都ok，或者通过</p><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">make</span><br><span class="line">sudo make install</span><br></pre></td></tr></table></figure><p>的方式，都能够顺利生成 <strong>8821ce.ko</strong> 文件。但是，加载就是失败。报错为 <em>key is not available</em> ， 大意如此。之后只能又遍寻方法，最后通过 关闭 BIOS 中的 Security Boost，重启之后，终获成功。</p><p><strong>Note</strong> ： 安装时，一定要将 BIOS 中的 Security Boost 选项 设置为 关闭（disable）。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;  公司新配的E480 原装了win10，奈何有时候还要用Linux，系统内存只有8G，开虚拟机有些吃紧，索性直接装 双系统吧。&lt;/p&gt;
+&lt;p&gt;安装过程暂且不表，但是，装完后发现，18.04 下竟然没有 WiFi和蓝牙。Google一番，&lt;br&gt;发现了解决方案。&lt;/p&gt;
+&lt;</summary>
+      
+    
+    
+    
+    <category term="编程" scheme="https://conner.work/categories/%E7%BC%96%E7%A8%8B/"/>
+    
+    
+    <category term="Linux" scheme="https://conner.work/tags/Linux/"/>
+    
+    <category term="Qt" scheme="https://conner.work/tags/Qt/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>修改iTunes备份路径</title>
+    <link href="https://conner.work/2018/09/17/%E4%BF%AE%E6%94%B9IiTunes%E5%A4%87%E4%BB%BD%E8%B7%AF%E5%BE%84/"/>
+    <id>https://conner.work/2018/09/17/%E4%BF%AE%E6%94%B9IiTunes%E5%A4%87%E4%BB%BD%E8%B7%AF%E5%BE%84/</id>
+    <published>2018-09-17T12:26:08.000Z</published>
+    <updated>2022-07-19T01:51:41.455Z</updated>
+    
+    <content type="html"><![CDATA[<p>  一直用的是Windows PC，奈何手里有个iPhone，有时候想备份了，备份到电脑吧，iTunes 无脑存C盘，</p><p>  真是让人很无语。搞了个外置硬盘来存备份，网上搜罗了下设置方法，终于找到了，那就是软链接。<br>参见<a href="https://www.howtogeek.com/howto/16226/complete-guide-to-symbolic-links-symlinks-on-windows-or-linux/">如何在Windows或Linux创建链接</a></p><p>简述下步骤：<br>备份的目标路径为H盘。</p><ol><li>在目标磁盘分区下面创建一个名为“Backup”的文件夹。</li><li>将 iTunes 默认备份路径（C:\Users\自己的电脑名\AppData\Roaming\Apple Computer\MobileSync\Backup）下的所有子文件夹（每个子文件夹代表着一个设备的备份目录）复制到刚才建立的 <strong>“H:\Backup”</strong> 文件夹下面。</li><li>删除原始的 C 盘路径下 Backup 文件夹及其下面的所有子文件夹。</li><li>找到 __C:\Windows\System32\cmd.exe__，选择“以管理员身份运行”，打开命令提示符程序，并输入下面字符串命令并按回车执行：<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">　　mklink /D &quot;C:\Users\自己电脑名\AppData\Roaming\Apple Computer\MobileSync\Backup&quot; &quot;H:\Backup&quot;</span><br></pre></td></tr></table></figure></li></ol><p>　　上述命令执行完之后，会自动在 MobileSync 文件夹下建立一个名为 Backup 的镜像文件夹，即 H 盘下的 Backup 文件夹已经映射到原先默认备份路径了。</p><p>　　大功告成。</p><p><strong>注</strong> 文中的方法参考了<a href="https://bbs.feng.com/mobile-news-read-0-684174.html">威锋论坛中的帖子</a>。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;  一直用的是Windows PC，奈何手里有个iPhone，有时候想备份了，备份到电脑吧，iTunes 无脑存C盘，&lt;/p&gt;
+&lt;p&gt;  真是让人很无语。搞了个外置硬盘来存备份，网上搜罗了下设置方法，终于找到了，那就是软链接。&lt;br&gt;参见&lt;a href=&quot;https://w</summary>
+      
+    
+    
+    
+    <category term="杂项" scheme="https://conner.work/categories/%E6%9D%82%E9%A1%B9/"/>
+    
+    
+    <category term="日常软件" scheme="https://conner.work/tags/%E6%97%A5%E5%B8%B8%E8%BD%AF%E4%BB%B6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Linux下Qt5链接MySQL数据库</title>
+    <link href="https://conner.work/2018/08/31/Linux%E4%B8%8BQt5%E9%93%BE%E6%8E%A5MySQL%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    <id>https://conner.work/2018/08/31/Linux%E4%B8%8BQt5%E9%93%BE%E6%8E%A5MySQL%E6%95%B0%E6%8D%AE%E5%BA%93/</id>
+    <published>2018-08-31T08:43:19.000Z</published>
+    <updated>2022-07-19T01:51:41.451Z</updated>
+    
+    <content type="html"><![CDATA[<p>Qt 访问 MySql 需要 2 个库文件，一个是 Qt 自己的 MySql 驱动插件，另一个是 MySql 的动态链接库，缺一不可。在 Qt 程序里加载 MySql 驱动插件，其依赖于MySql 的动态链接库。</p><p>在Windows下，使用Qt5链接MySql应该是一件比较简单的事，但是，Linux下却不见得如此。</p><p>背景介绍：</p><blockquote><p>系统环境：Ubuntu 14.04<br>Qt版本： Qt 5.3.1 (GCC 4.6.1, 32 bit)<br>MySQL版本：5.6</p></blockquote><p>首先我通过官网下载了Qt的安装包，安装了Qt，安装目录为 _~&#x2F;Qt5.3.1_，之后通过apt-get安装了MySql。然后使用了一个简单的程序进行MySql的链接测试，发现报错，错误为</p><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">QSqlDatabase: QMYSQL driver not loaded</span><br><span class="line">QSqlDatabase: available drivers: QSQLITE QMYSQL QMYSQL3 QPSQL QPSQL7  false  </span><br></pre></td></tr></table></figure><p>因为之前在Windows上也遇到了类似的报错，只要找到MySql的安装路径，将libmysql.dll动态库添加到Qt安装目录下的bin目录即可。Linux下又该如何解决呢？</p><p>  是Linux下MySql库的问题，还是Qt当中MySQL驱动插件的问题？通过命令行进入Qt的安装目录，<br><em>connlaio@ubuntu:~&#x2F;Qt5.3.1&#x2F;5.3&#x2F;gcc&#x2F;plugins&#x2F;sqldrivers$</em>  ，在终端中键入</p><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ldd libqsqlmysql.so</span><br><span class="line">libmysqlclient_r.so.16 =&gt; not found ----</span><br></pre></td></tr></table></figure><p>说明 MySQL的动态链接库无法找到，但是，在进入 <em>&#x2F;usr&#x2F;lib&#x2F;</em> 目录下通过find命令发现，MySQL的动态链接库是存在的，不过，名字不同。</p><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"> find -name &quot;libmysql*&quot; -print</span><br><span class="line">./i386-linux-gnu/libmysqlclient_r.so.18</span><br></pre></td></tr></table></figure><p>看来，我们需要重新编译Qt的MySQL驱动插件。找到Qt源码，进入 <em>qtbase&#x2F;src&#x2F;sql&#x2F;</em> 目录，最简单的方法是将目录下的sql工程添加到Qt中，构建MySQL驱动。 编译完成后到 <em>&#x2F;qtbase&#x2F;plugins&#x2F;sqldriver</em> 目录下就能看到生成的动态库。将新的MySQL驱动插件拷贝到对应的 <em>gcc&#x2F;plugins&#x2F;sqldrivers</em> 目录下即可。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;Qt 访问 MySql 需要 2 个库文件，一个是 Qt 自己的 MySql 驱动插件，另一个是 MySql 的动态链接库，缺一不可。在 Qt 程序里加载 MySql 驱动插件，其依赖于MySql 的动态链接库。&lt;/p&gt;
+&lt;p&gt;在Windows下，使用Qt5链接MySql应</summary>
+      
+    
+    
+    
+    <category term="编程" scheme="https://conner.work/categories/%E7%BC%96%E7%A8%8B/"/>
+    
+    
+    <category term="Linux" scheme="https://conner.work/tags/Linux/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Linux 禁止开机动画(Plymouth)</title>
+    <link href="https://conner.work/2018/08/31/Linux-disable-the-Splash-on-start/"/>
+    <id>https://conner.work/2018/08/31/Linux-disable-the-Splash-on-start/</id>
+    <published>2018-08-31T03:07:45.000Z</published>
+    <updated>2022-07-19T01:51:41.451Z</updated>
+    
+    <content type="html"><![CDATA[<p>先介绍下背景。客户使用的公司产品是Debian系统的，老版本的软件中，使用了带有公司logo的开机动画，客户想要去掉。</p><p>因为这些软件和系统的配置都不是我经手的，恰恰接到了这个任务，只好Google+Baidu了。开机动画是Plymouth 定制的主题。先按照这个方向去查找。<br>无果。好吧，意外找到了一个帖子，同样的需求，好消息是，题主解决了问题。</p><p>大概思路是修改grub的启动配置。</p><p>上解决方法。</p><p> <strong>Note</strong> : 以下操作，均使用的是 root 权限，或者 使用 sudo。</p><p>进入 <strong>&#x2F;etc&#x2F;default&#x2F;grub</strong> 目录</p><p>修改内容</p><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">GRUB_CMDLINE_LINUX_DEFAULT=”quiet splash”</span><br></pre></td></tr></table></figure><p><strong>删除值</strong>。</p><p><strong>关键</strong> : 执行命令。</p><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">update-grub</span><br></pre></td></tr></table></figure><p>重启。</p><p><a href="https://help.ubuntu.com/community/Grub2/Setup">参见官方说明</a></p><blockquote><p>GRUB_CMDLINE_LINUX_DEFAULT&#x3D;”quiet splash”</p><p>This line imports any entries to the end of the ‘linux’ line (GRUB legacy’s “kernel” line). The entries are appended to the end of the normal mode only.<br>To view a black screen with boot processes displayed in text, remove “quiet splash”. To see the grub splash image plus a condensed text output, use “splash”.</p></blockquote>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;先介绍下背景。客户使用的公司产品是Debian系统的，老版本的软件中，使用了带有公司logo的开机动画，客户想要去掉。&lt;/p&gt;
+&lt;p&gt;因为这些软件和系统的配置都不是我经手的，恰恰接到了这个任务，只好Google+Baidu了。开机动画是Plymouth 定制的主题。先按照这</summary>
+      
+    
+    
+    
+    <category term="编程" scheme="https://conner.work/categories/%E7%BC%96%E7%A8%8B/"/>
+    
+    
+    <category term="Linux" scheme="https://conner.work/tags/Linux/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>SQL Programming (6): Creating Data Aware Forms</title>
+    <link href="https://conner.work/2018/08/03/SQL%20Programming-6-Creating-Data-Aware-Forms/"/>
+    <id>https://conner.work/2018/08/03/SQL%20Programming-6-Creating-Data-Aware-Forms/</id>
+    <published>2018-08-03T05:10:48.000Z</published>
+    <updated>2022-07-19T01:51:41.451Z</updated>
+    
+    <content type="html"><![CDATA[<p>​    使用上述SQL模块，一个数据库的内容可以使用其他的模型&#x2F;视图模块来表示。对于一些应用程序来说，使用标准的item view 来显示信息已经足够了。然而，在基于用户数据的应用程序往往需要一个基于表格的用户交互界面，并且将数据库中指定行列的数据被填充到窗体的可编辑控件中去。我们可以使用QDataWidgetMapper类来创建上述的数据感知窗体，这个通用的模型&#x2F;视图组件可以将一个模型中的数据和用户界面的指定控件相互映射。QDataWidgetMapper 类针对指定的数据库表，将表中的项按照行或者列进行数据映射。因此，将QDataWidgetMapper 类与一个SQL模型搭配使用 和将其与其他table模型搭配使用一样简单。</p><p><img src="http://doc.qt.io/qt-5/images/qdatawidgetmapper-simple.png" alt="img"></p><p>​    上述 例子很好的说明了使用QDataWidgetMapper类和一些简单的输入控件来访问信息。</p><hr><p>Qt SQL Programming  系列翻译</p><ul><li><a href="/2015/02/11/SQL-Programming-1-Overview/" title="SQL Programming (1): Overview">SQL Programming (1): Overview</a></li><li><a href="/2018/07/23/SQL%20Programming-2-Connection-to-Databases/" title="SQL Programming (2): Connection to Databases">SQL Programming (2): Connection to Databases</a></li><li><a href="/2018/08/01/SQL-Programming-3-Executing-SQL-Statements/" title="SQL Programming (3): Executing SQL Statements">SQL Programming (3): Executing SQL Statements</a></li><li><a href="/2018/08/03/SQL%20Programming-4-Using-the-SQL-Model-Classes/" title="SQL Programming (4): Using the SQL Model Classes">SQL Programming (4): Using the SQL Model Classes</a></li><li><a href="/2018/08/03/SQL%20Programming-5-Presenting-Data-in-a-Table-View/" title="SQL Programming (5): Presenting Data in a Table View">SQL Programming (5): Presenting Data in a Table View</a></li></ul><hr>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;​    使用上述SQL模块，一个数据库的内容可以使用其他的模型&amp;#x2F;视图模块来表示。对于一些应用程序来说，使用标准的item view 来显示信息已经足够了。然而，在基于用户数据的应用程序往往需要一个基于表格的用户交互界面，并且将数据库中指定行列的数据被填充到窗体的</summary>
+      
+    
+    
+    
+    <category term="编程" scheme="https://conner.work/categories/%E7%BC%96%E7%A8%8B/"/>
+    
+    <category term="Qt" scheme="https://conner.work/categories/%E7%BC%96%E7%A8%8B/Qt/"/>
+    
+    <category term="Qt SQL Programming  系列翻译" scheme="https://conner.work/categories/Qt-SQL-Programming-%E7%B3%BB%E5%88%97%E7%BF%BB%E8%AF%91/"/>
+    
+    
+    <category term="翻译" scheme="https://conner.work/tags/%E7%BF%BB%E8%AF%91/"/>
+    
+    <category term="Qt" scheme="https://conner.work/tags/Qt/"/>
+    
+    <category term="SQL" scheme="https://conner.work/tags/SQL/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>SQL Programming (5): Presenting Data in a Table View</title>
+    <link href="https://conner.work/2018/08/03/SQL%20Programming-5-Presenting-Data-in-a-Table-View/"/>
+    <id>https://conner.work/2018/08/03/SQL%20Programming-5-Presenting-Data-in-a-Table-View/</id>
+    <published>2018-08-03T05:05:48.000Z</published>
+    <updated>2022-07-19T01:51:41.451Z</updated>
+    
+    <content type="html"><![CDATA[<p>​    QSqlQueryModel，QSqlTableModel， 和QSqlRelationalTableMode 类可以作为 Qt 视图类（例如QListView，QTableView 和QTreeView）的数据源。实践中，QTableView类是迄今为止最常见的选择，因为SQL结果集基本上是一个二维的数据结构。</p><p><img src="http://doc.qt.io/qt-5/images/relationaltable.png" alt="img"></p><p>​    下面的例子创建了一个基于SQL数据模型的视图：</p><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">QTableView *view = <span class="keyword">new</span> QTableView;</span><br><span class="line"></span><br><span class="line">view-&gt;<span class="built_in">setModel</span>(model);</span><br><span class="line"></span><br><span class="line">view-&gt;<span class="built_in">show</span>();</span><br></pre></td></tr></table></figure><p>​    如果模型是可读写的（例如，QSqlTableModel），那么视图是允许用户修改字段的。你可以通过调用下面的代码来禁止掉用户修改</p><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">view-&gt;<span class="built_in">setEditTriggers</span>(QAbstractItemView::NoEditTriggers);</span><br></pre></td></tr></table></figure><p>​    同一个数据模型可以作为多个视图的数据源。如果用户在其中一个视图中修改了数据模型，那么其他的视图会立刻做出相应的改变。The Table Model 例子说明了它是如何工作的。视图类显示了页眉顶部的标签栏。可以通过调用model中的setHeaderData()函数来修改标题文本。标题的标签文本默认为数据表的字段名。例如：</p><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">model-&gt;<span class="built_in">setHeaderData</span>(<span class="number">0</span>, Qt::Horizontal, QObject::<span class="built_in">tr</span>(<span class="string">&quot;ID&quot;</span>));</span><br><span class="line"></span><br><span class="line">model-&gt;<span class="built_in">setHeaderData</span>(<span class="number">1</span>, Qt::Horizontal, QObject::<span class="built_in">tr</span>(<span class="string">&quot;Name&quot;</span>));</span><br><span class="line"></span><br><span class="line">model-&gt;<span class="built_in">setHeaderData</span>(<span class="number">2</span>, Qt::Horizontal, QObject::<span class="built_in">tr</span>(<span class="string">&quot;City&quot;</span>));</span><br><span class="line"></span><br><span class="line">model-&gt;<span class="built_in">setHeaderData</span>(<span class="number">3</span>, Qt::Horizontal, QObject::<span class="built_in">tr</span>(<span class="string">&quot;Country&quot;</span>));</span><br></pre></td></tr></table></figure><p>​    QTableView 在表的左侧有一个用数字标识行号的垂直表头。如果通过调用 <em>QSqlTableModel::insertRows()</em> 函数来插入一行，那么新的一行将会标有 * 号，直到调用函数 <em>submitAll()</em> ，或者用户移动到其他数据行时被自动提交（假设编辑策略为 QSqlTableModel::OnRowChange），*号才会消失。</p><p><img src="http://doc.qt.io/qt-5/images/insertrowinmodelview.png" alt="img"></p><p>​    同样的，如果使用函数 <em>removeRows()</em> 来移除行，被移除的行会被一个感叹号(!)标记直到更改被提交。视图中的项通过委托（delegate）实现。默认的委托类QItemDelegate可以处理最常见的数据类型（例如int，QString，QImage等）。当用户开始编辑视图中的项时，委托还负责提供编辑工具（例如，组合框）。你也可以通过子类化QAbstractItemDelegate 或者 QItemDelegate 类来实现你自己的委托类。更多的信息，可以查看<a href="qthelp://org.qt-project.qtwidgets.531/qtwidgets/model-view-programming.html">模型视图编程</a>。</p><p>​    QSqlTableModel类针对单表操作进行了优化。如果需要一个可以操作任意结果集的可读写模型，你可以子类化QSqlTableModel，重新实现 <em>flags()</em> 、<em>setData()</em> 函数使其能够读写。下面的两个函数可以使一个查询模型的字段1、2可编辑：</p><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function">Qt::ItemFlags <span class="title">EditableSqlModel::flags</span><span class="params">(<span class="type">const</span> QModelIndex &amp;index)</span> <span class="type">const</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"></span><br><span class="line"> Qt::ItemFlags flags = QSqlQueryModel::<span class="built_in">flags</span>(index);</span><br><span class="line"></span><br><span class="line"> <span class="keyword">if</span> (index.<span class="built_in">column</span>() == <span class="number">1</span> || index.<span class="built_in">column</span>() == <span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">    flags |= Qt::ItemIsEditable;</span><br><span class="line"></span><br><span class="line"> <span class="keyword">return</span> flags;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">EditableSqlModel::setData</span><span class="params">(<span class="type">const</span> QModelIndex &amp;index, <span class="type">const</span> QVariant &amp;value, <span class="type">int</span> <span class="comment">/* role */</span>)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"></span><br><span class="line"> <span class="keyword">if</span> (index.<span class="built_in">column</span>() &lt; <span class="number">1</span> || index.<span class="built_in">column</span>() &gt; <span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line"> QModelIndex primaryKeyIndex = QSqlQueryModel::<span class="built_in">index</span>(index.<span class="built_in">row</span>(), <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"> <span class="type">int</span> id = <span class="built_in">data</span>(primaryKeyIndex).<span class="built_in">toInt</span>();</span><br><span class="line"></span><br><span class="line"> <span class="built_in">clear</span>();</span><br><span class="line"></span><br><span class="line"> <span class="type">bool</span> ok;</span><br><span class="line"></span><br><span class="line"> <span class="keyword">if</span> (index.<span class="built_in">column</span>() == <span class="number">1</span>) &#123;</span><br><span class="line"></span><br><span class="line">    ok = <span class="built_in">setFirstName</span>(id, value.<span class="built_in">toString</span>());</span><br><span class="line"></span><br><span class="line"> &#125; <span class="keyword">else</span> &#123;</span><br><span class="line"></span><br><span class="line">    ok = <span class="built_in">setLastName</span>(id, value.<span class="built_in">toString</span>());</span><br><span class="line"></span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> <span class="built_in">refresh</span>();</span><br><span class="line"></span><br><span class="line"> <span class="keyword">return</span> ok;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>​       函数 <em>setFirstName()</em> 的定义如下：</p><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">bool</span> <span class="title">EditableSqlModel::setFirstName</span><span class="params">(<span class="type">int</span> personId, <span class="type">const</span> QString &amp;firstName)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"></span><br><span class="line"> QSqlQuery query;</span><br><span class="line"></span><br><span class="line"> query.<span class="built_in">prepare</span>(<span class="string">&quot;update person set firstname = ? where id = ?&quot;</span>);</span><br><span class="line"></span><br><span class="line"> query.<span class="built_in">addBindValue</span>(firstName);</span><br><span class="line"></span><br><span class="line"> query.<span class="built_in">addBindValue</span>(personId);</span><br><span class="line"></span><br><span class="line"> <span class="keyword">return</span> query.<span class="built_in">exec</span>();</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>​    函数 <em>setLastName()</em> 类似。完整源代码可以查看 例子<a href="qthelp://org.qt-project.qtsql.531/qtsql/qtsql-querymodel-example.html">Query Model</a> 。</p><p>​    子类化一个模型类可以在很多方面进行定义：可以为项提供提示字符，改变背景色，提供计算后的值，为查看和编辑提供不同的值，处理空值等等。更多细节可以查看 <a href="qthelp://org.qt-project.qtwidgets.531/qtwidgets/model-view-programming.html">Model&#x2F;View Programming</a>以及<a href="qthelp://org.qt-project.qtwidgets.531/qtwidgets/qabstractitemview.html">QAbstractItemView</a>参考文档。</p><p>​    如果你仅仅想要将外键转化为更友好的字符串，你可以使用QSqlRelationalTableModel类。你最好也使用 QSqlRelationalDelegate 类，它提供了组合框控件来更方便的边间外键。</p><p><img src="http://doc.qt.io/qt-5/images/relationaltable.png" alt="img"></p><p>​    <a href="qthelp://org.qt-project.qtsql.531/qtsql/qtsql-relationaltablemodel-example.html">Relational Table Model</a>例子说明了如何使用 QSqlRelationalTableModel 和 QSqlRelationalDelegate类为表提供外键支持。</p><hr><p>Qt SQL Programming  系列翻译</p><ul><li><a href="/2015/02/11/SQL-Programming-1-Overview/" title="SQL Programming (1): Overview">SQL Programming (1): Overview</a></li><li><a href="/2018/07/23/SQL%20Programming-2-Connection-to-Databases/" title="SQL Programming (2): Connection to Databases">SQL Programming (2): Connection to Databases</a></li><li><a href="/2018/08/01/SQL-Programming-3-Executing-SQL-Statements/" title="SQL Programming (3): Executing SQL Statements">SQL Programming (3): Executing SQL Statements</a></li><li><a href="/2018/08/03/SQL%20Programming-4-Using-the-SQL-Model-Classes/" title="SQL Programming (4): Using the SQL Model Classes">SQL Programming (4): Using the SQL Model Classes</a></li><li><a href="/2018/08/03/SQL%20Programming-6-Creating-Data-Aware-Forms/" title="SQL Programming (6): Creating Data Aware Forms">SQL Programming (6): Creating Data Aware Forms</a></li></ul><hr>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;​    QSqlQueryModel，QSqlTableModel， 和QSqlRelationalTableMode 类可以作为 Qt 视图类（例如QListView，QTableView 和QTreeView）的数据源。实践中，QTableView类是迄今为止最常见的</summary>
+      
+    
+    
+    
+    <category term="编程" scheme="https://conner.work/categories/%E7%BC%96%E7%A8%8B/"/>
+    
+    <category term="Qt" scheme="https://conner.work/categories/%E7%BC%96%E7%A8%8B/Qt/"/>
+    
+    <category term="Qt SQL Programming  系列翻译" scheme="https://conner.work/categories/Qt-SQL-Programming-%E7%B3%BB%E5%88%97%E7%BF%BB%E8%AF%91/"/>
+    
+    
+    <category term="翻译" scheme="https://conner.work/tags/%E7%BF%BB%E8%AF%91/"/>
+    
+    <category term="Qt" scheme="https://conner.work/tags/Qt/"/>
+    
+    <category term="SQL" scheme="https://conner.work/tags/SQL/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>SQL Programming (4): Using the SQL Model Classes</title>
+    <link href="https://conner.work/2018/08/03/SQL%20Programming-4-Using-the-SQL-Model-Classes/"/>
+    <id>https://conner.work/2018/08/03/SQL%20Programming-4-Using-the-SQL-Model-Classes/</id>
+    <published>2018-08-03T00:54:47.000Z</published>
+    <updated>2022-07-19T01:51:41.451Z</updated>
+    
+    <content type="html"><![CDATA[<p>除了QSqlQuery类以外，Qt还提供了三个更复杂的访问数据库的类，QSqlQueryModel ,QSqlTableModel, QSqlRelationalTableModel.</p><ul><li><p>QSqlQueryModel : 一个基于任意SQL语句的只读模型</p></li><li><p>QSqlTableModel：一个针对单表的可读写模型</p></li><li><p>QSqlRelationalTableModel： 一个支持外键的QSQLTableModel的子类</p><p>以上的三个类都源于QAbstractTableModel类（这个类继承自QAbstractItemModel），通过和一个Item View类结合（比如QListView、QTableView），使得从一个数据库中呈现数据的更加的简单。在Presenting Data in a Table View 章节，这一过程将会被详细的解释。</p><p>使用这些类也能够让你的代码更加方便的更改为其他的数据源。举个例子，如果你开始使用的是QSqlTableModel类，之后觉得使用XML文档来替代之前使用的数据库来存储数据，那么这本质上只是一个数据模型替换为另一个的问题。</p></li></ul><h2 id="The-SQL-Query-Model"><a href="#The-SQL-Query-Model" class="headerlink" title="The SQL Query Model"></a>The SQL Query Model</h2><p>  QSqlQueryModel 提供了基于一条SQL语句的只读模型。</p><p>  例子：</p><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">QSqlQueryModel model; </span><br><span class="line"></span><br><span class="line">model.<span class="built_in">setQuery</span>(<span class="string">&quot;SELECT * FROM employee&quot;</span>); </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; model.<span class="built_in">rowCount</span>(); ++i) &#123; </span><br><span class="line"></span><br><span class="line"> <span class="type">int</span> id = model.<span class="built_in">record</span>(i).<span class="built_in">value</span>(<span class="string">&quot;id&quot;</span>).<span class="built_in">toInt</span>(); </span><br><span class="line"></span><br><span class="line"> QString name = model.<span class="built_in">record</span>(i).<span class="built_in">value</span>(<span class="string">&quot;name&quot;</span>).<span class="built_in">toString</span>(); </span><br><span class="line"></span><br><span class="line"> <span class="built_in">qDebug</span>() &lt;&lt; id &lt;&lt; name; </span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>  在调用了 <em>QSqlQueryModel::setQuery()</em> 函数设置了查询语句后，你可以使用 <em>QSqlQueryModel::record(int)</em> 来获取指定的查询记录。当然，你也可以使用   <em>QSqlQueryModel::data()</em> 或者其他的继承自QAbstractItemModel的函数。</p><p>​    例外，<em>setQuery()</em> 的一个重载函数支持两个参数，一个是一个QSqlQuery的对象，另外一个是要操作的结果集，也就是数据库。这可以让你更好的使用QSqlQuery的一些特性（比如，prepared queries）。</p><h2 id="The-SQL-Table-Model"><a href="#The-SQL-Table-Model" class="headerlink" title="The SQL Table Model"></a>The SQL Table Model</h2><p>​    QSqlTableModel提供了一个一次可以操作单个SQL表的可读写模型。</p><p>例子：</p><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"> QSqlTableModel model;</span><br><span class="line"></span><br><span class="line"> model.<span class="built_in">setTable</span>(<span class="string">&quot;employee&quot;</span>);</span><br><span class="line"></span><br><span class="line"> model.<span class="built_in">setFilter</span>(<span class="string">&quot;salary &gt; 50000&quot;</span>);</span><br><span class="line"></span><br><span class="line"> model.<span class="built_in">setSort</span>(<span class="number">2</span>, Qt::DescendingOrder);</span><br><span class="line"></span><br><span class="line"> model.<span class="built_in">select</span>();</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; model.<span class="built_in">rowCount</span>(); ++i) &#123;</span><br><span class="line"></span><br><span class="line"> QString name = model.<span class="built_in">record</span>(i).<span class="built_in">value</span>(<span class="string">&quot;name&quot;</span>).<span class="built_in">toString</span>();</span><br><span class="line"></span><br><span class="line"> <span class="type">int</span> salary = model.<span class="built_in">record</span>(i).<span class="built_in">value</span>(<span class="string">&quot;salary&quot;</span>).<span class="built_in">toInt</span>();</span><br><span class="line"></span><br><span class="line"> <span class="built_in">qDebug</span>() &lt;&lt; name &lt;&lt; salary;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>   QSqlTableModel 针对 QSqlQuery，在单表的操作修改上提供了更好的交互方式。这样就使得开发者只需要很少的代码同时摆脱了SQL语法的束缚就能够完成数据操作。</p><p>​   使用 <em>QSqlTableModel:record()</em> 函数可以获得表中的指定行，使用 <em>QSqlTableModel:setRecord()</em> 来修改数据。举个例子，下面的代码会将每个员工的工资提高10%：</p><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; model.<span class="built_in">rowCount</span>(); ++i) &#123;</span><br><span class="line"></span><br><span class="line"> QSqlRecord record = model.<span class="built_in">record</span>(i);</span><br><span class="line"></span><br><span class="line"> <span class="type">double</span> salary = record.<span class="built_in">value</span>(<span class="string">&quot;salary&quot;</span>).<span class="built_in">toInt</span>();</span><br><span class="line"></span><br><span class="line"> salary *= <span class="number">1.1</span>;</span><br><span class="line"></span><br><span class="line"> record.<span class="built_in">setValue</span>(<span class="string">&quot;salary&quot;</span>, salary);</span><br><span class="line"></span><br><span class="line"> model.<span class="built_in">setRecord</span>(i, record);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"> model.<span class="built_in">submitAll</span>();</span><br></pre></td></tr></table></figure><p>​    你也可以使用 <em>QSqlTableModel:data()</em> 和 _QSqlTableModel:setData()_（继承自QAbstractItemModel）来获取数据。例如，下面是如何使用 <em>setData()</em> 函数来更新一条记录：    </p><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">model.<span class="built_in">setData</span>(model.<span class="built_in">index</span>(row, column), <span class="number">75000</span>);</span><br><span class="line"></span><br><span class="line">model.<span class="built_in">submitAll</span>();</span><br></pre></td></tr></table></figure><p>​    以下是如何插入并填充一行数据：</p><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">model.<span class="built_in">insertRows</span>(row, <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">model.<span class="built_in">setData</span>(model.<span class="built_in">index</span>(row, <span class="number">0</span>), <span class="number">1013</span>);</span><br><span class="line"></span><br><span class="line">model.<span class="built_in">setData</span>(model.<span class="built_in">index</span>(row, <span class="number">1</span>), <span class="string">&quot;Peter Gordon&quot;</span>);</span><br><span class="line"></span><br><span class="line">model.<span class="built_in">setData</span>(model.<span class="built_in">index</span>(row, <span class="number">2</span>), <span class="number">68500</span>);</span><br><span class="line"></span><br><span class="line">model.<span class="built_in">submitAll</span>();</span><br></pre></td></tr></table></figure><p>​    以下是如何删除五个连续的行数据：</p><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">model.<span class="built_in">removeRows</span>(row, <span class="number">5</span>);</span><br><span class="line"></span><br><span class="line">model.<span class="built_in">submitAll</span>();</span><br></pre></td></tr></table></figure><p>​    函数 <em>QSqlTableModel:removeRows()</em> 的第一个参数是第一个要被删除行的索引。    </p><p>​    当你修改完成一行记录后，应该调用 <em>QSqlTableModel::submitAll()</em> 函数来保证所有的数据改变都被写入数据库。</p><p>​    至于在什么时候应该调用 <em>submitAll()</em> 函数取决于表的编辑策略（edit strategy）。默认的编辑策略是 _QSqlTableModel::OnRowChange_，即在用户选取不同的行后，向数据库提交更改。其他的策略还有 _QSqlTableModel::OnManualSubmin()_（即缓存所有数据改变，直到调用 <em>submitAll()</em> 函数），_QSqlTableModel::OnFieldChange()_（不缓存更改）。当 QSqlTableModel 和 View 类一起使用时，这些策略是非常有帮助的。</p><p>​    <em>QSqlTableModel::OnFieldChange()</em> 意味着你永远不会显示的调用 <em>submitAll()</em> 函数。尽管如此，这里面也存在这两个误区：</p><ol><li>没有任何缓存，意味着性能会显著下降；</li><li>当你试图增加一个主键时，你来不及对它填充数据。</li></ol><h2 id="The-SQL-Relational-Table-Model"><a href="#The-SQL-Relational-Table-Model" class="headerlink" title="The SQL Relational Table Model"></a>The SQL Relational Table Model</h2><p>​    QSqlRelationalTableModel 是对QSqlTableModel类的扩展，它提供了对外键的支持。一个外键是指一个表中的字段和另外一个表的主键存在一对一的映射关系。举个例子，如果book表中有一个名为 authorid 的字段指的是 author 表中的id字段（id字段是主键），那么 authorid 就是一个外键。</p><p>​        <img src="http://doc.qt.io/qt-5/images/noforeignkeys.png" alt="img"></p><p>​        <img src="http://doc.qt.io/qt-5/images/foreignkeys.png" alt="img"></p><p>​        第一副截图是在 QTableView 里使用了一个简单的QSqlTableModel。外键（city和Country）并没有被转化为可读值。第二幅截图使用的是QSqlRelationalTableModel，外键值被解析为可读的文本字符。</p><p>​    下面的代码片段演示了如何创建一个QSqlRelationalTableModel：</p><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">model-&gt;<span class="built_in">setTable</span>(<span class="string">&quot;employee&quot;</span>);</span><br><span class="line"></span><br><span class="line">model-&gt;<span class="built_in">setRelation</span>(<span class="number">2</span>, <span class="built_in">QSqlRelation</span>(<span class="string">&quot;city&quot;</span>, <span class="string">&quot;id&quot;</span>, <span class="string">&quot;name&quot;</span>));</span><br><span class="line"></span><br><span class="line">model-&gt;<span class="built_in">setRelation</span>(<span class="number">3</span>, <span class="built_in">QSqlRelation</span>(<span class="string">&quot;country&quot;</span>, <span class="string">&quot;id&quot;</span>, <span class="string">&quot;name&quot;</span>));</span><br></pre></td></tr></table></figure><p>​    详细用法，请查看QSqlRelationalTableModel的文档。</p><hr><p>Qt SQL Programming  系列翻译</p><ul><li><a href="/2015/02/11/SQL-Programming-1-Overview/" title="SQL Programming (1): Overview">SQL Programming (1): Overview</a></li><li><a href="/2018/07/23/SQL%20Programming-2-Connection-to-Databases/" title="SQL Programming (2): Connection to Databases">SQL Programming (2): Connection to Databases</a></li><li><a href="/2018/08/01/SQL-Programming-3-Executing-SQL-Statements/" title="SQL Programming (3): Executing SQL Statements">SQL Programming (3): Executing SQL Statements</a></li><li><a href="/2018/08/03/SQL%20Programming-5-Presenting-Data-in-a-Table-View/" title="SQL Programming (5): Presenting Data in a Table View">SQL Programming (5): Presenting Data in a Table View</a></li><li><a href="/2018/08/03/SQL%20Programming-6-Creating-Data-Aware-Forms/" title="SQL Programming (6): Creating Data Aware Forms">SQL Programming (6): Creating Data Aware Forms</a></li></ul><hr>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;除了QSqlQuery类以外，Qt还提供了三个更复杂的访问数据库的类，QSqlQueryModel ,QSqlTableModel, QSqlRelationalTableModel.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;QSqlQueryModel : 一个基于任意SQL语句</summary>
+      
+    
+    
+    
+    <category term="编程" scheme="https://conner.work/categories/%E7%BC%96%E7%A8%8B/"/>
+    
+    <category term="Qt" scheme="https://conner.work/categories/%E7%BC%96%E7%A8%8B/Qt/"/>
+    
+    <category term="Qt SQL Programming  系列翻译" scheme="https://conner.work/categories/Qt-SQL-Programming-%E7%B3%BB%E5%88%97%E7%BF%BB%E8%AF%91/"/>
+    
+    
+    <category term="翻译" scheme="https://conner.work/tags/%E7%BF%BB%E8%AF%91/"/>
+    
+    <category term="Qt" scheme="https://conner.work/tags/Qt/"/>
+    
+    <category term="SQL" scheme="https://conner.work/tags/SQL/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>SQL Programming (3): Executing SQL Statements</title>
+    <link href="https://conner.work/2018/08/01/SQL-Programming-3-Executing-SQL-Statements/"/>
+    <id>https://conner.work/2018/08/01/SQL-Programming-3-Executing-SQL-Statements/</id>
+    <published>2018-08-01T05:02:48.000Z</published>
+    <updated>2022-07-19T01:51:41.451Z</updated>
+    
+    <content type="html"><![CDATA[<p>  QSqlQuery 类为执行SQL语句和浏览查询结果上提供了交互接口。</p><p>  QSqlQueryModel 和QSqlTableModel在访问数据库上提供了更抽象的接口，这两个类将在下一部分进行说明。如果你不熟悉SQL，那么你可以直接查看下一部分<br>  <a href="/2018/08/03/SQL%20Programming-4-Using-the-SQL-Model-Classes/" title="Using the SQL Model Class">Using the SQL Model Class</a> 。</p><h2 id="执行一条语句"><a href="#执行一条语句" class="headerlink" title="执行一条语句"></a>执行一条语句</h2><p>  要执行一条SQL语句，你可以创建一个QSqlQuery 对象，然后调用 <em>QSqlQuery:exec()</em> 函数，如下：</p><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">QSqlQuery query;</span><br><span class="line">query.<span class="built_in">exec</span>(<span class="string">&quot;SELECT name, salary FROM employee WHERE salary &gt; 50000&quot;</span>);</span><br></pre></td></tr></table></figure><p>  QSqlQuery 的构造函数接受一个可选的QSqlDatabase对象作为参数，用来指定要使用的数据库。在上述例子中，QSqlQuery 对象在构造时没有传参来指定数据库，所以会使用默认的数据库连接。如果发生了错误，<em>exec()</em> 函数会返回false。之后可以使用 <em>QSqlQuery:lastError()</em> 函数来查看错误。</p><h2 id="浏览查询结果"><a href="#浏览查询结果" class="headerlink" title="浏览查询结果"></a>浏览查询结果</h2><p>  QSqlQuery 类可以逐一访问结果集的每一条记录。在调用 <em>exec()</em> 函数后，QSqlQuery 的内部指针会指向第一条记录之前的位置。我们必须调用 <em>QSqlQuery:next()</em> 函数将指针指向第一条记录，之后通过反复调用 <em>next()</em> 函数来获取其他记录，直到 <em>next()</em> 函数返回false。以下是一个典型的循环来遍历所有记录:</p><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">while</span> (query.<span class="built_in">next</span>()) &#123;</span><br><span class="line">    QString name = query.<span class="built_in">value</span>(<span class="number">0</span>).<span class="built_in">toString</span>();</span><br><span class="line">    <span class="type">int</span> salary = query.<span class="built_in">value</span>(<span class="number">1</span>).<span class="built_in">toInt</span>();</span><br><span class="line">    <span class="built_in">qDebug</span>() &lt;&lt; name &lt;&lt; salary;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p> <em>QSqlQuery:value()</em> 函数返回当前记录的指定字段的值。字段从0开始进行索引。 <em>QSqlQuery::value()</em> 函数返回一个QVariant类对象，它支持各种C++和Qt的核心数据类型，例如int，QString，QByteArray。数据库中不同的类型会自动映射到Qt中最接近等效的类型。在代码中，通过调用 <em>QVariant:toString()</em> 和 <em>QVariant:toInt()</em> 函数将变体类型分别转换为QString类型和int类型。对Qt所支持的数据库类型的推荐概述，请参见此表。你可以使用 <em>QSqlQuery::next()</em> , <em>QSqlQuery::previous()</em>, <em>QSqlQuery::first()</em>, <em>QSqlQuery::last()</em>, 和 <em>QSqlQuery::seek()</em> 函数对结果集进行反复查询。可以使用 <em>QSqlQuery:at()</em> 函数来获取当前行的索引，在数据库支持的情况下，可以使用 <em>QSqlQuery:size()</em> 函数来获取结果集的总行数。使用 <em>QSQLDriver:hasFeature()</em> 函数可以确定一个数据库是否支持给定的特性。在下面的例子中，如果数据库支持size特性，通过调用 <em>QSqlQuery:size()</em> 函数来获取结果集的记录数，不然，通过访问最后一条记录，利用记录的位置来总的记录数。</p><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">QSqlQuery query;</span><br><span class="line"><span class="type">int</span> numRows;</span><br><span class="line">query.<span class="built_in">exec</span>(<span class="string">&quot;SELECT name, salary FROM employee WHERE salary &gt; 50000&quot;</span>);</span><br><span class="line">QSqlDatabase defaultDB = QSqlDatabase::<span class="built_in">database</span>();</span><br><span class="line"><span class="keyword">if</span> (defaultDB.<span class="built_in">driver</span>()-&gt;<span class="built_in">hasFeature</span>(QSqlDriver::QuerySize)) &#123;</span><br><span class="line">numRows = query.<span class="built_in">size</span>();</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line"> <span class="comment">// this can be very slow</span></span><br><span class="line"> query.<span class="built_in">last</span>();</span><br><span class="line"> numRows = query.<span class="built_in">at</span>() + <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>  如果你在遍历结果时只通过传递正整数值来调用函数 <em>next()</em>, _seek()_，那么，你可以在调用 <em>exec()</em> 函数前，调用 _QSqlQuery::setForwardOnly(true)_。在针对大数据结果集进行操作时，这个简单的做法会显著的加快查询的速度。</p><h2 id="插入，更新，删除记录"><a href="#插入，更新，删除记录" class="headerlink" title="插入，更新，删除记录"></a>插入，更新，删除记录</h2><p>  QSqlQuery 类可以执行任意的SQL语句，不单单是select。下面的例子说明了如何使用insert 将一条记录插入数据表中：</p><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">QSqlQuery query;</span><br><span class="line">query.<span class="built_in">exec</span>(<span class="string">&quot;INSERT INTO employee (id, name, salary) &quot;</span></span><br><span class="line"> <span class="string">&quot;VALUES (1001, &#x27;Thad Beaumont&#x27;, 65000)&quot;</span>);</span><br></pre></td></tr></table></figure><p>  如果你想要同时插入多条记录，那么将真实的数据和SQL语句分开是一种比较有效的做法。这就要用到占位符。Qt支持两种占位符语法：命名绑定和位置绑定。下面是命名绑定的例子：</p><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">QSqlQuery query;</span><br><span class="line">query.<span class="built_in">prepare</span>(<span class="string">&quot;INSERT INTO employee (id, name, salary) &quot;</span></span><br><span class="line"><span class="string">&quot;VALUES (:id, :name, :salary)&quot;</span>);</span><br><span class="line">query.<span class="built_in">bindValue</span>(<span class="string">&quot;:id&quot;</span>, <span class="number">1001</span>);</span><br><span class="line">query.<span class="built_in">bindValue</span>(<span class="string">&quot;:name&quot;</span>, <span class="string">&quot;Thad Beaumont&quot;</span>);</span><br><span class="line">query.<span class="built_in">bindValue</span>(<span class="string">&quot;:salary&quot;</span>, <span class="number">65000</span>);</span><br><span class="line">query.<span class="built_in">exec</span>();</span><br></pre></td></tr></table></figure><p>位置绑定示例：</p><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">QSqlQuery query;</span><br><span class="line">query.<span class="built_in">prepare</span>(<span class="string">&quot;INSERT INTO employee (id, name, salary) &quot;</span></span><br><span class="line"><span class="string">&quot;VALUES (?, ?, ?)&quot;</span>);</span><br><span class="line">query.<span class="built_in">addBindValue</span>(<span class="number">1001</span>);</span><br><span class="line">query.<span class="built_in">addBindValue</span>(<span class="string">&quot;Thad Beaumont&quot;</span>);</span><br><span class="line">query.<span class="built_in">addBindValue</span>(<span class="number">65000</span>);</span><br><span class="line">query.<span class="built_in">exec</span>();</span><br></pre></td></tr></table></figure><p>  以上两种语法在Qt支持的数据库中都是有效的。如果数据库本就支持上述语法，那么Qt就会简单的将语句转发给数据库系统进行执行；否则，Qt会通过预处理查询来模拟占位符语法。最后，数据库执行的真正语句可以通过 <em>QSqlQuery:executedQuery()</em> 函数获得。需要插入多条记录时，只需要提前调用一次 <em>QSqlQuery:prepare()</em> 函数。之后你可以在调用 <em>exec()</em> 函数之前，根据需要调用 <em>bindValue()</em> 或者 <em>addBindValue()</em> 函数。除了性能，使用占位符的另外一个优点在于，你可以指定任意值而不用担心转义字符的问题。</p><p>  更新一条记录和插入记录类似：</p><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">QSqlQuery query;</span><br><span class="line">query.<span class="built_in">exec</span>(<span class="string">&quot;UPDATE employee SET salary = 70000 WHERE id = 1003&quot;</span>);</span><br></pre></td></tr></table></figure><p>  你同样可以使用命名绑定或者位置绑定将参数值和真值关联起来。</p><p>  最后，这是删除语句的例子：</p><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">QSqlQuery query;</span><br><span class="line">query.<span class="built_in">exec</span>(<span class="string">&quot;DELETE FROM employee WHERE id = 1007&quot;</span>);</span><br></pre></td></tr></table></figure><h2 id="事务处理"><a href="#事务处理" class="headerlink" title="事务处理"></a>事务处理</h2><p>  如果基础数据库引擎支持事务处理，那么 <em>QSqlDriver::hasFeature(QSqlDriver::Transactions)</em> 函数的返回值为true。首先使用 <em>QSqlDatabase::transaction()</em> 来启动事务，其次为要执行的SQL命令，最后调用 <em>QSqlDatabase::commit()</em> 或者 <em>QSqlDatabase::rollback()</em> 函数。当使用事务创建查询之前，首先要启动事务。</p><p>例子：</p><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">QSqlDatabase::<span class="built_in">database</span>().<span class="built_in">transaction</span>();</span><br><span class="line">QSqlQuery query;</span><br><span class="line">query.<span class="built_in">exec</span>(<span class="string">&quot;SELECT id FROM employee WHERE name = &#x27;Torild Halvorsen&#x27;&quot;</span>);</span><br><span class="line"><span class="keyword">if</span> (query.<span class="built_in">next</span>()) &#123;</span><br><span class="line"> <span class="type">int</span> employeeId = query.<span class="built_in">value</span>(<span class="number">0</span>).<span class="built_in">toInt</span>();</span><br><span class="line"> query.<span class="built_in">exec</span>(<span class="string">&quot;INSERT INTO project (id, name, ownerid) &quot;</span></span><br><span class="line"> <span class="string">&quot;VALUES (201, &#x27;Manhattan Project&#x27;, &quot;</span></span><br><span class="line"> + QString::<span class="built_in">number</span>(employeeId) + <span class="string">&#x27;)&#x27;</span>);</span><br><span class="line">&#125;</span><br><span class="line">QSqlDatabase::<span class="built_in">database</span>().<span class="built_in">commit</span>();</span><br></pre></td></tr></table></figure><p>  事务机制的使用是用来保证一个复杂操作的原子性（举个例子，查询一个外键和增加一条记录），或是提供一种消除中间复杂性变化的手段。</p><hr><p>Qt SQL Programming  系列翻译</p><ul><li><a href="/2015/02/11/SQL-Programming-1-Overview/" title="SQL Programming (1): Overview">SQL Programming (1): Overview</a></li><li><a href="/2018/07/23/SQL%20Programming-2-Connection-to-Databases/" title="SQL Programming (2): Connection to Databases">SQL Programming (2): Connection to Databases</a></li><li><a href="/2018/08/03/SQL%20Programming-4-Using-the-SQL-Model-Classes/" title="SQL Programming (4): Using the SQL Model Classes">SQL Programming (4): Using the SQL Model Classes</a></li><li><a href="/2018/08/03/SQL%20Programming-5-Presenting-Data-in-a-Table-View/" title="SQL Programming (5): Presenting Data in a Table View">SQL Programming (5): Presenting Data in a Table View</a></li><li><a href="/2018/08/03/SQL%20Programming-6-Creating-Data-Aware-Forms/" title="SQL Programming (6): Creating Data Aware Forms">SQL Programming (6): Creating Data Aware Forms</a></li></ul><hr>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;  QSqlQuery 类为执行SQL语句和浏览查询结果上提供了交互接口。&lt;/p&gt;
+&lt;p&gt;  QSqlQueryModel 和QSqlTableModel在访问数据库上提供了更抽象的接口，这两个类将在下一部分进行说明。如果你不熟悉SQL，那么你可以直接查看下一部分&lt;br&gt; </summary>
+      
+    
+    
+    
+    <category term="编程" scheme="https://conner.work/categories/%E7%BC%96%E7%A8%8B/"/>
+    
+    <category term="Qt" scheme="https://conner.work/categories/%E7%BC%96%E7%A8%8B/Qt/"/>
+    
+    <category term="Qt SQL Programming  系列翻译" scheme="https://conner.work/categories/Qt-SQL-Programming-%E7%B3%BB%E5%88%97%E7%BF%BB%E8%AF%91/"/>
+    
+    
+    <category term="翻译" scheme="https://conner.work/tags/%E7%BF%BB%E8%AF%91/"/>
+    
+    <category term="Qt" scheme="https://conner.work/tags/Qt/"/>
+    
+    <category term="SQL" scheme="https://conner.work/tags/SQL/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Elasticsearch 6.3 参考文档（1）</title>
+    <link href="https://conner.work/2018/07/24/Elasticsearch6-3Reference/"/>
+    <id>https://conner.work/2018/07/24/Elasticsearch6-3Reference/</id>
+    <published>2018-07-24T13:12:28.000Z</published>
+    <updated>2022-07-19T01:51:41.451Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><p>  Elasticsearch 是一个开源的，高度可扩展性的全文检索和分析引擎。它允许你在近乎实时下存储，搜索，分析大量数据。它通常用作底层引擎（技术），为具有复杂搜索功能和要求的应用程序提供支持。</p><p>以下是Elasticsearch的一些简单用例：</p><ul><li>你运行了一个允许用户检索所售商品的在线商店。在这个例子中，你可以使用Elasticsearch保存你的所有商品库存和目录，在用户搜索的时候提供建议。</li><li>你想要收集日志和交易数据，通过分析和挖掘这些数据来查看交易趋势，统计信息，总结和异常情况。在这个例子中，你可以使用 Logstash（Elasticsearch，Logstash，Kibana Stack的一部分功能）来收集，整合，分析这些数据，然后使用Logstash将结果反馈给Elasticsearch。一旦Elasticsearch获取了这些数据，你就可以通过查找，聚合来挖掘你所感兴趣的任何信息。</li><li>你运行了一个价格预警平台，它允许精打细算的客户制定一些规则。例如，我想买一个电子产品，在未来一个月内，如果有供应商的价格低于 xxx 的时候，我能够接到通知。在这个例子中，需要收集所有供应商的定价信息，然后推送到Elasticsearch中，通过Elasticsearch的反查找（过滤器）功能，将商品价格的变动和客户的需求进行匹配，一旦条件满足，则向客户发出通知。</li><li>假设你有数据分析或商业智能的需求，需要在大量数据的基础上（假设有百万条，甚至几十亿条数据）进行快速的调研，分析，可视化，定制化问卷。在这个例子里，你可以使用Elasticsearch存储数据，之后使用Kibana（Elasticsearch&#x2F;Logstash&#x2F;Kibana 的部分功能）来创建定制化的仪表盘，以实现重要数据的可视化。另外，基于这些数据，你可以使用Elasticsearch的聚合功能来执行复杂的商业信息查询工作。</li></ul><p>接下来的教程，将引导你安装运行Elasticsearch，了解其中的机理，执行索引，查找，修改数据等一些基础操作。在教程结束的时候，你应该对于Elasticsearch有了一定的了解，知道Elasticsearch 是什么，它是怎么工作的，希望你能够受到一些启发，利用它创建复杂的搜索应用程序，或者进行数据挖掘的工作。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;开始&quot;&gt;&lt;a href=&quot;#开始&quot; class=&quot;headerlink&quot; title=&quot;开始&quot;&gt;&lt;/a&gt;开始&lt;/h2&gt;&lt;p&gt;  Elasticsearch 是一个开源的，高度可扩展性的全文检索和分析引擎。它允许你在近乎实时下存储，搜索，分析大量数据。它通常用作底层</summary>
+      
+    
+    
+    
+    <category term="编程" scheme="https://conner.work/categories/%E7%BC%96%E7%A8%8B/"/>
+    
+    <category term="Elasticsearch 6.3 系列翻译" scheme="https://conner.work/categories/Elasticsearch-6-3-%E7%B3%BB%E5%88%97%E7%BF%BB%E8%AF%91/"/>
+    
+    
+    <category term="Elasticsearch" scheme="https://conner.work/tags/Elasticsearch/"/>
+    
+    <category term="翻译" scheme="https://conner.work/tags/%E7%BF%BB%E8%AF%91/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>SQL Programming (2): Connection to Databases</title>
+    <link href="https://conner.work/2018/07/23/SQL%20Programming-2-Connection-to-Databases/"/>
+    <id>https://conner.work/2018/07/23/SQL%20Programming-2-Connection-to-Databases/</id>
+    <published>2018-07-23T12:57:47.000Z</published>
+    <updated>2022-07-19T01:51:41.451Z</updated>
+    
+    <content type="html"><![CDATA[<p>使用 QSqlQuery 或者 QSqlQueryModel 可以访问数据库，创建并打开一个或多个数据库连接。数据库连接通常是使用连接名而不是数据库名来区分彼此。你可以针对一个数据库创建多个连接。 QSqlDatabase 类创建数据库连接时，如果没有指定连接名，那么就为默认连接。当调用 QSqlQuery 或者 QSqlQueryModel 的成员函数（有一个参数为数据库连接名）时，如果未传递数据库的连接名称， 那么默认的数据库连接就会被使用。当你的应用程序只需要一个数据库连接时，那么创建一个默认连接无疑是方便的。</p><p>​ <strong>注意</strong>：创建一个数据库连接和打开是不同的。创建一个连接涉及到实例化 QSqlDatabase 类，当打开它时，连接才会启用。下面的代码片段演示了如何创建一个默认的数据库连接，然后打开它：</p><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">QSqlDatabase db = QSqlDatabase::<span class="built_in">addDatabase</span>(<span class="string">&quot;QMYSQL&quot;</span>);</span><br><span class="line">db.<span class="built_in">setHostName</span>(<span class="string">&quot;bigblue&quot;</span>);</span><br><span class="line">db.<span class="built_in">setDatabaseName</span>(<span class="string">&quot;flightdb&quot;</span>);</span><br><span class="line">db.<span class="built_in">setUserName</span>(<span class="string">&quot;acarlson&quot;</span>);</span><br><span class="line">db.<span class="built_in">setPassword</span>(<span class="string">&quot;1uTbSbAs&quot;</span>);</span><br><span class="line"><span class="type">bool</span> ok = db.<span class="built_in">open</span>();</span><br></pre></td></tr></table></figure><p>​  第一行，创建一个数据库连接对象，最后一行是打开数据库连接，之后使用。在此期间，我们初始化了一些连接信息，包括数据库名，主机名，用户名和密码。上述例子中，我们连接了一个 bigblue 主机上的名为 flightdb 的MySQL数据库。函数 <em>addDatabase()</em> 的参数 “QMYSQL”指定了连接使用的数据库驱动类型。Qt所包含的数据库驱动集都列于支持的数据库驱动表中。 在上述代码段中，由于我们没有给 <em>addDatabase()</em> 函数的第二个参数连接名传递参数，所以，上述的连接会成为默认连接。举个例子，接下来我们创建了两个MySQL数据的连接，并分别命名为”first” 和”second”：</p><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">QSqlDatabase firstDB = QSqlDatabase::<span class="built_in">addDatabase</span>(<span class="string">&quot;QMYSQL&quot;</span>, <span class="string">&quot;first&quot;</span>);</span><br><span class="line">QSqlDatabase secondDB = QSqlDatabase::<span class="built_in">addDatabase</span>(<span class="string">&quot;QMYSQL&quot;</span>, <span class="string">&quot;second&quot;</span>);</span><br></pre></td></tr></table></figure><p>​ 在上述两个连接的信息初始化之后，针对每个连接调用open函数来建立真正的连接。如果调用open函数失败，那么返回值为false。这样的话，我们可以调用 <em>QSqlDatabase::lastError()</em> 函数来获取错误信息。一旦一个连接建立之后，我们就可以在任何地方调用 <em>QSqlDatabase::database()</em> 静态函数来获取这个数据库连接的指针。如果我们没有指定连接名，那么我们将会得到默认连接的指针。</p><p>​举个例子：</p><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">QSqlDatabase defaultDB = QSqlDatabase::<span class="built_in">database</span>();</span><br><span class="line">QSqlDatabase firstDB = QSqlDatabase::<span class="built_in">database</span>(<span class="string">&quot;first&quot;</span>);</span><br><span class="line">QSqlDatabase secondDB = QSqlDatabase::<span class="built_in">database</span>(<span class="string">&quot;second&quot;</span>);</span><br></pre></td></tr></table></figure><p>​如果要移除一个数据库连接，首先调用 <em>QSqlDatabase::close()</em> 来关闭数据库，之后使用静态函数 <em>QSqlDatabase::removeDatabase()</em> 来移除。</p><hr><p>Qt SQL Programming  系列翻译</p><ul><li><a href="/2015/02/11/SQL-Programming-1-Overview/" title="SQL Programming (1): Overview">SQL Programming (1): Overview</a></li><li><a href="/2018/08/01/SQL-Programming-3-Executing-SQL-Statements/" title="SQL Programming (3): Executing SQL Statements">SQL Programming (3): Executing SQL Statements</a></li><li><a href="/2018/08/03/SQL%20Programming-4-Using-the-SQL-Model-Classes/" title="SQL Programming (4): Using the SQL Model Classes">SQL Programming (4): Using the SQL Model Classes</a></li><li><a href="/2018/08/03/SQL%20Programming-5-Presenting-Data-in-a-Table-View/" title="SQL Programming (5): Presenting Data in a Table View">SQL Programming (5): Presenting Data in a Table View</a></li><li><a href="/2018/08/03/SQL%20Programming-6-Creating-Data-Aware-Forms/" title="SQL Programming (6): Creating Data Aware Forms">SQL Programming (6): Creating Data Aware Forms</a></li></ul><hr>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;使用 QSqlQuery 或者 QSqlQueryModel 可以访问数据库，创建并打开一个或多个数据库连接。数据库连接通常是使用连接名而不是数据库名来区分彼此。你可以针对一个数据库创建多个连接。 QSqlDatabase 类创建数据库连接时，如果没有指定连接名，那么就为默</summary>
+      
+    
+    
+    
+    <category term="编程" scheme="https://conner.work/categories/%E7%BC%96%E7%A8%8B/"/>
+    
+    <category term="Qt" scheme="https://conner.work/categories/%E7%BC%96%E7%A8%8B/Qt/"/>
+    
+    <category term="Qt SQL Programming  系列翻译" scheme="https://conner.work/categories/Qt-SQL-Programming-%E7%B3%BB%E5%88%97%E7%BF%BB%E8%AF%91/"/>
+    
+    
+    <category term="翻译" scheme="https://conner.work/tags/%E7%BF%BB%E8%AF%91/"/>
+    
+    <category term="Qt" scheme="https://conner.work/tags/Qt/"/>
+    
+    <category term="SQL" scheme="https://conner.work/tags/SQL/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Ubuntu 14.04 Qt5.3.1 Fcitx 输入法支持中文</title>
+    <link href="https://conner.work/2018/07/22/Ubuntu14%E4%B8%8BQt5-3-1%E5%AE%89%E8%A3%85%E4%B8%AD%E6%96%87%E8%BE%93%E5%85%A5%E6%B3%95%E6%94%AF%E6%8C%81/"/>
+    <id>https://conner.work/2018/07/22/Ubuntu14%E4%B8%8BQt5-3-1%E5%AE%89%E8%A3%85%E4%B8%AD%E6%96%87%E8%BE%93%E5%85%A5%E6%B3%95%E6%94%AF%E6%8C%81/</id>
+    <published>2018-07-22T12:57:47.000Z</published>
+    <updated>2022-07-19T01:51:41.455Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="安装fcitx-for-Qt5动态库"><a href="#安装fcitx-for-Qt5动态库" class="headerlink" title="安装fcitx for Qt5动态库"></a>安装fcitx for Qt5动态库</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo apt-get install fcitx-libs-qt5</span><br></pre></td></tr></table></figure><p><strong>注</strong>：这一个命令执行完毕后，系统中已经具备基于Qt5的程序的汉字录入环境支持。存在一个奇怪现象是，Qt5所带的Qt Creator依然无法切换输入法，而且刚刚编译的程序，也无法录入汉字，但卸载掉Qt5开发环境后，刚刚编译的程序居然可以切换输入法，录入汉字了。这个现象说明，卸载Qt5开发环境后，同样的程序，使用系统提供的依赖库环境，录入汉字问题消失。问题出在Qt5开发环境缺少fcix for Qt5动态库上面。</p><h2 id="向Qt5开发环境安装fcitx-for-Qt5支持"><a href="#向Qt5开发环境安装fcitx-for-Qt5支持" class="headerlink" title="向Qt5开发环境安装fcitx for Qt5支持"></a>向Qt5开发环境安装fcitx for Qt5支持</h2><p>进入 <em>&#x2F;Qt5.3.1&#x2F;Tools&#x2F;QtCreator&#x2F;bin&#x2F;plugins&#x2F;platforminputcontexts</em> 目录发现</p><p>官网提供的安装包仅仅有 _libibusplatforminputcontextplugin.so_，对ibus输入法的支持</p><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cd ~/Qt5.3.1/Tools/QtCreator/bin/plugins/platforminputcontexts</span><br><span class="line">cp /usr/lib/x86_64-linux-gnu/qt5/plugins/platforminputcontexts/libfcitxplatforminputcontextplugin.so .</span><br><span class="line"></span><br><span class="line">chmod +x  libfcitxplatforminputcontextplugin.so</span><br><span class="line"></span><br></pre></td></tr></table></figure><p>上面解决了Qt5 Creator汉字输入问题，新编译的程序运行库环境目录是_~&#x2F;Qt5.3.1&#x2F;5.3&#x2F;gcc_64&#x2F;plugins&#x2F;platforminputcontexts$_</p><p>依然执行如下命令</p><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cd ~/Qt5.3.1/5.3/gcc_64/plugins/platforminputcontexts$</span><br><span class="line"></span><br><span class="line">cp /usr/lib/x86_64-linux-gnu/qt5/plugins/platforminputcontexts/libfcitxplatforminputcontextplugin.so .</span><br><span class="line"></span><br><span class="line">chmod +x  libfcitxplatforminputcontextplugin.so</span><br><span class="line"></span><br></pre></td></tr></table></figure><p>同时需要在终端中对配置文件进行修改，使用命令 —<em>gedit ~&#x2F;.profile</em> 打开配置文件，在文档末尾添加</p><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">export GTK_IM_MODULE=fcitx</span><br><span class="line"></span><br><span class="line">export QT_IM_MODULE=fcitx</span><br><span class="line"></span><br><span class="line">export XMODIFIERS=@im=fcitx</span><br><span class="line"></span><br></pre></td></tr></table></figure><p>之后进行保存，重启fcitx，重启系统。</p><p><strong>Note</strong>:Qt 中默认的快捷键与输入法的激活快捷键是有冲突的，需要进行设定。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;安装fcitx-for-Qt5动态库&quot;&gt;&lt;a href=&quot;#安装fcitx-for-Qt5动态库&quot; class=&quot;headerlink&quot; title=&quot;安装fcitx for Qt5动态库&quot;&gt;&lt;/a&gt;安装fcitx for Qt5动态库&lt;/h2&gt;&lt;figure c</summary>
+      
+    
+    
+    
+    <category term="编程" scheme="https://conner.work/categories/%E7%BC%96%E7%A8%8B/"/>
+    
+    
+    <category term="Linux" scheme="https://conner.work/tags/Linux/"/>
+    
+    <category term="Qt" scheme="https://conner.work/tags/Qt/"/>
+    
+  </entry>
+  
+</feed>
